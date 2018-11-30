@@ -1,0 +1,74 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+input {
+  border: none;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  border: 0;
+  outline: none;
+  cursor: pointer;
+}
+
+button:after {
+  border: none;
+}
+
+.el-pagination.is-background .el-pager li:not(.disabled).active {
+  background: rgba(246, 246, 246, 1);
+  color: #989898;
+}
+
+.el-pagination.is-background .btn-next,
+.el-pagination.is-background .btn-prev,
+.el-pagination.is-background .el-pager li {
+  margin: 0;
+  background-color: rgba(255, 255, 255, 1);
+  color: #666666;
+  min-width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  border: 1px solid #e6e6e6;
+  border-left: none;
+  border-radius: 0;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.el-pagination {
+  text-align: right;
+  margin-top: 39px;
+}
+
+.el-pagination.is-background .btn-prev {
+  border-left: 1px solid #e6e6e6;
+}
+
+.el-pagination .btn-prev .el-icon {
+  font-size: 15px;
+  margin-top: 2px;
+}
+
+.el-pagination .btn-next .el-icon {
+  font-size: 15px;
+  margin-top: 2px;
+
+}
+
+
+.el-pagination button,
+.el-pagination span:not([class*=suffix]) {
+  color: #989898;
+  height: 40px;
+  line-height: 40px;
+  font-size: 15px;
+  margin-left: 12px;
+}

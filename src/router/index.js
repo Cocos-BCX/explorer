@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../modules/home'
 import Block from '../modules/block'
-import Trade from '../modules/trade'
+import Address from '../modules/address'
 import Hash from '../modules/hash'
 import Stopcock from '../modules/stopcock'
 
@@ -12,7 +12,7 @@ export default new Router({
   mode: 'history',
   routes: [
     ...Block,
-    ...Trade,
+    ...Address,
     ...Hash,
     ...Stopcock,
     ...Home

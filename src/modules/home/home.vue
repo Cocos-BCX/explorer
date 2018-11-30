@@ -15,7 +15,7 @@
             ></dropdown>
           </div>
           <div class="search-box">
-            <input placeholder="搜索地址、区块、交易hash" v-model="search">
+            <input :placeholder="$t('home.search')" v-model="search">
             <div class="btn" @click="searchInfo()">
               <img v-lazy="'/static/image/search.png'" alt>
             </div>
@@ -28,24 +28,24 @@
       <div class="content-box">
         <div class="count">
           <div class="num">
-            <div>1231231</div>
-            <span>测试节点</span>
+            <div>{{count.nodes}}</div>
+            <span>{{$t('home.banner.node')}}</span>
           </div>
           <div class="num">
-            <div>123123134134</div>
-            <span>区块高度</span>
+            <div>{{count.block_height}}</div>
+            <span>{{$t('home.banner.block')}}</span>
+          </div>
+          <div class="num">
+            <div>{{count.trans}}</div>
+            <span>{{$t('home.banner.trade')}}</span>
+          </div>
+          <div class="num">
+            <div>{{count.user_count}}</div>
+            <span>{{$t('home.banner.count')}}</span>
           </div>
           <div class="num">
             <div>1231231</div>
-            <span>过去一天交易数</span>
-          </div>
-          <div class="num">
-            <div>1231231</div>
-            <span>账户数量</span>
-          </div>
-          <div class="num">
-            <div>1231231</div>
-            <span>TPS/峰值</span>
+            <span>{{$t('home.banner.tps')}}</span>
           </div>
         </div>
         <div class="chart">
@@ -60,47 +60,62 @@
           <div class="block">
             <div class="title">
               <div class="title">
-                <span>区块</span>
-                <div @click="moreBlock()">查看全部</div>
+                <span>{{$t('home.list.block.title')}}</span>
+                <div @click="moreBlock()">{{$t('home.list.block.more')}}</div>
               </div>
             </div>
-            <div class="block-piece">
-              <div class="block-id">
-                <p>区块214214</p>
-                <p>>1分钟24秒前</p>
-              </div>
-              <div class="block-detail">
-                <p class="address">
-                  由矿工
-                  <span>214214214214</span>
-                </p>
-                <p class="trade-num">
-                  <span>112交易</span> 于11秒
-                </p>
-                <p class="award">区块奖励 2131244124 以太币</p>
+            <div class="block-content">
+              <div class="block-piece" v-for="block in blocks" :key="block.block_height">
+                <div class="block-id" @click="queryBlock(block.block_height)">
+                  <p>{{$t('home.list.block.block_detail.block')}}{{block.block_height}}</p>
+                  <p>>{{block.time}}</p>
+                  <!-- {{$t('home.list.block.block_detail.second')}} -->
+                </div>
+                <div class="block-detail">
+                  <p class="address">
+                    {{$t('home.list.block.block_detail.produced')}}
+                    <span>{{block.witness_name}}</span>
+                  </p>
+                  <p class="trade-num">
+                    <span>{{block.trx_count}}{{$t('home.list.block.block_detail.trade')}}</span>
+                    {{$t('home.list.block.block_detail.by')}}{{block.timestamp}}{{$t('home.list.block.block_detail.time')}}
+                  </p>
+                  <p class="award">{{$t('home.list.block.block_detail.reward')}} 0 COCOS</p>
+                </div>
               </div>
             </div>
           </div>
           <div class="block trade">
             <div class="title">
-              <span>交易</span>
-              <div @click="moreTrade()">查看全部</div>
+              <span>{{$t('home.list.trade.title')}}</span>
+              <div @click="moreTrade()">{{$t('home.list.trade.more')}}</div>
             </div>
-            <div class="block-piece trade-piece">
-              <div class="trade-info">
-                <div class="trade-id" @click="queryHash()">
-                  交易#
-                  <span>qwertyuiop1234sdfghjkl78z</span>
+            <div class="block-content">
+              <div class="block-piece trade-piece" v-for="tran in trans" :key="tran.trx_id">
+                <div class="trade-info">
+                  <div class="trade-id" @click="queryHash(tran.trx_id)">
+                    {{$t('home.list.trade.trade_detail.trade')}}
+                    <span>{{tran.trx_id}}</span>
+                  </div>
+                  <div class="trade-address">
+                    {{$t('home.list.trade.trade_detail.from')}}
+                    <span
+                      @click="queryAddress()"
+                    >{{tran.parse_ops.parse_operations.from}}</span>
+                    <span class="cut"></span>
+                    {{$t('home.list.trade.trade_detail.to')}}
+                    <span
+                      @click="queryAddress()"
+                    >{{tran.parse_ops.parse_operations.to}}</span>
+                  </div>
+                  <div
+                    class="trade-num"
+                  >{{$t('home.list.trade.trade_detail.num')}} {{tran.parse_ops.parse_operations.amount}}</div>
                 </div>
-                <div class="trade-address">
-                  发送方
-                  <span>qwertyuiop1234sdfghjkl78</span>
-                  <span class="cut"></span> 接收方
-                  <span>qwertyuiop1234sdfghjkl78</span>
-                </div>
-                <div class="trade-num">数额 0 以太币</div>
+                <div class="trade-time">>{{tran.date}}</div>
+                <!-- {{$t('home.list.trade.trade_detail.eth')}} -->
+                <!-- {{$t('home.list.trade.trade_detail.time')}} -->
               </div>
-              <div class="trade-time">>47秒前</div>
             </div>
           </div>
         </div>
@@ -118,6 +133,8 @@ import Highcharts from "../../components/hightcart";
 import { throws } from "assert";
 import Dropdown from "../../components/dropdown";
 import axios from "axios";
+import moment from "moment";
+import { mapState, mapMutations } from "vuex";
 Vue.use(VueI18n);
 export default {
   name: "home",
@@ -128,12 +145,16 @@ export default {
   },
   data: function() {
     return {
+      pageMarket: 1,
+      blocks: [],
+      trans: [],
+      count: {},
       select: [{ name: "English", type: "en" }, { name: "中文", type: "cn" }],
       style: "white",
-      selected: { name: "中文" },
+      selected: { name: "中文", type: "cn" },
       search: "",
       options: {
-        title: "过去14天的交易数",
+        title: "",
         categories: [
           "一月",
           "二月",
@@ -171,32 +192,105 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapState({
+      language: state => state.app.language,
+      defaults: state => state.app.defaults
+    })
+    // ...mapMutations({ setLanguage: 'updateOption' })
+  },
+  created() {
+    this.options.title = this.defaults.trade;
+  },
   mounted() {
-    // axios
-    //   .get("/query_block/000222e17b4657186ef3ac27a427a56e1b5d4137")
-    //   .then(response => console.log(response));
-    // api
-    //   .get("/query_block/000222e17b4657186ef3ac27a427a56e1b5d4137", {})
-    //   .then(result => {
-    //     console.log(result.data);
-    //   });
     const that = this;
-    // console.log(process.env.NODE_ENV);
+    let params = {
+      limit: 10,
+      page: this.pageMarket
+    };
+    api.get("/query_count", {}).then(result => {
+      that.count = result.data.info;
+    });
+    api.get("/query_all_block", params).then(result => {
+      const blocks = [];
+      result.data.blocks.forEach(item => {
+        item.time = moment(new Date()).to(moment(new Date(item.time)));
+        item.timestamp = moment(new Date()).to(
+          moment(new Date(item.timestamp))
+        );
+        blocks.push(item);
+      });
+      that.blocks = blocks;
+    });
+    api.get("/query_all_trans", params).then(result => {
+      const trans = [];
+      result.data.trans.forEach(item => {
+        if (item.parse_ops && item.parse_ops.length) {
+          let params = {
+            parse_ops: item.parse_ops[0],
+            trx_id: item.trx_id,
+            date: moment(new Date()).to(
+              moment(new Date(item.parse_ops[0].date))
+            ),
+            signatures: item.signatures
+          };
+          trans.push(params);
+        }
+      });
+      that.trans = trans;
+    });
+    // this.options.title = this.defaults.trade;
+    // console.log(this.defaults.trade);
   },
   methods: {
     moreBlock() {
-      this.$router.push({ path: "/block" });
+      this.$router.push({ name: "BlockList" });
     },
     moreTrade() {
-      this.$router.push({ path: "/trade" });
+      this.$router.push({ name: "HashList" });
     },
-    queryHash() {
-      this.$router.push({ path: "/hash" });
+    queryHash(trans) {
+      this.$router.push({ name: "Hash", params: { trans_id: trans } });
     },
+    queryBlock(block) {
+      this.$router.push({ name: "Block", params: { block_height: block } });
+    },
+    // queryAddress() {
+    //   this.$router.push({ path: "/address" });
+    // },
     methodToRunOnSelect(payload) {
       this.selected = payload;
     },
-    searchInfo() {}
+    searchInfo() {
+      const that = this;
+      let url;
+      if (/^[0-9]*$/.test(that.search)) {
+        url = `/query_block/${that.search}`;
+      } else if (/^\w{38+}$/) {
+        url = `/query_trans/${that.search}`;
+      } else {
+        url = `/query_user/${that.search}`;
+      }
+      api
+        .get(url, {})
+        .then(result => {
+          console.log(result.data);
+          if (result.data.block) {
+            that.$router.push({
+              name: "Block",
+              params: { block_height: result.data.block.block_height }
+            });
+          } else if (result.data.trans) {
+            that.$router.push({
+              name: "Hash",
+              params: { trans_id: result.data.trans.trx_id }
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
   }
 };
 </script>
@@ -383,12 +477,16 @@ export default {
     }
     .block {
       width: 569px;
-      height: 750px;
       overflow: scroll;
       padding: 33px 0 0 20px;
       background: rgba(255, 255, 255, 1);
       display: flex;
       flex-direction: column;
+      .block-content {
+        height: 720px;
+        // margin-top: 16px;
+        overflow: scroll;
+      }
       .block-piece {
         padding-top: 18px;
         height: 92px;
@@ -403,6 +501,7 @@ export default {
           flex-direction: column;
           align-items: center;
           justify-content: center;
+          cursor: pointer;
         }
         .block-detail {
           margin-left: 18px;

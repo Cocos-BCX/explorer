@@ -8,9 +8,15 @@ import Vuex from 'vuex'
 import VueLazyload from 'vue-lazyload'
 import Highcharts from 'highcharts/highstock'
 import VueClipboard from 'vue-clipboard2'
+import cn from './il8n/lang/cn'
+import en from './il8n/lang/en'
+import {
+  Pagination
+} from 'element-ui';
 // import VuePaginate from 'vue-paginate'
+// import defaults from './http/api';
 
-// Vue.use(VuePaginate)
+Vue.use(Pagination)
 Vue.use(Vuex)
 Vue.use(VueLazyload)
 Vue.use(VueI18n)
@@ -24,10 +30,14 @@ Vue.use(VueClipboard)
 // })
 const store = new Vuex.Store({})
 const i18n = new VueI18n({
-  locale: 'zh-CN', // 语言标识, 通过切换locale的值来实现语言切换,this.$i18n.locale 
+  locale: 'cn', // 语言标识, 通过切换locale的值来实现语言切换,this.$i18n.locale 
   messages: {
-    'zh-CN': require('./il8n/lang/cn'), // 中文语言包
-    'en-US': require('./il8n/lang/en') // 英文语言包
+    en: {
+      ...en
+    }, // 中文语言包
+    cn: {
+      ...cn
+    }
   }
 })
 store.registerModule('app', {
@@ -35,11 +45,18 @@ store.registerModule('app', {
     language: {
       name: '中文',
       type: 'en'
+    },
+    defaults: {
+      trade: '过去14天交易数',
+      address: '过去14天地址增长'
     }
   },
   mutations: {
     setLanguage(state, language) {
       state.language = language
+    },
+    setDefault(state, defaults) {
+      state.defaults = defaults
     }
   }
 })
