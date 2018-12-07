@@ -21,6 +21,11 @@ button:after {
   border: none;
 }
 
+a {
+  text-decoration: none;
+  color: #888;
+}
+
 .el-pagination.is-background .el-pager li:not(.disabled).active {
   background: rgba(246, 246, 246, 1);
   color: #989898;
@@ -63,7 +68,6 @@ button:after {
 
 }
 
-
 .el-pagination button,
 .el-pagination span:not([class*=suffix]) {
   color: #989898;
@@ -71,4 +75,8 @@ button:after {
   line-height: 40px;
   font-size: 15px;
   margin-left: 12px;
+}
+
+.cursor {
+  cursor: pointer;
 }

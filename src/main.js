@@ -11,17 +11,18 @@ import VueClipboard from 'vue-clipboard2'
 import cn from './il8n/lang/cn'
 import en from './il8n/lang/en'
 import {
-  Pagination
+  Pagination,
+  MessageBox,
 } from 'element-ui';
 // import VuePaginate from 'vue-paginate'
 // import defaults from './http/api';
-
-Vue.use(Pagination)
+Vue.component(MessageBox)
+Vue.component(Pagination)
 Vue.use(Vuex)
 Vue.use(VueLazyload)
 Vue.use(VueI18n)
 Vue.use(VueClipboard)
-
+Vue.prototype.$alert = MessageBox.alert;
 // Vue.use(VueLazyload, {
 //   preLoad: 1.3,
 //   error: 'dist/error.png',
@@ -61,7 +62,9 @@ store.registerModule('app', {
   }
 })
 Vue.config.productionTip = false
-
+router.afterEach((to, from, next) => {
+  window.scrollTo(0, 0);
+})
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

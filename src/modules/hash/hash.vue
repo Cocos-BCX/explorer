@@ -22,13 +22,16 @@
             <span class="center">{{transactions.trx_id}}</span>
             <button
               type="button"
-              v-clipboard:copy="address"
+              v-clipboard:copy="transactions.trx_id"
               v-clipboard:success="onCopy"
             >{{$t('trade.detail.copy')}}</button>
           </div>
           <div class="status piece">
             <span>{{$t('trade.detail.block')}}</span>
-            <span class="center address">{{transactions.block_num}}</span>
+            <span
+              class="center address blocks"
+              @click="queryBlock(transactions.block_num)"
+            >{{transactions.block_num}}</span>
           </div>
           <div class="hash piece">
             <span>{{$t('trade.detail.time')}}</span>
@@ -39,12 +42,15 @@
           {{$t('trade.trade_detail.trade')}}
           <span>{{$t('trade.trade_detail.address')}}</span>
         </div>
-        <div class="info trade-info">
-          <div class="height piece">
+        <div class="info trade-info" v-if="transactions.parse_operations">
+          <div
+            class="height piece address"
+            @click="queryAddress(transactions.parse_operations.from)"
+          >
             <span>{{$t('trade.trade_detail.from')}}</span>
             <span class="center">{{transactions.parse_operations.from}}</span>
           </div>
-          <div class="status piece">
+          <div class="status piece address" @click="queryAddress(transactions.parse_operations.to)">
             <span>{{$t('trade.trade_detail.to')}}</span>
             <span class="center">{{transactions.parse_operations.to}}</span>
           </div>
@@ -77,25 +83,56 @@ export default {
   },
   mounted() {
     const that = this;
-    that.pageFn();
     let trans_id = that.$route.params.trans_id;
-    api.get(`/query_trans/${trans_id}`, {}).then(result => {
-      if (result.data.trans.parse_ops && result.data.trans.parse_ops.length) {
-        that.transactions = result.data.trans.parse_ops[0];
-        that.transactions.trx_id = result.data.trans.trx_id;
-        that.transactions.date = moment(
-          new Date(result.data.trans.parse_ops[0].date)
-        ).format("MM/DD/YYYY HH:MMA");
-        that.transactions.signatures = result.data.trans.signatures;
-      }
-    });
+    api
+      .get(`/query_trans/${trans_id}`, {})
+      .then(result => {
+        if (result.trans.parse_ops && result.trans.parse_ops.length) {
+          that.transactions = result.trans.parse_ops[0];
+          that.transactions.trx_id = result.trans.trx_id;
+          that.transactions.date = moment(
+            new Date(result.trans.parse_ops[0].date)
+          ).format("MM/DD/YYYY HH:MMA");
+          that.transactions.signatures = result.trans.signatures;
+        }
+      })
+      .catch(err => {
+        this.$message.error(err.errmsg);
+      });
   },
   methods: {
-    pageFn(val) {
-      this.page = val;
+    queryBlock(block) {
+      this.$router.push({
+        name: "Block",
+        params: { block_height: block }
+      });
     },
     onCopy: function(e) {
-      console.log("你刚刚复制: " + e.text);
+      this.$message({
+        type: "success",
+        message: `复制成功`
+      });
+    },
+    queryAddress(address) {
+      const that = this;
+      api
+        .get(`/query_user/${address}`, {})
+        .then(result => {
+          if (result.user) {
+            that.$router.push({
+              name: "Address",
+              params: { address_name: address }
+            });
+          } else {
+            that.$alert("该地址不可访问", "地址已锁定", {
+              confirmButtonText: "确定",
+              callback: action => {}
+            });
+          }
+        })
+        .catch(err => {
+          this.$message.error(err.errmsg);
+        });
     }
   }
 };
@@ -167,6 +204,9 @@ export default {
             font-size: 18px;
             color: rgba(152, 152, 152, 1);
           }
+          span.blocks {
+            cursor: pointer;
+          }
           span:nth-of-type(2) {
             color: #333;
             margin-left: 40px;
@@ -193,8 +233,12 @@ export default {
         .height.piece {
           margin-top: 0;
         }
+        .address {
+          cursor: pointer;
+        }
       }
     }
   }
 }
+@import "../../style/comm.media.less";
 </style>

@@ -15,7 +15,7 @@
             ></dropdown>
           </div>
           <div class="search-box">
-            <input :placeholder="$t('home.search')" v-model="search">
+            <input :placeholder="$t('home.search')" v-model="search" @keyup.enter="searchInfo()">
             <div class="btn" @click="searchInfo()">
               <img v-lazy="'/static/image/search.png'" alt>
             </div>
@@ -32,7 +32,9 @@
             <span>{{$t('home.banner.node')}}</span>
           </div>
           <div class="num">
-            <div>{{count.block_height}}</div>
+            <div>
+              <countTo :startVal="startVal" :endVal="count.block_height" :duration="3000"></countTo>
+            </div>
             <span>{{$t('home.banner.block')}}</span>
           </div>
           <div class="num">
@@ -65,20 +67,21 @@
               </div>
             </div>
             <div class="block-content">
-              <div class="block-piece" v-for="block in blocks" :key="block.block_height">
+              <loading :height="height" v-if="!blocks.length"></loading>
+              <div class="block-piece" v-for="block in blocks" :key="block.block_id">
                 <div class="block-id" @click="queryBlock(block.block_height)">
                   <p>{{$t('home.list.block.block_detail.block')}}{{block.block_height}}</p>
                   <p>>{{block.time}}</p>
                   <!-- {{$t('home.list.block.block_detail.second')}} -->
                 </div>
                 <div class="block-detail">
-                  <p class="address">
+                  <p class="address" @click="queryAddress(block.witness_name)">
                     {{$t('home.list.block.block_detail.produced')}}
                     <span>{{block.witness_name}}</span>
                   </p>
                   <p class="trade-num">
                     <span>{{block.trx_count}}{{$t('home.list.block.block_detail.trade')}}</span>
-                    {{$t('home.list.block.block_detail.by')}}{{block.timestamp}}{{$t('home.list.block.block_detail.time')}}
+                    {{$t('home.list.block.block_detail.by')}}{{block.timestamp}}
                   </p>
                   <p class="award">{{$t('home.list.block.block_detail.reward')}} 0 COCOS</p>
                 </div>
@@ -91,6 +94,7 @@
               <div @click="moreTrade()">{{$t('home.list.trade.more')}}</div>
             </div>
             <div class="block-content">
+              <loading :height="height" v-if="!trans.length"></loading>
               <div class="block-piece trade-piece" v-for="tran in trans" :key="tran.trx_id">
                 <div class="trade-info">
                   <div class="trade-id" @click="queryHash(tran.trx_id)">
@@ -100,17 +104,17 @@
                   <div class="trade-address">
                     {{$t('home.list.trade.trade_detail.from')}}
                     <span
-                      @click="queryAddress()"
-                    >{{tran.parse_ops.parse_operations.from}}</span>
+                      @click="queryAddress(tran.parse_operations.from)"
+                    >{{tran.parse_operations.from}}</span>
                     <span class="cut"></span>
                     {{$t('home.list.trade.trade_detail.to')}}
                     <span
-                      @click="queryAddress()"
-                    >{{tran.parse_ops.parse_operations.to}}</span>
+                      @click="queryAddress(tran.parse_operations.to)"
+                    >{{tran.parse_operations.to}}</span>
                   </div>
                   <div
                     class="trade-num"
-                  >{{$t('home.list.trade.trade_detail.num')}} {{tran.parse_ops.parse_operations.amount}}</div>
+                  >{{$t('home.list.trade.trade_detail.num')}} {{tran.parse_operations.amount}}</div>
                 </div>
                 <div class="trade-time">>{{tran.date}}</div>
                 <!-- {{$t('home.list.trade.trade_detail.eth')}} -->
@@ -132,8 +136,10 @@ import Foot from "../../components/foot";
 import Highcharts from "../../components/hightcart";
 import { throws } from "assert";
 import Dropdown from "../../components/dropdown";
+import Loading from "../../components/loading";
 import axios from "axios";
 import moment from "moment";
+import countTo from "vue-count-to";
 import { mapState, mapMutations } from "vuex";
 Vue.use(VueI18n);
 export default {
@@ -141,7 +147,9 @@ export default {
   components: {
     Highcharts,
     Foot,
-    Dropdown
+    Dropdown,
+    Loading,
+    countTo
   },
   data: function() {
     return {
@@ -149,10 +157,12 @@ export default {
       blocks: [],
       trans: [],
       count: {},
+      height: "720px",
       select: [{ name: "English", type: "en" }, { name: "中文", type: "cn" }],
       style: "white",
       selected: { name: "中文", type: "cn" },
       search: "",
+      startVal: 0,
       options: {
         title: "",
         categories: [
@@ -169,7 +179,7 @@ export default {
           "十一月",
           "十二月"
         ], // x轴数据
-        yCompany: "mm", // y轴单位没有则去掉
+        yCompany: "kb", // y轴单位没有则去掉
         series: [
           {
             // name: '东京',
@@ -199,48 +209,54 @@ export default {
     })
     // ...mapMutations({ setLanguage: 'updateOption' })
   },
-  created() {
-    this.options.title = this.defaults.trade;
-  },
   mounted() {
     const that = this;
     let params = {
       limit: 10,
       page: this.pageMarket
     };
+    let counts = localStorage.getItem("counts");
+    if (counts) {
+      that.startVal = Number(counts);
+    }
     api.get("/query_count", {}).then(result => {
-      that.count = result.data.info;
+      that.count = result.info;
+      localStorage.setItem("counts", result.info.block_height);
     });
-    api.get("/query_all_block", params).then(result => {
-      const blocks = [];
-      result.data.blocks.forEach(item => {
-        item.time = moment(new Date()).to(moment(new Date(item.time)));
-        item.timestamp = moment(new Date()).to(
-          moment(new Date(item.timestamp))
-        );
-        blocks.push(item);
+    api
+      .get("/query_all_block", params)
+      .then(result => {
+        const blocks = [];
+        result.blocks.forEach(item => {
+          item.time = moment(new Date()).to(moment(new Date(item.time)));
+          item.timestamp = moment(new Date()).to(
+            moment(new Date(item.timestamp))
+          );
+          blocks.push(item);
+        });
+        that.blocks = blocks;
+      })
+      .catch(err => {
+        this.$message.error(err.errmsg);
       });
-      that.blocks = blocks;
-    });
-    api.get("/query_all_trans", params).then(result => {
-      const trans = [];
-      result.data.trans.forEach(item => {
-        if (item.parse_ops && item.parse_ops.length) {
+    api
+      .get("/query_all_trans", params)
+      .then(result => {
+        const trans = [];
+        result.transfer.forEach(item => {
           let params = {
-            parse_ops: item.parse_ops[0],
+            parse_operations: item.parse_operations,
             trx_id: item.trx_id,
-            date: moment(new Date()).to(
-              moment(new Date(item.parse_ops[0].date))
-            ),
-            signatures: item.signatures
+            date: moment(new Date()).to(moment(new Date(item.date)))
+            // signatures: item.signatures
           };
           trans.push(params);
-        }
+        });
+        that.trans = trans;
+      })
+      .catch(err => {
+        this.$message.error(err.errmsg);
       });
-      that.trans = trans;
-    });
-    // this.options.title = this.defaults.trade;
-    // console.log(this.defaults.trade);
   },
   methods: {
     moreBlock() {
@@ -255,11 +271,29 @@ export default {
     queryBlock(block) {
       this.$router.push({ name: "Block", params: { block_height: block } });
     },
-    // queryAddress() {
-    //   this.$router.push({ path: "/address" });
-    // },
     methodToRunOnSelect(payload) {
       this.selected = payload;
+    },
+    queryAddress(address) {
+      const that = this;
+      api
+        .get(`/query_user/${address}`, {})
+        .then(result => {
+          if (result.user) {
+            that.$router.push({
+              name: "Address",
+              params: { address_name: address }
+            });
+          } else {
+            that.$alert("该地址不可访问", "地址已锁定", {
+              confirmButtonText: "确定",
+              callback: action => {}
+            });
+          }
+        })
+        .catch(err => {
+          that.$message.error(err.errmsg);
+        });
     },
     searchInfo() {
       const that = this;
@@ -274,21 +308,21 @@ export default {
       api
         .get(url, {})
         .then(result => {
-          console.log(result.data);
-          if (result.data.block) {
+          if (result.block) {
             that.$router.push({
               name: "Block",
-              params: { block_height: result.data.block.block_height }
+              params: { block_height: result.block.block_height }
             });
-          } else if (result.data.trans) {
+          } else if (result.trans) {
             that.$router.push({
               name: "Hash",
-              params: { trans_id: result.data.trans.trx_id }
+              params: { trans_id: result.trans.trx_id }
             });
           }
         })
         .catch(err => {
           console.log(err);
+          that.$message.error(err.errmsg);
         });
     }
   }
@@ -300,6 +334,8 @@ export default {
   width: 100%;
   // background: cadetblue;
   background: url("/static/image/banner.png") no-repeat;
+  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg-login.png',sizingMethod='scale');
+  background-size: cover;
   .content-box {
     width: 1440px;
     margin: 0 auto;
@@ -386,9 +422,8 @@ export default {
       }
       .banner-bottom {
         width: 1200px;
-        height: 38px;
-        margin-top: 88px;
-        border-bottom: 1px dashed #333;
+        height: 40px;
+        margin-top: 90px;
         background: white;
       }
     }
@@ -400,6 +435,7 @@ export default {
   .content-box {
     width: 1440px;
     height: 1418px;
+    margin: 0 auto;
     // background: linear-gradient(
     //     180deg,
     //     rgba(121, 57, 248, 0.55) 0%,
@@ -421,12 +457,18 @@ export default {
         flex-direction: column;
         align-items: center;
         div {
-          margin-top: 15px;
           font-size: 33px;
           font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(51, 51, 51, 1);
           line-height: 45px;
+          span {
+            font-size: 33px;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            line-height: 45px;
+          }
         }
         span {
           height: 20px;
@@ -580,4 +622,6 @@ export default {
     }
   }
 }
+@import "../../style/media.less";
 </style>
+

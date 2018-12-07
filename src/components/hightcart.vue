@@ -1,5 +1,5 @@
 <template>
-  <div class="highcharts-container" :options="options" style="height:409px"></div>
+  <div class="highcharts-container" :options="options"></div>
 </template>
 <script>
 import Highcharts from "highcharts/highstock";
@@ -16,7 +16,6 @@ export default {
       this.options = newValue;
       this.initChart();
     },
-
     deep: true
   },
   mounted() {
@@ -32,6 +31,7 @@ export default {
             },
             chart: {
               type: "area"
+              // backgroundColor: "rgba(53,139,244,0.1)"
             },
             title: {
               text: this.options.title || "",
@@ -40,7 +40,7 @@ export default {
                 fontSize: "12px"
               }
             },
-            colors: this.options.clolor || ["rgba(53,139,244,0.6)"],
+            color: this.options.color || ["rgba(53,139,244,0.1)"],
             subtitle: {},
             xAxis: {
               categories: this.options.categories,
@@ -71,7 +71,11 @@ export default {
               shared: true,
               useHTML: true
             },
-            plotOptions: {},
+            plotOptions: {
+              area: {
+                fillOpacity: 0.19
+              }
+            },
             series: this.options.series || "",
             legend: {
               enabled: false

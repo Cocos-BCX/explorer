@@ -16,7 +16,11 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(response => {
-  return response
+  if (response.status === 200 && response.statusText === 'OK') {
+    return response
+  } else {
+    return Promise.reject(response)
+  }
 }, error => {
   if (error && error.response) {
     switch (error.response.status) {
@@ -83,7 +87,9 @@ export default {
           cancel = c
         })
       }).then(res => {
-        resolve(res)
+        resolve(res.data)
+      }).catch(err => {
+        reject(err.data)
       })
     })
   },
@@ -97,7 +103,9 @@ export default {
           cancel = c
         })
       }).then(res => {
-        resolve(res)
+        resolve(res.data)
+      }).catch(err => {
+        reject(err.data)
       })
     })
   }

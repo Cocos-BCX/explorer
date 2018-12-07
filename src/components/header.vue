@@ -95,4 +95,72 @@ export default {
     }
   }
 }
+@media (min-width: 1200px) and (max-width: 1440px) {
+  .banner {
+    height: 98px;
+    .content-box {
+      width: 1200px;
+      height: 98px;
+      .content {
+        height: 98px;
+        width: 1000px;
+        .logo {
+          margin-top: 25px;
+          width: 110px;
+          height: 48px;
+          img {
+            width: 110px;
+            height: 48px;
+          }
+        }
+        .language {
+          width: 74px;
+          height: 62px;
+          margin-top: 55px;
+          border-radius: 3px;
+          opacity: 0.5;
+          font-size: 12px;
+          .icon {
+            border: 5px solid;
+            margin: 5px 0 0 3px;
+          }
+        }
+      }
+    }
+  }
+}
+@media (max-width: 1200px) {
+  .banner {
+    height: 83px;
+    .content-box {
+      width: 1024px;
+      height: 83px;
+      .content {
+        height: 83px;
+        width: 853px;
+        .logo {
+          margin-top: 21px;
+          width: 94px;
+          height: 41px;
+          img {
+            width: 94px;
+            height: 41px;
+          }
+        }
+        .language {
+          width: 63px;
+          height: 53px;
+          margin-top: 47px;
+          border-radius: 3px;
+          opacity: 0.5;
+          font-size: 10px;
+          .icon {
+            border: 4px solid;
+            margin: 4px 0 0 2px;
+          }
+        }
+      }
+    }
+  }
+}
 </style>

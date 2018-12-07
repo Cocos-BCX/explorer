@@ -58,10 +58,10 @@
           </div>
           <div class="code piece">
             <span>{{$t('block.detail.code')}}</span>
-            <span>{{block.witness_name}}</span>
+            <span>{{block.transaction_merkle_root}}</span>
             <button
               type="button"
-              v-clipboard:copy="block.witness_name"
+              v-clipboard:copy="block.transaction_merkle_root"
               v-clipboard:success="onCopy"
             >{{$t('block.detail.copy')}}</button>
           </div>
@@ -87,10 +87,16 @@
             <div class="list">{{$t('block.trade.num')}}</div>
           </div>
           <div class="td th" v-for="(item,index) in transactions" :key="index">
-            <div class="list">{{item.parse_operations.trx_id}}</div>
-            <div class="list">{{item.parse_operations.date}}</div>
-            <div class="list">{{item.parse_operations.from}}</div>
-            <div class="list">{{item.parse_operations.to}}</div>
+            <div class="list cursor" @click="queryHash(item.trx_id)">{{item.trx_id}}</div>
+            <div class="list">{{item.date}}</div>
+            <div
+              class="list cursor"
+              @click="queryAddress(item.parse_operations.from)"
+            >{{item.parse_operations.from}}</div>
+            <div
+              class="list cursor"
+              @click="queryAddress(item.parse_operations.to)"
+            >{{item.parse_operations.to}}</div>
             <div class="list">{{item.parse_operations.amount}}</div>
           </div>
         </div>
@@ -102,7 +108,7 @@
           @next-click="pageNext"
           :current-page="currentPage"
           :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :page-size="20"
           layout="prev, pager, next, total"
           :total="trans_length"
         ></el-pagination>
@@ -130,17 +136,17 @@ export default {
       transactions: [],
       total: 0,
       currentPage: 1,
-      trans_length: 0
+      trans_length: 0,
+      dialogVisible: false
     };
   },
   mounted() {
-    this.pageFn();
     const that = this;
     let block_height = that.$route.params.block_height;
     api
       .get(`/query_block/${block_height}`, {})
       .then(result => {
-        const data = result.data.block;
+        const data = result.block;
         data.timestamp = util(data.timestamp);
         // data.transaction_merkle_root = parseInt(data.transaction_merkle_root,2);
         that.block = data;
@@ -153,11 +159,14 @@ export default {
       });
   },
   methods: {
-    pageFn(val) {
-      this.page = val;
-    },
     onCopy: function(e) {
-      console.log("你刚刚复制: " + e.text);
+      this.$message({
+        type: "info",
+        message: `复制成功`
+      });
+    },
+    queryHash(trans) {
+      this.$router.push({ name: "Hash", params: { trans_id: trans } });
     },
     queryTrade(block_height) {
       const that = this;
@@ -165,24 +174,57 @@ export default {
         limit: 20,
         page: this.pageMarket
       };
+      console.log(block_height);
       api
-        .get(`/query_block/${block_height}/detail`, params)
+        .get(`/query_tranfer_block/${block_height}`, params)
         .then(result => {
-          result.data.transactions.forEach(item => {
-            if (item.parse_ops && item.parse_ops.length) {
-              item.parse_ops[0].parse_operations.trx_id = item.trx_id;
-              if (item.parse_ops[0].type === "transfer") {
-                item.parse_ops[0].parse_operations.date = moment(new Date()).to(
-                  moment(new Date(item.parse_ops[0].date))
-                );
-                that.transactions.push(item.parse_ops[0]);
-              }
-              that.trans_length = result.data.trans_length;
-            }
+          // result.transactions.forEach(item => {
+          // if (item.parse_ops && item.parse_ops.length) {
+          //   item.parse_ops[0].parse_operations.trx_id = item.trx_id;
+          //   if (item.parse_ops[0].type === "transfer") {
+          //     item.parse_ops[0].parse_operations.date = moment(new Date()).to(
+          //       moment(new Date(item.parse_ops[0].date))
+          //     );
+          //     that.transactions.push(item.parse_ops[0]);
+          //   }
+          //   that.trans_length = result.trans_length;
+          // }
+          // });
+          const transactions = [];
+          result.transfer.forEach(item => {
+            let params = {
+              parse_operations: item.parse_operations,
+              trx_id: item.trx_id,
+              date: moment(new Date()).to(moment(new Date(item.date)))
+              // signatures: item.signatures
+            };
+            transactions.push(params);
           });
+          that.transactions = transactions;
         })
         .catch(err => {
-          console.log(err);
+          this.$message.error(err.errmsg);
+        });
+    },
+    queryAddress(address) {
+      const that = this;
+      api
+        .get(`/query_user/${address}`, {})
+        .then(result => {
+          if (result.user) {
+            that.$router.push({
+              name: "Address",
+              params: { address_name: address }
+            });
+          } else {
+            that.$alert("该地址不可访问", "地址已锁定", {
+              confirmButtonText: "确定",
+              callback: action => {}
+            });
+          }
+        })
+        .catch(err => {
+          this.$message.error(err.errmsg);
         });
     },
     handleSizeChange(e) {},
@@ -304,6 +346,12 @@ export default {
           color: #333;
           height: 86px;
         }
+        .td:hover {
+          background: rgba(246, 246, 252, 1);
+          .cursor {
+            color: #4990ed;
+          }
+        }
         .list:nth-of-type(1) {
           width: 220px;
           margin-left: 25px;
@@ -331,6 +379,148 @@ export default {
         }
         .list:nth-of-type(5) {
           margin-left: 61px;
+        }
+      }
+    }
+  }
+}
+@media (min-width: 1200px) and (max-width: 1440px) {
+  .block {
+    width: 100%;
+    .detail {
+      width: 1200px;
+      margin: 0 auto;
+      max-height: 1674px;
+      margin-bottom: 117px;
+      .content {
+        margin: 0 auto;
+        width: 1200px;
+        display: flex;
+        display: flex;
+        flex-direction: column;
+        .title {
+          height: 52px;
+          font-size: 26px;
+          margin-top: 49px;
+        }
+        .info {
+          width: 1148px;
+          height: 312px;
+          background: rgba(246, 246, 252, 1);
+          margin-top: 20px;
+          display: flex;
+          padding: 32px 26px;
+          flex-direction: column;
+          .status .padding {
+            background: rgba(223, 223, 230, 1);
+            font-size: 18px;
+            color: #666;
+            padding: 0 4px;
+          }
+          .center.no-padding {
+            background: #388df4;
+            color: #fff;
+            font-size: 18px;
+            padding: 0 4px;
+          }
+          .piece {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 14px;
+            span:nth-of-type(1) {
+              width: 122px;
+              height: 25px;
+              font-size: 18px;
+              color: rgba(152, 152, 152, 1);
+            }
+            .center.no-padding {
+              color: #fff;
+            }
+            span:nth-of-type(2) {
+              color: #333;
+              // margin-left: 10px;
+              // width: 700px;
+              font-size: 18px;
+            }
+            p.center {
+              color: #333;
+              // width: 700px;
+              font-size: 18px;
+              span {
+                margin: 0;
+                color: #333;
+              }
+            }
+            button {
+              border: 0;
+              background-color: transparent;
+              outline: none;
+              width: 36px;
+              height: 16px;
+              border-radius: 50px;
+              border: 1px solid #4990ed;
+              color: #4990ed;
+              line-height: 16px;
+              margin: 4px 0 0 6px;
+              cursor: pointer;
+            }
+            button:after {
+              border: none;
+            }
+          }
+          .height.piece {
+            margin-top: 0;
+          }
+        }
+        .table {
+          display: flex;
+          flex-direction: column;
+          .th {
+            display: flex;
+            align-items: center;
+            height: 60px;
+            width: 100%;
+            border-bottom: 1px solid #e6e6e6;
+            color: #989898;
+          }
+          .td {
+            color: #333;
+            height: 86px;
+          }
+          .td:hover {
+            background: rgba(246, 246, 252, 1);
+            .cursor {
+              color: #4990ed;
+            }
+          }
+          .list:nth-of-type(1) {
+            width: 18.3%;
+            margin-left: 2.1%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .list:nth-of-type(2) {
+            width: 9.8%;
+            margin-left: 4.3%;
+          }
+          .list:nth-of-type(3) {
+            width: 221px;
+            margin-left: 61px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .list:nth-of-type(4) {
+            width: 18.41;
+            margin-left: 5%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+          .list:nth-of-type(5) {
+            margin-left: 5%;
+          }
         }
       }
     }

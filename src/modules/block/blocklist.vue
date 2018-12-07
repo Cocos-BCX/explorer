@@ -1,22 +1,25 @@
 <template>
-  <div class="block" id="block">
+  <div class="block">
     <Header></Header>
     <div class="detail">
       <div class="content">
         <div class="title" v-if="blocks && blocks.length">{{$t('block.title')}}</div>
         <div class="table" v-if="blocks && blocks.length">
           <div class="th">
-            <div class="list">{{$t('block.list.high')}}</div>
+            <div class="list click">{{$t('block.list.high')}}</div>
             <div class="list">{{$t('block.list.age')}}</div>
             <div class="list">{{$t('block.list.trade')}}</div>
-            <div class="list">{{$t('block.list.produced')}}</div>
+            <div class="list click">{{$t('block.list.produced')}}</div>
             <!-- <div class="list">{{$t('block.list.bit')}}</div> -->
           </div>
           <div class="td th" v-for="(item,index) in blocks" :key="index">
-            <div class="list">{{item.block_height}}</div>
+            <div class="list click" @click="queryItemBlock(item.block_height)">{{item.block_height}}</div>
             <div class="list">{{item.time}}</div>
             <div class="list">{{item.trx_count}}</div>
-            <div class="list">{{item.witness_name}}</div>
+            <div
+              class="list click"
+              @click="queryItemAddress(item.witness_name)"
+            >{{item.witness_name}}</div>
             <!-- <div class="list">{{item.parse_operations.amount}}</div> -->
           </div>
         </div>
@@ -28,7 +31,7 @@
           @next-click="pageNext"
           :current-page="currentPage"
           :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :page-size="20"
           layout="prev, pager, next, total"
           :total="total"
         ></el-pagination>
@@ -64,8 +67,35 @@ export default {
   },
 
   methods: {
+    queryBlock() {
+      const that = this;
+      let params = {
+        limit: 20,
+        page: that.pageMarket
+      };
+      api
+        .get("/query_all_block", params)
+        .then(result => {
+          const blocks = [];
+          result.blocks.forEach(item => {
+            item.time = moment(new Date()).to(moment(new Date(item.time)));
+            item.timestamp = moment(new Date()).to(
+              moment(new Date(item.timestamp))
+            );
+            blocks.push(item);
+          });
+          that.blocks = blocks;
+          that.total = result.block_height;
+        })
+        .catch(err => {
+          this.$message.error(err.errmsg);
+        });
+    },
     handleSizeChange(e) {
       console.log(e);
+    },
+    queryItemBlock(block) {
+      this.$router.push({ name: "Block", params: { block_height: block } });
     },
     handleCurrentChange(e) {
       this.pageMarket = parseInt(e);
@@ -75,38 +105,37 @@ export default {
       this.pageMarket++;
       this.queryBlock();
     },
-    queryBlock() {
-      const that = this;
-      let params = {
-        limit: 20,
-        page: that.pageMarket
-      };
-      api.get("/query_all_block", params).then(result => {
-        const blocks = [];
-        result.data.blocks.forEach(item => {
-          item.time = moment(new Date()).to(moment(new Date(item.time)));
-          item.timestamp = moment(new Date()).to(
-            moment(new Date(item.timestamp))
-          );
-          blocks.push(item);
-        });
-        that.blocks = blocks;
-        that.total = result.data.block_height;
-      });
-    },
     pagePrev() {
       this.pageMarket--;
       this.queryBlock();
+    },
+    queryItemAddress(address) {
+      const that = this;
+      api
+        .get(`/query_user/${address}`, {})
+        .then(result => {
+          if (result.user) {
+            that.$router.push({
+              name: "Address",
+              params: { address_name: address }
+            });
+          } else {
+            that.$alert("该地址不可访问", "地址已锁定", {
+              confirmButtonText: "确定",
+              callback: action => {}
+            });
+          }
+        })
+        .catch(err => {
+          this.$message.error(err.errmsg);
+        });
     }
   }
 };
 </script>
 <style scoped lang="less" rel="stylesheet/less">
-#block {
+.block {
   width: 100%;
-  .el-pager li {
-    margin: 0;
-  }
   .detail {
     width: 1440px;
     margin: 0 auto;
@@ -133,6 +162,12 @@ export default {
           width: 100%;
           border-bottom: 1px solid #e6e6e6;
           color: #989898;
+          .click {
+            cursor: pointer;
+          }
+        }
+        .td:hover {
+          background: rgba(246, 246, 252, 1);
         }
         .td {
           color: #333;
@@ -142,36 +177,37 @@ export default {
           }
         }
         .list:nth-of-type(1) {
-          width: 220px;
-          margin-left: 25px;
+          width: 16.25%;
+          margin-left: 2%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(2) {
-          width: 118px;
-          margin-left: 52px;
+          width: 8.25%;
+          margin-left: 4.3%;
         }
         .list:nth-of-type(3) {
-          width: 221px;
-          margin-left: 61px;
+          width: 11%;
+          margin-left: 5%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(4) {
-          width: 221px;
-          margin-left: 61px;
+          width: 22%;
+          margin-left: 5%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(5) {
-          width: 84px;
-          margin-left: 61px;
+          width: 19%;
+          margin-left: 5%;
         }
       }
     }
   }
 }
+@import "../../style/comm.media.less";
 </style>

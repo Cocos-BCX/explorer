@@ -7,25 +7,29 @@
         <div class="info">
           <div class="height piece">
             <span>{{$t('address.detail.address')}}</span>
-            <span class="center address">{{address}}</span>
+            <span class="center address">{{user.user_name}}</span>
             <button
               type="button"
-              v-clipboard:copy="address"
+              v-clipboard:copy="user.user_name"
               v-clipboard:success="onCopy"
             >{{$t('address.trade.copy')}}</button>
           </div>
           <div class="status piece">
             <span>{{$t('address.detail.name')}}</span>
-            <span class="center">21312312</span>
+            <span class="center">{{user.user_name}}</span>
           </div>
           <div class="time piece">
             <span>{{$t('address.detail.trade')}}</span>
-            <span class="low center">↓324234</span>
-            <span class="high center">↑234442</span>
+            <span class="low center">↓{{user.trans_counts && user.trans_counts.to_num}}</span>
+            <span class="high center">↑{{user.trans_counts && user.trans_counts.from_num}}</span>
           </div>
           <div class="hash piece">
             <span>{{$t('address.detail.balance')}}</span>
-            <span class="center">234124141214TRX</span>
+            <p
+              class="center"
+              v-for="item in user.counts"
+              :key="item.id"
+            >{{item.balance}} {{item.symbol}}</p>
           </div>
         </div>
         <div class="title">{{$t('address.trade.title')}}</div>
@@ -37,14 +41,32 @@
             <div class="list">{{$t('address.trade.to')}}</div>
             <div class="list">{{$t('address.trade.num')}}</div>
           </div>
-          <div class="td th">
-            <div class="list">qwert12345ujhgfdsx45qwert12345ujhgfdsx45</div>
-            <div class="list">3 seconds</div>
-            <div class="list">qwert12345ujhgfdsx45qwert12345ujhgfdsx45</div>
-            <div class="list">qwert12345ujhgfdsx45qwert12345ujhgfdsx45</div>
-            <div class="list">COCOC3</div>
+          <div class="td th" v-for="item in trans" :key="item.id">
+            <div class="list cursor" @click="queryHash(item.trx_id)">{{item.trx_id}}</div>
+            <div class="list">{{(item.result.real_running_time / 1000).toFixed(2)}} seconds</div>
+            <div
+              class="list cursor"
+              @click="queryAddress(item.parse_operations.from)"
+            >{{item.parse_operations.from}}</div>
+            <div
+              class="list cursor"
+              @click="queryAddress(item.parse_operations.to)"
+            >{{item.parse_operations.to}}</div>
+            <div class="list">{{item.parse_operations.amount}}</div>
           </div>
         </div>
+        <el-pagination
+          background
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          @prev-click="pagePrev"
+          @next-click="pageNext"
+          :current-page="pageMarket"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="20"
+          layout="prev, pager, next, total"
+          :total="trans_count"
+        ></el-pagination>
       </div>
     </div>
     <!-- <pageination :total="50" :size="size" :page="10" :changge="pageFn" :isUrl="true"></pageination> -->
@@ -54,26 +76,99 @@
 <script>
 import Header from "../../components/header.vue";
 import Foot from "../../components/foot.vue";
+import api from "../../http/api.js";
 export default {
   components: {
     Header,
     Foot
   },
-  name: "trade",
+  name: "Address",
   data() {
     return {
-      address: "af82e2e2ed5c7db4953baf82e2e2ed5c7db4953b"
+      user: {},
+      pageMarket: 1,
+      trans: [],
+      trans_count: 0
     };
   },
   mounted() {
-    this.pageFn();
+    const that = this;
+    let address_name = that.$route.params.address_name;
+    that.queryInfo(address_name);
+    //查询地址信息
   },
   methods: {
-    pageFn(val) {
-      this.page = val;
+    queryInfo(address_name) {
+      const that = this;
+      api
+        .get(`/query_user/${address_name}`, {})
+        .then(result => {
+          that.user = result.user;
+        })
+        .catch(err => {
+          this.$message.error(err.errmsg);
+        });
+      let params = {
+        limit: 10,
+        page: this.pageMarket
+      };
+      //查询转账信息
+      api
+        .get(`query_user_block/${address_name}`, params)
+        .then(result => {
+          that.trans = result.transfer;
+          that.trans_count = result.count;
+        })
+        .catch(err => {
+          this.$message.error(err.errmsg);
+        });
     },
+    queryTrade() {},
     onCopy: function(e) {
-      console.log("你刚刚复制: " + e.text);
+      this.$message({
+        type: "info",
+        message: `复制成功`
+      });
+    },
+    queryHash(trans) {
+      this.$router.push({ name: "Hash", params: { trans_id: trans } });
+    },
+    queryAddress(address) {
+      const that = this;
+      that.$route.params.address_name = address;
+      api
+        .get(`/query_user/${address}`, {})
+        .then(result => {
+          if (result.user) {
+            // that.$router.replace({
+            //   name: "Address",
+            //   params: { address_name: address }
+            // });
+            that.queryInfo(address);
+          } else {
+            that.$alert("该地址不可访问", "地址已锁定", {
+              confirmButtonText: "确定",
+              callback: action => {}
+            });
+          }
+        })
+        .catch(err => {
+          this.$message.error(err.errmsg);
+        });
+    },
+    handleSizeChange(e) {},
+    handleCurrentChange(e) {
+      console.log(e);
+      this.pageMarket = parseInt(e);
+      this.queryInfo(this.$route.params.address_name);
+    },
+    pageNext() {
+      this.pageMarket++;
+      this.queryInfo(this.$route.params.address_name);
+    },
+    pagePrev() {
+      this.pageMarket--;
+      this.queryInfo(this.$route.params.address_name);
     }
   }
 };
@@ -132,6 +227,13 @@ export default {
             // width: 700px;
             font-size: 18px;
           }
+          .hash,
+          p {
+            color: #333;
+            margin-left: 40px;
+            // width: 700px;
+            font-size: 18px;
+          }
           button {
             border: 0;
             background-color: transparent;
@@ -168,37 +270,43 @@ export default {
           color: #333;
           height: 86px;
         }
+        .td:hover {
+          background: rgba(246, 246, 252, 1);
+          .cursor {
+            color: #4990ed;
+          }
+        }
         .list:nth-of-type(1) {
-          width: 220px;
-          margin-left: 25px;
+          width: 18.3%;
+          margin-left: 2.1%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(2) {
-          width: 88px;
-          margin-left: 52px;
+          width: 12.4%;
+          margin-left: 4.3%;
         }
         .list:nth-of-type(3) {
-          width: 221px;
-          margin-left: 61px;
+          width: 18.4%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(4) {
-          width: 221px;
-          margin-left: 61px;
+          width: 18.4%;
+          margin-left: 5.1%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(5) {
-          width: 84px;
-          margin-left: 61px;
+          // width: 84px;
+          margin-left: 5%;
         }
       }
     }
   }
 }
+@import "../../style/comm.media.less";
 </style>

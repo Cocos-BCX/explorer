@@ -68,7 +68,7 @@ export default {
       this.$store.commit("setLanguage", option);
       this.showMenu = false;
       this.$emit("updateOption", this.language);
-      this.$i18n.locale = this.$i18n.locale === "cn" ? "en" : "cn";
+      this.$i18n.locale = this.$i18n.locale === "en" ? "cn" : "en";
       //   let language = this.$i18n.messages[this.$i18n.locale];
       //   this.$store.commit("setDefault", language);
       this.$store.commit("setDefault", this.$t("home.charts"));
@@ -95,9 +95,6 @@ export default {
   min-width: 74px;
   height: 40px;
   position: relative;
-  /* margin: 10px 1px; */
-  /* display: inline-block;
-    vertical-align: middle; */
   float: right;
 }
 .btn-group a:hover {
@@ -118,10 +115,6 @@ export default {
   font-size: 14px;
   color: #666;
 }
-/* .dropdown-toggle:hover {
-    background: #e1e1e1;
-    cursor: pointer;
-} */
 .border {
   color: #388df4;
   border: 1px solid #388df4;
@@ -187,5 +180,27 @@ span.white {
 }
 li {
   list-style: none;
+}
+@media (max-width: 1440px) {
+  .btn-group {
+    min-width: 62px;
+    height: 33px;
+  }
+  .dropdown-toggle {
+    width: 63px;
+    height: 23px;
+    margin-top: 37px;
+    font-size: 11px;
+  }
+  .dropdown-menu {
+    width: 62px;
+    padding: 4px 0;
+    font-size: 10px;
+    width: 62px;
+  }
+
+  .dropdown-menu > li > a {
+    padding: 4px 12px;
+  }
 }
 </style>
