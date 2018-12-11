@@ -20,8 +20,8 @@
           </div>
           <div class="time piece">
             <span>{{$t('address.detail.trade')}}</span>
-            <span class="low center">↓{{user.trans_counts && user.trans_counts.to_num}}</span>
-            <span class="high center">↑{{user.trans_counts && user.trans_counts.from_num}}</span>
+            <span class="low center">↓{{num && num.to}}</span>
+            <span class="high center">↑{{num.from && num.from}}</span>
           </div>
           <div class="hash piece">
             <span>{{$t('address.detail.balance')}}</span>
@@ -66,6 +66,7 @@
           :page-size="20"
           layout="prev, pager, next, total"
           :total="trans_count"
+          v-if="trans && trans.length"
         ></el-pagination>
       </div>
     </div>
@@ -87,6 +88,7 @@ export default {
     return {
       user: {},
       pageMarket: 1,
+      num: "",
       trans: [],
       trans_count: 0
     };
@@ -106,7 +108,7 @@ export default {
           that.user = result.user;
         })
         .catch(err => {
-          this.$message.error(err.errmsg);
+          that.$message.error(err.data.errmsg);
         });
       let params = {
         limit: 10,
@@ -118,9 +120,10 @@ export default {
         .then(result => {
           that.trans = result.transfer;
           that.trans_count = result.count;
+          that.num = result.num || "";
         })
         .catch(err => {
-          this.$message.error(err.errmsg);
+          that.$message.error(err.data.errmsg);
         });
     },
     queryTrade() {},

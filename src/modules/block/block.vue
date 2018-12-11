@@ -111,6 +111,7 @@
           :page-size="20"
           layout="prev, pager, next, total"
           :total="trans_length"
+          v-if="block.transactions && block.transactions.length"
         ></el-pagination>
       </div>
     </div>
@@ -526,4 +527,5 @@ export default {
     }
   }
 }
+@import "../../style/comm.media.less";
 </style>

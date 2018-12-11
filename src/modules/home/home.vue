@@ -15,7 +15,12 @@
             ></dropdown>
           </div>
           <div class="search-box">
-            <input :placeholder="$t('home.search')" v-model="search" @keyup.enter="searchInfo()">
+            <input
+              :placeholder="$t('home.search')"
+              v-focus="true"
+              v-model="search"
+              @keyup.enter="searchInfo()"
+            >
             <div class="btn" @click="searchInfo()">
               <img v-lazy="'/static/image/search.png'" alt>
             </div>
@@ -31,11 +36,11 @@
             <div>{{count.nodes}}</div>
             <span>{{$t('home.banner.node')}}</span>
           </div>
-          <div class="num">
-            <div>
+          <div class="num block">
+            <div @click="moreBlock()">
               <countTo :startVal="startVal" :endVal="count.block_height" :duration="3000"></countTo>
             </div>
-            <span>{{$t('home.banner.block')}}</span>
+            <span @click="moreBlock()">{{$t('home.banner.block')}}</span>
           </div>
           <div class="num">
             <div>{{count.trans}}</div>
@@ -46,7 +51,7 @@
             <span>{{$t('home.banner.count')}}</span>
           </div>
           <div class="num">
-            <div>1231231</div>
+            <div>232/8646</div>
             <span>{{$t('home.banner.tps')}}</span>
           </div>
         </div>
@@ -55,7 +60,7 @@
             <Highcharts :options="options"></Highcharts>
           </div>
           <div class="child-chart address-chart">
-            <Highcharts :options="options"></Highcharts>
+            <Highcharts :options="address_options"></Highcharts>
           </div>
         </div>
         <div class="block_trade">
@@ -68,7 +73,7 @@
             </div>
             <div class="block-content">
               <loading :height="height" v-if="!blocks.length"></loading>
-              <div class="block-piece" v-for="block in blocks" :key="block.block_id">
+              <div class="block-piece" v-for="block in blocks" :key="block.id">
                 <div class="block-id" @click="queryBlock(block.block_height)">
                   <p>{{$t('home.list.block.block_detail.block')}}{{block.block_height}}</p>
                   <p>>{{block.time}}</p>
@@ -95,7 +100,7 @@
             </div>
             <div class="block-content">
               <loading :height="height" v-if="!trans.length"></loading>
-              <div class="block-piece trade-piece" v-for="tran in trans" :key="tran.trx_id">
+              <div class="block-piece trade-piece" v-for="tran in trans" :key="tran.id">
                 <div class="trade-info">
                   <div class="trade-id" @click="queryHash(tran.trx_id)">
                     {{$t('home.list.trade.trade_detail.trade')}}
@@ -141,6 +146,7 @@ import axios from "axios";
 import moment from "moment";
 import countTo from "vue-count-to";
 import { mapState, mapMutations } from "vuex";
+// import { setTimeout, clearTimeout, clearInterval } from "timers";
 Vue.use(VueI18n);
 export default {
   name: "home",
@@ -151,9 +157,19 @@ export default {
     Loading,
     countTo
   },
+  directives: {
+    focus: {
+      inserted: function(el, { value }) {
+        if (value) {
+          el.focus();
+        }
+      }
+    }
+  },
   data: function() {
     return {
       pageMarket: 1,
+      myInterval: null,
       blocks: [],
       trans: [],
       count: {},
@@ -163,44 +179,93 @@ export default {
       selected: { name: "中文", type: "cn" },
       search: "",
       startVal: 0,
+      address_options: {},
       options: {
-        title: "",
-        categories: [
-          "一月",
-          "二月",
-          "三月",
-          "四月",
-          "五月",
-          "六月",
-          "七月",
-          "八月",
-          "九月",
-          "十月",
-          "十一月",
-          "十二月"
-        ], // x轴数据
-        yCompany: "kb", // y轴单位没有则去掉
-        series: [
-          {
-            // name: '东京',
-            data: [
-              49.9,
-              71.5,
-              106.4,
-              129.2,
-              144.0,
-              176.0,
-              135.6,
-              148.5,
-              216.4,
-              194.1,
-              95.6,
-              54.4
-            ]
-          }
-        ]
+        // title: "",
+        // categories: [
+        //   "一月",
+        //   "二月",
+        //   "三月",
+        //   "四月",
+        //   "五月",
+        //   "六月",
+        //   "七月",
+        //   "八月",
+        //   "九月",
+        //   "十月",
+        //   "十一月",
+        //   "十二月"
+        // ], // x轴数据
+        // yCompany: "", // y轴单位没有则去掉
+        // series: [
+        //   {
+        //     // name: '东京',
+        //     data: [
+        //       49.9,
+        //       71.5,
+        //       106.4,
+        //       129.2,
+        //       144.0,
+        //       176.0,
+        //       135.6,
+        //       148.5,
+        //       216.4,
+        //       194.1,
+        //       95.6,
+        //       54.4
+        //     ]
+        //   }
+        // ]
       }
     };
+  },
+  created() {
+    const that = this;
+    let params = {
+      limit: 10,
+      page: that.pageMarket
+    };
+    this.getCount();
+    this.queryBlockList();
+    this.queryTransList();
+    that.timeUpdate();
+    api
+      .get("/chart", {})
+      .then(result => {
+        let trade_categories = [];
+        let trade_series = [
+          {
+            data: []
+          }
+        ];
+        result.counts.forEach(item => {
+          trade_categories.push(item.date);
+          trade_series[0].data.push(item.count);
+        });
+        that.options = {
+          categories: trade_categories,
+          series: trade_series,
+          title: that.$t("home.charts.trade")
+        };
+        let address_categories = [];
+        let address_series = [
+          {
+            data: []
+          }
+        ];
+        result.address.forEach(item => {
+          address_categories.push(item.date);
+          address_series[0].data.push(item.count);
+        });
+        that.address_options = {
+          categories: address_categories,
+          series: address_series,
+          title: that.$t("home.charts.address")
+        };
+      })
+      .catch(err => {
+        this.$message.error(err.data.errmsg);
+      });
   },
   computed: {
     ...mapState({
@@ -210,55 +275,92 @@ export default {
     // ...mapMutations({ setLanguage: 'updateOption' })
   },
   mounted() {
+    // if (this.myInterval) {
+    //   this.$once("hook:beforeDestroy", () => {
+    //     clearInterval(this.myInterval);
+    //   });
+    // }
     const that = this;
-    let params = {
-      limit: 10,
-      page: this.pageMarket
-    };
-    let counts = localStorage.getItem("counts");
-    if (counts) {
-      that.startVal = Number(counts);
-    }
-    api.get("/query_count", {}).then(result => {
-      that.count = result.info;
-      localStorage.setItem("counts", result.info.block_height);
-    });
-    api
-      .get("/query_all_block", params)
-      .then(result => {
-        const blocks = [];
-        result.blocks.forEach(item => {
-          item.time = moment(new Date()).to(moment(new Date(item.time)));
-          item.timestamp = moment(new Date()).to(
-            moment(new Date(item.timestamp))
-          );
-          blocks.push(item);
-        });
-        that.blocks = blocks;
-      })
-      .catch(err => {
-        this.$message.error(err.errmsg);
-      });
-    api
-      .get("/query_all_trans", params)
-      .then(result => {
-        const trans = [];
-        result.transfer.forEach(item => {
-          let params = {
-            parse_operations: item.parse_operations,
-            trx_id: item.trx_id,
-            date: moment(new Date()).to(moment(new Date(item.date)))
-            // signatures: item.signatures
-          };
-          trans.push(params);
-        });
-        that.trans = trans;
-      })
-      .catch(err => {
-        this.$message.error(err.errmsg);
-      });
+    that.search = localStorage.getItem("search");
+  },
+  destroyed() {
+    clearInterval(this.myInterval);
   },
   methods: {
+    timeUpdate() {
+      const that = this;
+      clearInterval(that.myInterval);
+      that.myInterval = setInterval(function() {
+        that.getCount();
+        that.queryBlockList();
+        that.queryTransList();
+      }, 5000);
+    },
+    queryBlockList() {
+      const that = this;
+      let params = {
+        limit: 10,
+        page: this.pageMarket
+      };
+      api
+        .get("/query_all_block", params)
+        .then(result => {
+          const blocks = [];
+          result.blocks.forEach(item => {
+            item.time = moment(new Date()).to(moment(new Date(item.time)));
+            item.timestamp = moment(new Date()).to(
+              moment(new Date(item.timestamp))
+            );
+            blocks.push(item);
+          });
+          that.blocks = blocks;
+        })
+        .catch(err => {
+          this.$message.error(err.data.errmsg);
+        });
+    },
+    queryTransList() {
+      const that = this;
+      let params = {
+        limit: 10,
+        page: this.pageMarket
+      };
+      api
+        .get("/query_all_trans", params)
+        .then(result => {
+          const trans = [];
+          result.transfer.forEach(item => {
+            let params = {
+              parse_operations: item.parse_operations,
+              trx_id: item.trx_id,
+              date: moment(new Date()).to(moment(new Date(item.date)))
+              // signatures: item.signatures
+            };
+            trans.push(params);
+          });
+          that.trans = trans;
+        })
+        .catch(err => {
+          this.$message.error(err.data.errmsg);
+        });
+    },
+    getCount() {
+      const that = this;
+      let counts = localStorage.getItem("counts");
+      if (counts) {
+        that.startVal = Number(counts) - 100;
+      }
+      api
+        .get("/query_count", {})
+        .then(result => {
+          that.count = result.info;
+          localStorage.setItem("counts", result.info.block_height);
+        })
+        .catch(err => {
+          this.$message.error(err.data.errmsg);
+        });
+    },
+
     moreBlock() {
       this.$router.push({ name: "BlockList" });
     },
@@ -274,6 +376,7 @@ export default {
     methodToRunOnSelect(payload) {
       this.selected = payload;
     },
+    mySetInterval(fn, millisec) {},
     queryAddress(address) {
       const that = this;
       api
@@ -292,7 +395,7 @@ export default {
           }
         })
         .catch(err => {
-          that.$message.error(err.errmsg);
+          that.$message.error(err.data.errmsg);
         });
     },
     searchInfo() {
@@ -300,7 +403,7 @@ export default {
       let url;
       if (/^[0-9]*$/.test(that.search)) {
         url = `/query_block/${that.search}`;
-      } else if (/^\w{38+}$/) {
+      } else if (/^\w{38+}$/.test(that.search)) {
         url = `/query_trans/${that.search}`;
       } else {
         url = `/query_user/${that.search}`;
@@ -318,11 +421,15 @@ export default {
               name: "Hash",
               params: { trans_id: result.trans.trx_id }
             });
+          } else if (result.user) {
+            that.$router.push({
+              name: "Address",
+              params: { address_name: result.user.user_name }
+            });
           }
         })
         .catch(err => {
-          console.log(err);
-          that.$message.error(err.errmsg);
+          that.$message.error(err.data.errmsg);
         });
     }
   }
@@ -451,6 +558,9 @@ export default {
       background: white;
       margin: 0 auto;
       opacity: 1;
+      .block.num {
+        cursor: pointer;
+      }
       .num {
         width: 240px;
         display: flex;

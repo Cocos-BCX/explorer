@@ -177,25 +177,25 @@ export default {
           }
         }
         .list:nth-of-type(1) {
-          width: 16.25%;
+          width: 20%;
           margin-left: 2%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(2) {
-          width: 8.25%;
+          width: 15%;
           margin-left: 4.3%;
         }
         .list:nth-of-type(3) {
-          width: 11%;
+          width: 12%;
           margin-left: 5%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(4) {
-          width: 22%;
+          width: 25%;
           margin-left: 5%;
           overflow: hidden;
           text-overflow: ellipsis;

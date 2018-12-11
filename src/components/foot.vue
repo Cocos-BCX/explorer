@@ -52,7 +52,7 @@
               @blur="SubBlur()"
               class="send_text"
               type="text"
-              v-model="email"
+              v-model="cocos_subscribe"
               :class="focus ? 'focus_color' : ''"
             >
             <span
@@ -62,6 +62,8 @@
             >Subscribe</span>
           </div>
           <div class="warn" v-if="warn">请输入正确的邮箱</div>
+          <div class="warn" v-if="success">订阅成功</div>
+          <div class="warn" v-if="fail">订阅失败</div>
         </div>
       </div>
     </div>
@@ -69,6 +71,7 @@
   </div>
 </template>
 <script>
+import axios from "axios";
 export default {
   name: "Foot",
   data() {
@@ -76,7 +79,10 @@ export default {
       code: false,
       focus: false,
       email: "",
-      warn: false
+      warn: false,
+      fail: false,
+      success: false,
+      cocos_subscribe: ""
     };
   },
   mounted() {},
@@ -94,10 +100,38 @@ export default {
       this.focus = false;
     },
     Subscribe() {
-      let pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-      if (!pattern.test(this.email)) {
-        this.warn = true;
+      const that = this;
+      let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+      if (!reg.test(that.cocos_subscribe)) {
+        that.warn = true;
       }
+      axios
+        .get("https://bcx.cocos.com/api/cocos_subscribe", {
+          params: {
+            action: "cocos_subscribe",
+            name: that.cocos_subscribe
+          }
+        })
+        .then(response => {
+          var data = JSON.parse(response.body);
+          console.log(data);
+          if (data.status == 1) {
+            //  alert(response.body.msg)
+            that.cocos_subscribe = "";
+            that.success = true;
+            that.warn = false;
+            that.fail = false;
+          } else {
+            that.cocos_subscribe = "";
+            that.warn = false;
+            that.fail = true;
+            that.success = false;
+          }
+        })
+        .catch(e => {
+          // 打印一下错误
+          console.log(e);
+        });
     },
     PolicyOpen() {
       var iframePldom = $("#iframePl");

@@ -8,6 +8,7 @@ import Vuex from 'vuex'
 import VueLazyload from 'vue-lazyload'
 import Highcharts from 'highcharts/highstock'
 import VueClipboard from 'vue-clipboard2'
+import qs from 'qs'
 import cn from './il8n/lang/cn'
 import en from './il8n/lang/en'
 import {
@@ -18,6 +19,7 @@ import {
 // import defaults from './http/api';
 Vue.component(MessageBox)
 Vue.component(Pagination)
+Vue.prototype.$qs = qs;
 Vue.use(Vuex)
 Vue.use(VueLazyload)
 Vue.use(VueI18n)

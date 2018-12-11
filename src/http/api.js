@@ -1,19 +1,18 @@
 import axios from 'axios'
-
+import qs from 'qs'
 let cancel, promiseArr = {}
-const CancelToken = axios.CancelToken;
-
-axios.interceptors.request.use(config => {
-  if (promiseArr[config.url]) {
-    promiseArr[config.url]('操作取消')
-    promiseArr[config.url] = cancel
-  } else {
-    promiseArr[config.url] = cancel
-  }
-  return config
-}, error => {
-  return Promise.reject(error)
-})
+// const CancelToken = axios.CancelToken;
+// axios.interceptors.request.use(config => {
+//   // if (promiseArr[config.url]) {
+//   //   promiseArr[config.url]('操作取消')
+//   //   promiseArr[config.url] = cancel
+//   // } else {
+//   //   promiseArr[config.url] = cancel
+//   // }
+//   return config
+// }, error => {
+//   return Promise.reject(error)
+// })
 
 axios.interceptors.response.use(response => {
   if (response.status === 200 && response.statusText === 'OK') {
@@ -21,7 +20,8 @@ axios.interceptors.response.use(response => {
   } else {
     return Promise.reject(response)
   }
-}, error => {
+}, err => {
+  let error = qs.parse(qs.stringify(err))
   if (error && error.response) {
     switch (error.response.status) {
       case 400:
@@ -66,8 +66,7 @@ axios.interceptors.response.use(response => {
   } else {
     error.message = "连接到服务器失败"
   }
-  // message.error(error)
-  return Promise.resolve(error.response)
+  return Promise.reject(error.response)
 })
 
 axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : ''
@@ -83,13 +82,13 @@ export default {
         method: 'get',
         url,
         params: param,
-        cancelToken: new CancelToken(c => {
-          cancel = c
-        })
+        // cancelToken: new CancelToken(c => {
+        //   cancel = c
+        // })
       }).then(res => {
         resolve(res.data)
       }).catch(err => {
-        reject(err.data)
+        reject(err);
       })
     })
   },
@@ -105,7 +104,7 @@ export default {
       }).then(res => {
         resolve(res.data)
       }).catch(err => {
-        reject(err.data)
+        reject(err);
       })
     })
   }
