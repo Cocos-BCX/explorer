@@ -69,7 +69,7 @@ axios.interceptors.response.use(response => {
   return Promise.reject(error.response)
 })
 
-axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : ''
+axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://192.168.90.45:5000' : ''
 axios.defaults.headers = {
   'X-Requested-With': 'XMLHttpRequest'
 }

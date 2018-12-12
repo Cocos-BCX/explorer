@@ -57,10 +57,10 @@
         </div>
         <div class="chart">
           <div class="child-chart trade-chart">
-            <Highcharts :options="options"></Highcharts>
+            <Highcharts :options="options" ref="tradeCharts"></Highcharts>
           </div>
           <div class="child-chart address-chart">
-            <Highcharts :options="address_options"></Highcharts>
+            <Highcharts :options="address_options" ref="addressCharts"></Highcharts>
           </div>
         </div>
         <div class="block_trade">
@@ -84,7 +84,7 @@
                     {{$t('home.list.block.block_detail.produced')}}
                     <span>{{block.witness_name}}</span>
                   </p>
-                  <p class="trade-num">
+                  <p class="trade-num" @click="queryBlock(block.block_height)">
                     <span>{{block.trx_count}}{{$t('home.list.block.block_detail.trade')}}</span>
                     {{$t('home.list.block.block_detail.by')}}{{block.timestamp}}
                   </p>
@@ -179,9 +179,11 @@ export default {
       selected: { name: "中文", type: "cn" },
       search: "",
       startVal: 0,
-      address_options: {},
+      address_options: {
+        title: ""
+      },
       options: {
-        // title: "",
+        title: ""
         // categories: [
         //   "一月",
         //   "二月",
@@ -219,6 +221,23 @@ export default {
       }
     };
   },
+  watch: {
+    defaults: {
+      handler: function(new_defaults, old_defaults) {
+        this.address_options.title = new_defaults.address;
+        this.options.title = new_defaults.trade;
+        this.$refs.tradeCharts.options.title = new_defaults.trade;
+        // this.HighCharts.chart(this.options);
+        // this.HighCharts.chart(this.address_options);
+      },
+      deep: true
+    }
+  },
+  // computed: {
+  //   defaults() {
+  //     console.log();
+  //   }
+  // },
   created() {
     const that = this;
     let params = {
@@ -229,6 +248,15 @@ export default {
     this.queryBlockList();
     this.queryTransList();
     that.timeUpdate();
+  },
+  computed: {
+    ...mapState({
+      language: state => state.app.language,
+      defaults: state => state.app.defaults
+    })
+    // ...mapMutations({ setLanguage: 'updateOption' })
+  },
+  mounted() {
     api
       .get("/chart", {})
       .then(result => {
@@ -245,7 +273,7 @@ export default {
         that.options = {
           categories: trade_categories,
           series: trade_series,
-          title: that.$t("home.charts.trade")
+          title: that.defaults.trade
         };
         let address_categories = [];
         let address_series = [
@@ -260,29 +288,20 @@ export default {
         that.address_options = {
           categories: address_categories,
           series: address_series,
-          title: that.$t("home.charts.address")
+          title: that.defaults.address
         };
       })
       .catch(err => {
         this.$message.error(err.data.errmsg);
       });
-  },
-  computed: {
-    ...mapState({
-      language: state => state.app.language,
-      defaults: state => state.app.defaults
-    })
-    // ...mapMutations({ setLanguage: 'updateOption' })
-  },
-  mounted() {
-    // if (this.myInterval) {
-    //   this.$once("hook:beforeDestroy", () => {
-    //     clearInterval(this.myInterval);
-    //   });
-    // }
     const that = this;
     that.search = localStorage.getItem("search");
+    // that.$nextTick(function() {
+    //   that.address_options.title = that.defaults.address;
+    //   that.options.title = that.defaults.trade;
+    // });
   },
+  updated() {},
   destroyed() {
     clearInterval(this.myInterval);
   },
