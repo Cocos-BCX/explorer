@@ -68,7 +68,7 @@
             <div class="title">
               <div class="title">
                 <span>{{$t('home.list.block.title')}}</span>
-                <div @click="moreBlock()">{{$t('home.list.block.more')}}</div>
+                <div class="more" @click="moreBlock()">{{$t('home.list.block.more')}}</div>
               </div>
             </div>
             <div class="block-content">
@@ -96,23 +96,23 @@
           <div class="block trade">
             <div class="title">
               <span>{{$t('home.list.trade.title')}}</span>
-              <div @click="moreTrade()">{{$t('home.list.trade.more')}}</div>
+              <div class="more" @click="moreTrade()">{{$t('home.list.trade.more')}}</div>
             </div>
             <div class="block-content">
               <loading :height="height" v-if="!trans.length"></loading>
               <div class="block-piece trade-piece" v-for="tran in trans" :key="tran.id">
                 <div class="trade-info">
                   <div class="trade-id" @click="queryHash(tran.trx_id)">
-                    {{$t('home.list.trade.trade_detail.trade')}}
+                    <div>{{$t('home.list.trade.trade_detail.trade')}}</div>
                     <span>{{tran.trx_id}}</span>
                   </div>
                   <div class="trade-address">
-                    {{$t('home.list.trade.trade_detail.from')}}
+                    <div>{{$t('home.list.trade.trade_detail.from')}}</div>
                     <span
                       @click="queryAddress(tran.parse_operations.from)"
                     >{{tran.parse_operations.from}}</span>
                     <span class="cut"></span>
-                    {{$t('home.list.trade.trade_detail.to')}}
+                    <div>{{$t('home.list.trade.trade_detail.to')}}</div>
                     <span
                       @click="queryAddress(tran.parse_operations.to)"
                     >{{tran.parse_operations.to}}</span>
@@ -266,6 +266,7 @@ export default {
         that.options = {
           categories: trade_categories,
           series: trade_series,
+          yCompany: "transaction",
           title: that.defaults.trade
         };
         let address_categories = [];
@@ -281,6 +282,7 @@ export default {
         that.address_options = {
           categories: address_categories,
           series: address_series,
+          yCompany: "address",
           title: that.defaults.address
         };
       })
@@ -621,7 +623,7 @@ export default {
     display: flex;
     justify-content: center;
     .title {
-      width: 569px;
+      width: 100%;
       height: 26px;
       font-size: 18px;
       display: flex;
@@ -631,7 +633,7 @@ export default {
         font-size: 20px;
         color: #333;
       }
-      div {
+      .more {
         font-size: 14px;
         font-family: PingFangSC-Regular;
         color: rgba(56, 141, 244, 1);
@@ -721,6 +723,7 @@ export default {
         .trade-id {
           display: flex;
           margin-top: 4px;
+          align-items: center;
           span {
             margin-left: 4px;
             text-decoration: none;

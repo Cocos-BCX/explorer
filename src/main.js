@@ -50,8 +50,8 @@ store.registerModule('app', {
       type: 'en'
     },
     defaults: {
-      trade: '过去14天交易数',
-      address: '过去14天地址增长'
+      trade: '14 day Transaction History',
+      address: '14 day Address Growth'
     }
   },
   mutations: {
@@ -66,6 +66,13 @@ store.registerModule('app', {
 Vue.config.productionTip = false
 router.afterEach((to, from, next) => {
   window.scrollTo(0, 0);
+  var _hmt = _hmt || [];
+  (function () {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?bab6d19be10a79632bc890001c815bbd";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
 })
 /* eslint-disable no-new */
 new Vue({
