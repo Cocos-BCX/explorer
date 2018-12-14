@@ -227,17 +227,10 @@ export default {
         this.address_options.title = new_defaults.address;
         this.options.title = new_defaults.trade;
         this.$refs.tradeCharts.options.title = new_defaults.trade;
-        // this.HighCharts.chart(this.options);
-        // this.HighCharts.chart(this.address_options);
       },
       deep: true
     }
   },
-  // computed: {
-  //   defaults() {
-  //     console.log();
-  //   }
-  // },
   created() {
     const that = this;
     let params = {
@@ -459,7 +452,7 @@ export default {
   height: 354px;
   width: 100%;
   // background: cadetblue;
-  background: url("/static/image/banner.png") no-repeat;
+  background: url("/static/image/banner.png") center center no-repeat;
   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg-login.png',sizingMethod='scale');
   background-size: cover;
   .content-box {
