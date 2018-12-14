@@ -666,6 +666,9 @@ export default {
           align-items: center;
           justify-content: center;
           cursor: pointer;
+          p:nth-of-type(2) {
+            text-align: center;
+          }
         }
         .block-detail {
           margin-left: 18px;
