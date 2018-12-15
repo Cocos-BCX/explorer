@@ -66,10 +66,8 @@
         <div class="block_trade">
           <div class="block">
             <div class="title">
-              <div class="title">
-                <span>{{$t('home.list.block.title')}}</span>
-                <div class="more" @click="moreBlock()">{{$t('home.list.block.more')}}</div>
-              </div>
+              <span>{{$t('home.list.block.title')}}</span>
+              <div class="more" @click="moreBlock()">{{$t('home.list.block.more')}}</div>
             </div>
             <div class="block-content">
               <loading :height="height" v-if="!blocks.length"></loading>
@@ -641,9 +639,12 @@ export default {
         cursor: pointer;
       }
     }
+    .block::-webkit-scrollbar {
+      width: 0 !important;
+    }
     .block {
       width: 569px;
-      overflow: scroll;
+      overflow-y: scroll;
       padding: 33px 0 0 20px;
       background: rgba(255, 255, 255, 1);
       display: flex;
@@ -651,7 +652,6 @@ export default {
       .block-content {
         height: 720px;
         // margin-top: 16px;
-        overflow: scroll;
       }
       .block-piece {
         padding-top: 18px;
@@ -708,13 +708,16 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          width: 150px;
+          // width: 150px;
           margin-left: 4px;
           cursor: pointer;
         }
         .trade-address {
           display: flex;
           margin-top: 4px;
+          div {
+            width: 50px;
+          }
         }
         .cut {
           height: 20px;
@@ -745,6 +748,7 @@ export default {
         font-family: PingFangSC-Regular;
         font-weight: 400;
         margin-right: 22px;
+        width: 100px;
         color: rgba(152, 152, 152, 1);
       }
     }
