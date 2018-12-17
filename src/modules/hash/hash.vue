@@ -163,7 +163,7 @@ export default {
         }
       }
       .trade-title.title {
-        margin-top: 44px;
+        margin-top: 84px;
       }
       .info.trade-info {
         height: 105px;

@@ -46,7 +46,7 @@ const i18n = new VueI18n({
 store.registerModule('app', {
   state: {
     language: {
-      name: '中文',
+      name: 'English',
       type: 'en'
     },
     defaults: {

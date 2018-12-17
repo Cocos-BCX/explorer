@@ -51,7 +51,7 @@
             <span>{{$t('home.banner.count')}}</span>
           </div>
           <div class="num">
-            <div>232/8646</div>
+            <div>{{totals.tps }}/{{totals.max}}</div>
             <span>{{$t('home.banner.tps')}}</span>
           </div>
         </div>
@@ -171,6 +171,7 @@ export default {
       blocks: [],
       trans: [],
       count: {},
+      totals: {},
       height: "720px",
       select: [{ name: "English", type: "en" }, { name: "中文", type: "cn" }],
       style: "white",
@@ -366,6 +367,7 @@ export default {
         .get("/query_count", {})
         .then(result => {
           that.count = result.info;
+          that.totals = result.info.counts;
           localStorage.setItem("counts", result.info.block_height);
         })
         .catch(err => {
@@ -644,13 +646,13 @@ export default {
     }
     .block {
       width: 569px;
-      overflow-y: scroll;
       padding: 33px 0 0 20px;
       background: rgba(255, 255, 255, 1);
       display: flex;
       flex-direction: column;
       .block-content {
         height: 720px;
+        overflow-y: scroll;
         // margin-top: 16px;
       }
       .block-piece {

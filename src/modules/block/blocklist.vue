@@ -178,18 +178,18 @@ export default {
         }
         .list:nth-of-type(1) {
           width: 20%;
-          margin-left: 2%;
+          margin-left: 10%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(2) {
           width: 15%;
-          margin-left: 4.3%;
+          margin-left: 5%;
         }
         .list:nth-of-type(3) {
           width: 12%;
-          margin-left: 5%;
+          margin-left: 9%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;

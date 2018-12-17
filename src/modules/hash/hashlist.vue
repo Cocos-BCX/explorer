@@ -14,7 +14,11 @@
             <div class="list">{{$t('trade.list.count')}}</div>
           </div>
           <div class="td th" v-for="(item,index) in trans" :key="index">
-            <div class="list cursor" @click="queryHash(item.trx_id)">{{item.trx_id}}</div>
+            <div
+              :title="item.trx_id"
+              class="list cursor"
+              @click="queryHash(item.trx_id)"
+            >{{item.trx_id}}</div>
             <div class="list cursor" @click="queryBlock(item.block_num)">{{item.block_num}}</div>
             <div class="list">{{item.date}}</div>
             <div
@@ -205,7 +209,7 @@ export default {
           cursor: pointer;
         }
         .list:nth-of-type(1) {
-          width: 12.25%;
+          width: 24%;
           margin-left: 2%;
           overflow: hidden;
           text-overflow: ellipsis;
@@ -223,7 +227,7 @@ export default {
           white-space: nowrap;
         }
         .list:nth-of-type(4) {
-          width: 19%;
+          width: 10%;
           margin-left: 5%;
           overflow: hidden;
           text-overflow: ellipsis;

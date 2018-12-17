@@ -42,7 +42,11 @@
             <div class="list">{{$t('address.trade.num')}}</div>
           </div>
           <div class="td th" v-for="item in trans" :key="item.id">
-            <div class="list cursor" @click="queryHash(item.trx_id)">{{item.trx_id}}</div>
+            <div
+              :title="item.trx_id"
+              class="list cursor"
+              @click="queryHash(item.trx_id)"
+            >{{item.trx_id}}</div>
             <div class="list">{{(item.result.real_running_time / 1000).toFixed(2)}} seconds</div>
             <div
               class="list cursor"
@@ -280,24 +284,24 @@ export default {
           }
         }
         .list:nth-of-type(1) {
-          width: 18.3%;
+          width: 30%;
           margin-left: 2.1%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(2) {
-          width: 12.4%;
+          width: 15%;
           margin-left: 4.3%;
         }
         .list:nth-of-type(3) {
-          width: 18.4%;
+          width: 10%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(4) {
-          width: 18.4%;
+          width: 10%;
           margin-left: 5.1%;
           overflow: hidden;
           text-overflow: ellipsis;
