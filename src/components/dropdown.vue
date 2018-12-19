@@ -6,20 +6,19 @@
       :class="setClass()"
       v-if="language.name !== undefined"
     >
-      {{ language.name }}
+      {{language.name }}
       <span class="icon" :class="setClass()"></span>
     </li>
 
     <li
       @click="toggleMenu()"
-      class="dropdown-toggle language"
+      class="dropdown-toggle languae"
       :class="setClass()"
       v-if="language.name === undefined"
     >
       {{placeholderText}}
       <span class="icon" :class="setClass()"></span>
     </li>
-
     <ul class="dropdown-menu" v-if="showMenu">
       <li v-for="(option,index) in options" :key="index">
         <a href="javascript:void(0)" @click="updateOption(option)">{{ option.name }}</a>
@@ -53,7 +52,7 @@ export default {
   mounted() {
     this.selectedOption = this.selected;
     if (this.placeholder) {
-      this.placeholderText = this.placeholder;
+      this.placeholderText = "English";
     }
     let name = localStorage.getItem("language_name");
     let type = localStorage.getItem("language_type");
@@ -65,7 +64,8 @@ export default {
           }
         : this.language;
     this.$store.commit("setLanguage", option);
-    this.$i18n.locale = option.name === "English" ? "cn" : "en";
+    this.name = localStorage.getItem("language_name") || "English";
+    this.$i18n.locale = option.type === "en" ? "en" : "cn";
     // let language =
     //   JSON.parse(localStorage.getItem("language")) || this.language;
   },
@@ -83,7 +83,7 @@ export default {
       this.$store.commit("setLanguage", option);
       this.showMenu = false;
       this.$emit("updateOption", this.language);
-      this.$i18n.locale = option.name === "English" ? "cn" : "en";
+      this.$i18n.locale = option.type === "en" ? "en" : "cn";
       //   let language = this.$i18n.messages[this.$i18n.locale];
       //   this.$store.commit("setDefault", language);
       this.$store.commit("setDefault", this.$t("home.charts"));

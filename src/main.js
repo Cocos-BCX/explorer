@@ -47,7 +47,7 @@ store.registerModule('app', {
   state: {
     language: {
       name: 'English',
-      type: 'en'
+      type: 'cn'
     },
     defaults: {
       trade: '14 day Transaction History',
