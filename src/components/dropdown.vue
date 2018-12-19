@@ -55,6 +55,19 @@ export default {
     if (this.placeholder) {
       this.placeholderText = this.placeholder;
     }
+    let name = localStorage.getItem("language_name");
+    let type = localStorage.getItem("language_type");
+    let option =
+      name && type
+        ? {
+            name,
+            type
+          }
+        : this.language;
+    this.$store.commit("setLanguage", option);
+    this.$i18n.locale = option.name === "English" ? "cn" : "en";
+    // let language =
+    //   JSON.parse(localStorage.getItem("language")) || this.language;
   },
   computed: {
     ...mapState({
@@ -65,10 +78,12 @@ export default {
   },
   methods: {
     updateOption(option) {
+      localStorage.setItem("language_name", option.name);
+      localStorage.setItem("language_type", option.type);
       this.$store.commit("setLanguage", option);
       this.showMenu = false;
       this.$emit("updateOption", this.language);
-      this.$i18n.locale = this.$i18n.locale === "en" ? "cn" : "en";
+      this.$i18n.locale = option.name === "English" ? "cn" : "en";
       //   let language = this.$i18n.messages[this.$i18n.locale];
       //   this.$store.commit("setDefault", language);
       this.$store.commit("setDefault", this.$t("home.charts"));
