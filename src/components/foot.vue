@@ -44,10 +44,10 @@
           </p>
         </div>
         <div class="item-footer right_f">
-          <p class="f_info send_info">订阅我们的报告</p>
+          <p class="f_info send_info">{{$t('bottom.subscribe')}}</p>
           <div class="send-warp">
             <input
-              placeholder="请输入您的邮箱"
+              :placeholder="$t('bottom.message')"
               @focus="Subfocus()"
               @blur="SubBlur()"
               class="send_text"
@@ -61,9 +61,9 @@
               :class="focus ? 'focus_bg_color' : ''"
             >Subscribe</span>
           </div>
-          <div class="warn" v-if="warn">请输入正确的邮箱</div>
-          <div class="warn" v-if="success">订阅成功</div>
-          <div class="warn" v-if="fail">订阅失败</div>
+          <div class="warn" v-if="warn">{{$t('bottom.email')}}</div>
+          <div class="warn" v-if="success">{{$t('bottom.success')}}</div>
+          <div class="warn" v-if="fail">{{$t('bottom.error')}}</div>
         </div>
       </div>
     </div>

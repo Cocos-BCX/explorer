@@ -137,6 +137,13 @@ export default {
     search: '请输入测试网地址',
     register: '没有地址 去注册测试网地址',
     get: '获取'
+  },
+  bottom: {
+    subscribe: '订阅我们的报告',
+    message: '请输入您的邮箱',
+    email: '请输入正确的邮箱',
+    success: '订阅成功',
+    error: '订阅失败'
   }
 
 }

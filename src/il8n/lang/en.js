@@ -138,5 +138,12 @@ export default {
     search: 'Enter your testing address',
     register: ' Haven’t registered? Create your testing address',
     get: 'Take'
+  },
+  bottom: {
+    subscribe: 'Subscribe to our community updates.',
+    message: 'Your Email Address',
+    email: 'Enter your email address',
+    success: 'Success',
+    error: 'Error'
   }
 }
