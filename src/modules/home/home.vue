@@ -340,6 +340,7 @@ export default {
           that.blocks = blocks;
         })
         .catch(err => {
+          that.block_right = true;
           this.$message.error(err.data.errmsg);
         });
     },
@@ -367,6 +368,7 @@ export default {
           that.trans = trans;
         })
         .catch(err => {
+          that.trade_right = true;
           this.$message.error(err.data.errmsg);
         });
     },
@@ -386,6 +388,7 @@ export default {
           localStorage.setItem("counts", result.info.block_height);
         })
         .catch(err => {
+          that.count_right = true;
           this.$message.error(err.data.errmsg);
         });
     },
