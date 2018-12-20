@@ -55,14 +55,14 @@
             <span>{{$t('home.banner.tps')}}</span>
           </div>
         </div>
-        <div class="chart">
+        <!-- <div class="chart">
           <div class="child-chart trade-chart">
             <Highcharts :options="options" ref="tradeCharts"></Highcharts>
           </div>
           <div class="child-chart address-chart">
             <Highcharts :options="address_options" ref="addressCharts"></Highcharts>
           </div>
-        </div>
+        </div>-->
         <div class="block_trade">
           <div class="block">
             <div class="title">
@@ -569,11 +569,12 @@ export default {
   }
 }
 .body {
-  height: 1418px;
+  // height: 1418px;
   width: 100%;
   .content-box {
     width: 1440px;
-    height: 1418px;
+    // height: 1418px;
+    height: 1008px;
     margin: 0 auto;
     // background: linear-gradient(
     //     180deg,
@@ -628,7 +629,7 @@ export default {
       display: flex;
       justify-content: space-between;
       .child-chart {
-        height: 410px;
+        // height: 410px;
         width: 590px;
         background: white;
       }

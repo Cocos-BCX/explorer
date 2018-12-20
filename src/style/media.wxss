@@ -65,12 +65,11 @@
     background: white;
   }
   .body {
-    height: 1250px;
+    height: 900px;
     width: 100%;
   }
   .body .content-box {
     width: 1200px;
-    height: 1250px;
   }
   .body .content-box .count {
     display: flex;
@@ -235,12 +234,11 @@
     margin-top: 65px;
   }
   .body {
-    height: 1140px;
+    height: 700px;
     width: 100%;
   }
   .body .content-box {
     width: 1024px;
-    height: 1140px;
   }
   .body .content-box .count {
     height: 80px;
