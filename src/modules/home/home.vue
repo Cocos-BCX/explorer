@@ -181,6 +181,9 @@ export default {
       address_options: {
         title: ""
       },
+      block_right: false,
+      trade_right: false,
+      count_right: false,
       options: {
         title: ""
         // categories: [
@@ -304,13 +307,20 @@ export default {
       const that = this;
       clearInterval(that.myInterval);
       that.myInterval = setInterval(function() {
-        that.getCount();
-        that.queryBlockList();
-        that.queryTransList();
+        if (that.block_right) {
+          that.queryBlockList();
+        }
+        if (that.count_right) {
+          that.getCount();
+        }
+        if (that.trade_right) {
+          that.queryTransList();
+        }
       }, 5000);
     },
     queryBlockList() {
       const that = this;
+      that.block_right = false;
       let params = {
         limit: 10,
         page: this.pageMarket
@@ -318,6 +328,7 @@ export default {
       api
         .get("/query_all_block", params)
         .then(result => {
+          that.block_right = true;
           const blocks = [];
           result.blocks.forEach(item => {
             item.time = moment(new Date()).to(moment(new Date(item.time)));
@@ -334,6 +345,7 @@ export default {
     },
     queryTransList() {
       const that = this;
+      that.trade_right = false;
       let params = {
         limit: 10,
         page: this.pageMarket
@@ -342,6 +354,7 @@ export default {
         .get("/query_all_trans", params)
         .then(result => {
           const trans = [];
+          that.trade_right = true;
           result.transfer.forEach(item => {
             let params = {
               parse_operations: item.parse_operations,
@@ -359,6 +372,7 @@ export default {
     },
     getCount() {
       const that = this;
+      that.count_right = false;
       let counts = localStorage.getItem("counts");
       if (counts) {
         that.startVal = Number(counts) - 100;
@@ -366,6 +380,7 @@ export default {
       api
         .get("/query_count", {})
         .then(result => {
+          that.count_right = true;
           that.count = result.info;
           that.totals = result.info.counts;
           localStorage.setItem("counts", result.info.block_height);
