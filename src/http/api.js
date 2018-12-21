@@ -74,7 +74,7 @@ axios.interceptors.response.use(
 )
 
 axios.defaults.baseURL =
-  process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://api.cocosbcx.io/'
+  process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://explorer.cocosbcx.io/api/'
 axios.defaults.headers = {
   'X-Requested-With': 'XMLHttpRequest'
 }
