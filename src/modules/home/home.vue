@@ -33,7 +33,7 @@
       <div class="content-box">
         <div class="count">
           <div class="num">
-            <div>{{count.nodes}}</div>
+            <div>{{count.nodes || 0}}</div>
             <span>{{$t('home.banner.node')}}</span>
           </div>
           <div class="num block">
@@ -43,15 +43,15 @@
             <span @click="moreBlock()">{{$t('home.banner.block')}}</span>
           </div>
           <div class="num">
-            <div>{{count.trans}}</div>
+            <div>{{count.trans || 0}}</div>
             <span>{{$t('home.banner.trade')}}</span>
           </div>
           <div class="num">
-            <div>{{count.user_count}}</div>
+            <div>{{count.user_count || 0}}</div>
             <span>{{$t('home.banner.count')}}</span>
           </div>
           <div class="num">
-            <div>{{totals.tps }}/{{totals.max}}</div>
+            <div>{{totals.tps || 0 }}/{{totals.max || 0}}</div>
             <span>{{$t('home.banner.tps')}}</span>
           </div>
         </div>
@@ -84,7 +84,7 @@
                   </p>
                   <p class="trade-num" @click="queryBlock(block.block_height)">
                     <span>{{block.trx_count}}{{$t('home.list.block.block_detail.trade')}}</span>
-                    {{$t('home.list.block.block_detail.by')}}{{block.timestamp}}
+                    {{$t('home.list.block.block_detail.by')}}{{block.time}}
                   </p>
                   <p class="award">{{$t('home.list.block.block_detail.reward')}} 0 COCOS</p>
                 </div>
