@@ -20,21 +20,15 @@
               v-if="block.witness_signature"
             >{{$t('block.detail.status.enter')}}</span>
           </div>
-          <div class="time piece" v-if="block.timestamp">
+          <div class="time piece" v-if="block.time">
             <span>{{$t('block.detail.time.name')}}</span>
             <p class="center">
-              <span
-                v-if="block.timestamp.days"
-              >{{block.timestamp.days}}{{$t('block.detail.time.day')}}</span>
-              <span
-                v-if="block.timestamp.hours"
-              >{{block.timestamp.hours}}{{$t('block.detail.time.hour')}}</span>
-              <span
-                v-if="block.timestamp.minutes"
-              >{{block.timestamp.minutes}}{{$t('block.detail.time.min')}}</span>
-              {{block.timestamp.seconds}}{{$t('block.detail.time.second')}}
+              <span v-if="block.time.days">{{block.time.days}}{{$t('block.detail.time.day')}}</span>
+              <span v-if="block.time.hours">{{block.time.hours}}{{$t('block.detail.time.hour')}}</span>
+              <span v-if="block.time.minutes">{{block.time.minutes}}{{$t('block.detail.time.min')}}</span>
+              {{block.time.seconds}}{{$t('block.detail.time.second')}}
               {{$t('block.detail.time.ago')}}
-              ({{block.timestamp.times}})
+              ({{block.time.times}})
               {{$t('block.detail.time.trade')}}
             </p>
           </div>
@@ -148,7 +142,7 @@ export default {
       .get(`/query_block/${block_height}`, {})
       .then(result => {
         const data = result.block;
-        data.timestamp = util(data.timestamp);
+        data.time = util(data.time);
         // data.transaction_merkle_root = parseInt(data.transaction_merkle_root,2);
         that.block = data;
         if (data.transactions && data.transactions.length) {
