@@ -768,7 +768,6 @@ export default {
         font-family: PingFangSC-Regular;
         font-weight: 400;
         margin-right: 22px;
-        width: 100px;
         color: rgba(152, 152, 152, 1);
       }
     }
