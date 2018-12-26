@@ -65,7 +65,7 @@
     background: white;
   }
   .body {
-    height: 900px;
+    height: 1250px;
     width: 100%;
   }
   .body .content-box {
@@ -234,11 +234,11 @@
     margin-top: 65px;
   }
   .body {
-    height: 700px;
     width: 100%;
   }
   .body .content-box {
     width: 1024px;
+    height: 1140px;
   }
   .body .content-box .count {
     height: 80px;
