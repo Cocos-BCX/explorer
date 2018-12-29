@@ -435,7 +435,7 @@ export default {
       let url;
       if (/^[0-9]*$/.test(that.search)) {
         url = `/query_block/${that.search}`;
-      } else if (/^\w{38+}$/.test(that.search)) {
+      } else if (/^.{25,40}$/.test(that.search)) {
         url = `/query_trans/${that.search}`;
       } else {
         url = `/query_user/${that.search}`;
