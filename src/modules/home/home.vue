@@ -326,7 +326,7 @@ export default {
         page: this.pageMarket
       };
       api
-        .get("/query_all_block", params)
+        .get("/query_list_block", params)
         .then(result => {
           that.block_right = true;
           const blocks = [];
@@ -352,7 +352,7 @@ export default {
         page: this.pageMarket
       };
       api
-        .get("/query_all_trans", params)
+        .get("/query_list_trans", params)
         .then(result => {
           const trans = [];
           that.trade_right = true;
