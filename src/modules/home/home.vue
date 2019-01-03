@@ -316,7 +316,7 @@ export default {
         if (that.trade_right) {
           that.queryTransList();
         }
-      }, 5000);
+      }, 2000);
     },
     queryBlockList() {
       const that = this;
