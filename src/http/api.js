@@ -76,7 +76,8 @@ axios.interceptors.response.use(
 axios.defaults.baseURL =
   process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://explorer.cocosbcx.io/api/'
 axios.defaults.headers = {
-  'X-Requested-With': 'XMLHttpRequest'
+  'X-Requested-With': 'XMLHttpRequest',
+  'Content-Type': 'application/json;charset=UTF-8'
 }
 axios.defaults.timeout = 10000
 

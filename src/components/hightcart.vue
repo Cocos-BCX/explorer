@@ -2,7 +2,7 @@
   <div class="highcharts-container" :options="options"></div>
 </template>
 <script>
-import Highcharts from "highcharts/highstock";
+import HighCharts from 'highcharts'
 export default {
   props: ["options", "styles"],
   name: "highcharts",
@@ -25,7 +25,7 @@ export default {
     initChart() {
       this.$nextTick(
         () =>
-          (this.chart = new Highcharts.Chart(this.$el, {
+          (this.chart = Highcharts.chart(this.$el, {
             credits: {
               enabled: false
             },
