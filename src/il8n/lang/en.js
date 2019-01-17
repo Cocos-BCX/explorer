@@ -6,7 +6,7 @@ export default {
       block: 'Block Height',
       trade: 'Transactions Last Day',
       count: 'Total Accounts',
-      tps: 'Max TPS'
+      tps: 'TPS'
     },
     charts: {
       trade: '14 day Transaction History',

@@ -6,7 +6,7 @@ export default {
       block: '区块高度',
       trade: '过去一天交易数',
       count: '账户数量',
-      tps: 'TPS/峰值'
+      tps: 'TPS'
     },
     charts: {
       trade: '过去14天交易数',
