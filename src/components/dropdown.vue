@@ -38,7 +38,8 @@ export default {
         type: ""
       },
       showMenu: false,
-      disabledGroup: this.$i18n.messages[this.$i18n.locale]
+      disabledGroup: this.$i18n.messages[this.$i18n.locale],
+      urls: ""
     };
   },
   props: {
@@ -54,18 +55,24 @@ export default {
     if (this.placeholder) {
       this.placeholderText = "English";
     }
-    let name = localStorage.getItem("language_name");
-    let type = localStorage.getItem("language_type");
-    let option =
-      name && type
-        ? {
-            name,
-            type
-          }
-        : this.language;
-    this.$store.commit("setLanguage", option);
-    this.name = localStorage.getItem("language_name") || "English";
-    this.$i18n.locale = option.type === "en" ? "en" : "cn";
+    this.urls = this.getQueryVariable("language") || "";
+    if (this.urls) {
+      this.$i18n.locale = "en";
+    } else {
+      let name = localStorage.getItem("language_name");
+      let type = localStorage.getItem("language_type");
+      let option =
+        name && type
+          ? {
+              name,
+              type
+            }
+          : this.language;
+      this.$store.commit("setLanguage", option);
+      this.name = localStorage.getItem("language_name") || "English";
+      this.$i18n.locale = option.type === "en" ? "en" : "cn";
+    }
+
     // let language =
     //   JSON.parse(localStorage.getItem("language")) || this.language;
   },
@@ -87,6 +94,17 @@ export default {
       //   let language = this.$i18n.messages[this.$i18n.locale];
       //   this.$store.commit("setDefault", language);
       this.$store.commit("setDefault", this.$t("home.charts"));
+    },
+    getQueryVariable(variable) {
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        if (pair[0] == variable) {
+          return pair[1];
+        }
+      }
+      return false;
     },
     toggleMenu() {
       this.showMenu = !this.showMenu;
