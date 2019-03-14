@@ -56,6 +56,7 @@ export default {
       this.placeholderText = "English";
     }
     this.urls = this.getQueryVariable("language") || "";
+    console.log(this.urls);
     if (this.urls) {
       this.$i18n.locale = "en";
     } else {
