@@ -8,6 +8,26 @@ export default {
       count: 'Total Accounts',
       tps: 'TPS'
     },
+    header: {
+      homepage: "HOME",
+      develop: 'DEVELOPER',
+      developPlan: 'PROGRAM',
+      developApi: 'DOC',
+      developsq: 'FORUM',
+      jili: 'BOUNTY',
+      stproduct: 'ECOSYSYEM',
+      action: 'NEWS',
+      browser: 'EXPLORER',
+      about: 'ABOUT',
+      whiteBook: 'WHITE PAPER',
+      team: 'Team & Partners',
+    },
+    footer: {
+      contact: 'Contact Info',
+      subscribe: 'Subscribe to our community updates',
+      submit: 'SUBSCRIBE',
+      int_email: 'Enter your email address...',
+    },
     charts: {
       trade: '14 day Transaction History',
       address: '14 day Address Growth'

@@ -42,7 +42,7 @@
 </template>
 <script>
 import Header from "../../components/header.vue";
-import Foot from "../../components/foot.vue";
+import Foot from "../../components/footer.vue";
 import api from "../../http/api.js";
 import moment from "moment";
 import util from "../../util/util";

@@ -56,7 +56,6 @@ export default {
       this.placeholderText = "English";
     }
     this.urls = this.getQueryVariable("language") || "";
-    console.log(this.urls);
     if (this.urls) {
       this.$i18n.locale = "en";
     } else {
@@ -73,9 +72,6 @@ export default {
       this.name = localStorage.getItem("language_name") || "English";
       this.$i18n.locale = option.type === "en" ? "en" : "cn";
     }
-
-    // let language =
-    //   JSON.parse(localStorage.getItem("language")) || this.language;
   },
   computed: {
     ...mapState({

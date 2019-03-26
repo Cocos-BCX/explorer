@@ -1,60 +1,55 @@
 <template>
-  <div>
-    <div class="banner">
-      <div class="content-box">
-        <div class="content">
-          <div>
-            <div class="logo" @click="contract()">
-              <img v-lazy="'/static/image/logo1.png'" alt>
-            </div>
-            <dropdown
-              :options="select"
-              :styles="style"
-              :selected="selected"
-              updateOption="methodToRunOnSelect"
-            ></dropdown>
-          </div>
-          <div class="search-box">
-            <input
-              :placeholder="$t('home.search')"
-              v-focus="true"
-              v-model="search"
-              @keyup.enter="searchInfo()"
-            >
-            <div class="btn" @click="searchInfo()">
-              <img v-lazy="'/static/image/search.png'" alt>
-            </div>
-          </div>
-          <div class="banner-bottom"></div>
+  <div class="home">
+    <Headers></Headers>
+    <div class="position">
+      <div class="search-box">
+        <div class="input-box">
+          <input
+            :placeholder="$t('home.search')"
+            v-focus="true"
+            v-model="search"
+            @keyup.enter="searchInfo()"
+          >
+        </div>
+        <div class="btn" @click="searchInfo()">
+          <img v-lazy="'/static/image/serach.png'" alt>
         </div>
       </div>
     </div>
+    <div class="content-box-total">
+      <div class="count">
+        <div class="num">
+          <img src="https://jdi.cocosbcx.net/image/explorer/jiedian.png" alt>
+          <div>{{count.nodes || 0}}</div>
+          <span>{{$t('home.banner.node')}}</span>
+        </div>
+        <div class="num block">
+          <img src="https://jdi.cocosbcx.net/image/explorer/gaodu.png" alt>
+          <div @click="moreBlock()">
+            <countTo :startVal="startVal" :endVal="count.block_height" :duration="3000"></countTo>
+          </div>
+          <span @click="moreBlock()">{{$t('home.banner.block')}}</span>
+        </div>
+        <div class="num">
+          <img src="https://jdi.cocosbcx.net/image/explorer/hour.png" alt>
+          <div>{{count.trans || 0}}</div>
+          <span>{{$t('home.banner.trade')}}</span>
+        </div>
+        <div class="num">
+          <img src="https://jdi.cocosbcx.net/image/explorer/zhanghu.png" alt>
+          <div>{{count.user_count || 0}}</div>
+          <span>{{$t('home.banner.count')}}</span>
+        </div>
+        <div class="num">
+          <img src="https://jdi.cocosbcx.net/image/explorer/tps.png" alt>
+          <div>{{totals.tps || 0 }}/{{totals.max || 0}}</div>
+          <span>{{$t('home.banner.tps')}}</span>
+        </div>
+      </div>
+    </div>
+
     <div class="body">
       <div class="content-box">
-        <div class="count">
-          <div class="num">
-            <div>{{count.nodes || 0}}</div>
-            <span>{{$t('home.banner.node')}}</span>
-          </div>
-          <div class="num block">
-            <div @click="moreBlock()">
-              <countTo :startVal="startVal" :endVal="count.block_height" :duration="3000"></countTo>
-            </div>
-            <span @click="moreBlock()">{{$t('home.banner.block')}}</span>
-          </div>
-          <div class="num">
-            <div>{{count.trans || 0}}</div>
-            <span>{{$t('home.banner.trade')}}</span>
-          </div>
-          <div class="num">
-            <div>{{count.user_count || 0}}</div>
-            <span>{{$t('home.banner.count')}}</span>
-          </div>
-          <div class="num">
-            <div>{{totals.tps || 0 }}/{{totals.max || 0}}</div>
-            <span>{{$t('home.banner.tps')}}</span>
-          </div>
-        </div>
         <div class="chart">
           <div class="child-chart trade-chart">
             <Highcharts :options="options" ref="tradeCharts"></Highcharts>
@@ -135,7 +130,7 @@
 import api from "../../http/api.js";
 import VueI18n from "vue-i18n";
 import Vue from "vue";
-import Foot from "../../components/foot";
+import Foot from "../../components/footer";
 import Highcharts from "../../components/hightcart";
 import { throws } from "assert";
 import Dropdown from "../../components/dropdown";
@@ -143,6 +138,7 @@ import Loading from "../../components/loading";
 import axios from "axios";
 import moment from "moment";
 import countTo from "vue-count-to";
+import Headers from "../../components/headers";
 import { mapState, mapMutations } from "vuex";
 // import { setTimeout, clearTimeout, clearInterval } from "timers";
 Vue.use(VueI18n);
@@ -153,7 +149,8 @@ export default {
     Foot,
     Dropdown,
     Loading,
-    countTo
+    countTo,
+    Headers
   },
   directives: {
     focus: {
@@ -435,106 +432,172 @@ export default {
 };
 </script>
 <style scoped lang="less" rel="stylesheet/less">
-.banner {
-  height: 354px;
+.home {
+  position: relative;
+}
+.position {
   width: 100%;
-  // background: cadetblue;
-  background: url("/static/image/banner.png") center center no-repeat;
-  filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg-login.png',sizingMethod='scale');
-  background-size: cover;
-  .content-box {
-    width: 1440px;
+  position: absolute;
+  top: 252px;
+  .search-box {
     margin: 0 auto;
-    height: 354px;
-    // background: linear-gradient(
-    //     180deg,
-    //     rgba(121, 57, 248, 1) 0%,
-    //     rgba(47, 81, 255, 1) 100%
-    // );
-    // opacity: 0.0551;
-    // background: red;
-    .content {
-      height: 354px;
-      margin: 0 auto;
-      width: 1200px;
+    width: 700px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    .input-box {
+      background: rgba(255, 255, 255, 1);
+      width: 640px;
+      height: 60px;
       display: flex;
-      flex-direction: column;
-      // height: 100px;
-      .logo {
-        cursor: pointer;
-        float: left;
-        margin-top: 30px;
-        width: 132px;
-        height: 58px;
-        img {
-          width: 132px;
-          height: 58px;
-          object-fit: cover;
-        }
-      }
-      .language {
-        cursor: pointer;
-        float: right;
-        width: 90px;
-        height: 27px;
-        margin-top: 66px;
-        border-radius: 3px;
-        opacity: 0.5;
-        border: 1px solid;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        color: #fff;
-        .icon {
-          height: 9px;
-          width: 12px;
-          margin-left: 3px;
-        }
-      }
-      .search-box {
-        margin: 76px 0 0 132px;
-        width: 938px;
-        height: 60px;
-        background: rgba(255, 255, 255, 1);
-        border-radius: 30px;
-        display: flex;
-        align-items: center;
-        input {
-          width: 825px;
-          border: none;
-          padding-left: 30px;
-          margin-left: 5px;
-          font-size: 16px;
-        }
-        input:focus {
-          outline: none;
-        }
-        .btn {
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 80px;
-          height: 60px;
-          margin-left: 2px;
-          border-radius: 0 30px 30px 0;
-          background: rgba(56, 141, 244, 1);
-          img {
-            height: 20px;
-            width: 20px;
-          }
-        }
-      }
-      .banner-bottom {
-        width: 1200px;
-        height: 40px;
-        margin-top: 90px;
-        background: white;
+      align-items: center;
+      transform: skewX(-30deg);
+    }
+    input {
+      width: 530px;
+      border: none;
+      background: rgba(255, 255, 255, 1);
+      padding-left: 30px;
+      margin-left: 5px;
+      font-size: 16px;
+      transform: skewX(30deg);
+    }
+    input:focus {
+      outline: none;
+    }
+    .btn {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 110px;
+      height: 60px;
+      margin-left: 17px;
+      transform: skewX(-30deg);
+      background: #2ad9fe;
+      img {
+        transform: skewX(30deg);
+        height: 20px;
+        width: 20px;
       }
     }
   }
 }
+.content-box-total {
+  position: absolute;
+  width: 100%;
+  height: 224px;
+  top: 422px;
+  .count {
+    background: white;
+    display: flex;
+    height: 224px;
+    width: 1200px;
+    margin: 0 auto;
+    opacity: 1;
+    .block.num {
+      cursor: pointer;
+    }
+    .num {
+      width: 240px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      img {
+        margin: 45px 0 24px;
+      }
+      div {
+        font-size: 33px;
+        font-family: PingFangSC-Medium;
+        font-weight: 500;
+        color: rgba(51, 51, 51, 1);
+        line-height: 45px;
+        span {
+          font-size: 33px;
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(51, 51, 51, 1);
+          line-height: 45px;
+        }
+      }
+      span {
+        height: 20px;
+        font-size: 18px;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(152, 152, 152, 1);
+        line-height: 21px;
+      }
+    }
+  }
+}
+
+// .banner {
+//   height: 354px;
+//   width: 100%;
+//   // background: cadetblue;
+//   background: url("/static/image/banner.png") center no-repeat;
+//   filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg-login.png',sizingMethod='scale');
+//   background-size: cover;
+//   .content-box {
+//     width: 1440px;
+//     margin: 0 auto;
+//     height: 354px;
+//     // background: linear-gradient(
+//     //     180deg,
+//     //     rgba(121, 57, 248, 1) 0%,
+//     //     rgba(47, 81, 255, 1) 100%
+//     // );
+//     // opacity: 0.0551;
+//     // background: red;
+//     .content {
+//       height: 354px;
+//       margin: 0 auto;
+//       width: 1200px;
+//       display: flex;
+//       flex-direction: column;
+//       // height: 100px;
+//       .logo {
+//         cursor: pointer;
+//         float: left;
+//         margin-top: 30px;
+//         width: 132px;
+//         height: 58px;
+//         img {
+//           width: 132px;
+//           height: 58px;
+//           object-fit: cover;
+//         }
+//       }
+//       .language {
+//         cursor: pointer;
+//         float: right;
+//         width: 90px;
+//         height: 27px;
+//         margin-top: 66px;
+//         border-radius: 3px;
+//         opacity: 0.5;
+//         border: 1px solid;
+//         display: flex;
+//         align-items: center;
+//         justify-content: center;
+//         font-size: 12px;
+//         color: #fff;
+//         .icon {
+//           height: 9px;
+//           width: 12px;
+//           margin-left: 3px;
+//         }
+//       }
+//       .banner-bottom {
+//         width: 1200px;
+//         height: 40px;
+//         margin-top: 90px;
+//         background: white;
+//       }
+//     }
+//   }
+// }
 .body {
   height: 1418px;
   width: 100%;
@@ -551,48 +614,9 @@ export default {
     background-color: rgba(47, 81, 255, 0.055);
     display: flex;
     flex-direction: column;
-    .count {
-      display: flex;
-      height: 113px;
-      width: 1200px;
-      background: white;
-      margin: 0 auto;
-      opacity: 1;
-      .block.num {
-        cursor: pointer;
-      }
-      .num {
-        width: 240px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        div {
-          font-size: 33px;
-          font-family: PingFangSC-Medium;
-          font-weight: 500;
-          color: rgba(51, 51, 51, 1);
-          line-height: 45px;
-          span {
-            font-size: 33px;
-            font-family: PingFangSC-Medium;
-            font-weight: 500;
-            color: rgba(51, 51, 51, 1);
-            line-height: 45px;
-          }
-        }
-        span {
-          height: 20px;
-          font-size: 18px;
-          font-family: PingFangSC-Regular;
-          font-weight: 400;
-          color: rgba(152, 152, 152, 1);
-          line-height: 21px;
-        }
-      }
-    }
     .chart {
       width: 1200px;
-      margin: 24px auto 0;
+      margin: 100px auto 0;
       display: flex;
       justify-content: space-between;
       .child-chart {

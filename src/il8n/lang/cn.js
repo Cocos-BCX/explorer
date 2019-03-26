@@ -8,6 +8,26 @@ export default {
       count: '账户数量',
       tps: 'TPS'
     },
+    header: {
+      homepage: "首页",
+      develop: '开发着',
+      developPlan: '开发者计划',
+      developApi: '开发文档',
+      developsq: '开发者社区',
+      jili: '激励',
+      stproduct: '生态产品',
+      action: '动态',
+      browser: '浏览器',
+      about: '关于我们',
+      whiteBook: 'WHITE PAPER',
+      team: 'Team & Partners',
+    },
+    footer: {
+      contact: '联系方式',
+      subscribe: '订阅我们的报告',
+      submit: '订阅',
+      int_email: '请输入您的电子邮件地址...',
+    },
     charts: {
       trade: '过去14天交易数',
       address: '过去14天地址增长'
