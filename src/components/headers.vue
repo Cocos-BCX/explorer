@@ -4,7 +4,10 @@
       <div class="nav" :class="$i18n.locale === 'cn'? 'cn' : 'en'">
         <div class="nav_list_box">
           <div class="nav_home lt">
-            <a class="nav_home_click">{{$t('home.header.homepage')}}</a>
+            <a
+              :href="$i18n.locale === 'en' ? baseurl + '?language=en' : baseurl"
+              class="nav_home_click"
+            >{{$t('home.header.homepage')}}</a>
           </div>
           <div class="nav_develop lt">
             <a class="nav_browser_click" @mouseenter="Devs()">
@@ -16,28 +19,55 @@
               <transition name="slide-fade">
                 <div class="nav_develop_list_box" v-if="hover">
                   <!-- <div class="nav_develop_list_trans"> -->
-                  <div class="dev_a">{{$t('home.header.developPlan')}}</div>
-                  <div class="dev_a">{{$t('home.header.developApi')}}</div>
-                  <div class="dev_a">{{$t('home.header.developsq')}}</div>
+                  <a
+                    :href="$i18n.locale === 'cn'? 'https://mp.weixin.qq.com/s/EuM8mGfXh3QpwKLN7i9ITA' :'https://medium.com/@CocosBCX/cocos-bcx-alpha-testing-now-open-to-developers-globally-908880f67de7'"
+                    class="dev_a"
+                    target="_blank"
+                  >{{$t('home.header.developPlan')}}</a>
+                  <a
+                    :href="$i18n.locale === 'cn'? 'https://dev.cocosbcx.io/' : 'https://doc.cocosbcx.io/'"
+                    class="dev_a"
+                    target="_blank"
+                  >{{$t('home.header.developApi')}}</a>
+                  <a
+                    href="https://discuss.cocos2d-x.org/c/cocos-bcx"
+                    class="dev_a"
+                    target="_blank"
+                  >{{$t('home.header.developsq')}}</a>
                   <!-- </div> -->
                 </div>
               </transition>
             </div>
           </div>
           <div class="nav_jl lt">
-            <a class="nav_browser_click" target="_blank">{{$t('home.header.jili')}}</a>
+            <a
+              :href="$i18n.locale === 'cn'? 'https://bcx.cocos.com/' : 'https://bcx.cocos.com/en'"
+              class="nav_browser_click"
+              target="_blank"
+            >{{$t('home.header.jili')}}</a>
           </div>
           <div class="nav_st lt">
-            <a class="nav_st_click">{{$t('home.header.stproduct')}}</a>
+            <a
+              :href="$i18n.locale === 'en' ? baseurl + ' /product?language=en' : baseurl + '/product'"
+              class="nav_st_click"
+              target="_blank"
+            >{{$t('home.header.stproduct')}}</a>
           </div>
           <div class="nav_action lt">
-            <a class="nav_st_click">{{$t('home.header.action')}}</a>
+            <a
+              :href="$i18n.locale === 'en' ? baseurl + ' /action?language=en' : baseurl + '/action'"
+              class="nav_st_click"
+              target="_blank"
+            >{{$t('home.header.action')}}</a>
           </div>
-          <div class="nav_browser lt">
+          <div class="nav_browser lt" @click="reload()">
             <a class="nav_st_click active">{{$t('home.header.browser')}}</a>
           </div>
           <div class="nav_about lt">
-            <a class="nav_st_click">{{$t('home.header.about')}}</a>
+            <a
+              :href="$i18n.locale === 'en' ? baseurl + ' /about?language=en' : baseurl + ' /about'"
+              class="nav_st_click"
+            >{{$t('home.header.about')}}</a>
             <!-- <div class="nav_about_more"></div> -->
           </div>
         </div>
@@ -91,7 +121,6 @@ export default {
     // if (this.placeholder) {
     //   this.placeholderText = "English";
     // }
-    console.log(this.$route.path);
     this.urls = this.getQueryVariable("language") || "";
     if (this.urls) {
       this.$i18n.locale = "en";
@@ -113,6 +142,9 @@ export default {
   methods: {
     Devs() {
       this.hover = true;
+    },
+    reload() {
+      window.reload();
     },
     LeaveDevs() {
       this.hover = false;
@@ -159,6 +191,10 @@ export default {
   background: url(https://jdi.cocosbcx.net/image/explorer/bg-banner.png)
     no-repeat 50%;
   overflow: hidden;
+  &.no-home {
+    height: 250px;
+    background: url(https://jdi.cocosbcx.net/image/explorer/bg-banner-child.png);
+  }
   .lt {
     float: left;
     margin-left: 47px;
