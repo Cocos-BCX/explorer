@@ -91,6 +91,7 @@ export default {
     // if (this.placeholder) {
     //   this.placeholderText = "English";
     // }
+    console.log(this.$route.path);
     this.urls = this.getQueryVariable("language") || "";
     if (this.urls) {
       this.$i18n.locale = "en";

@@ -3,7 +3,9 @@ import Home from './home.vue'
 export default [{
     path: '/',
     name: 'Home',
-    component: Home
+    component: (r) => {
+      require(["./home.vue"], r)
+    }
   },
   {
     path: '*',
