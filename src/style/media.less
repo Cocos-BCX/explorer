@@ -1,4 +1,4 @@
-@media (min-width: 1200px) and (max-width: 1440px) {
+@media (min-width: 600px) and (max-width: 1440px) {
   .banner {
     height: 295px;
     width: 100%;
@@ -77,6 +77,47 @@
     }
   }
 
+  .content-box-total {
+    position: absolute;
+    height: 224px;
+    top: 422px;
+
+    .count {
+      display: flex;
+      height: 224px;
+
+      .num {
+
+        // width: 200px;
+        div {
+          margin-top: 13px;
+          font-size: 27px;
+          font-family: PingFangSC-Medium;
+          font-weight: 500;
+          color: rgba(51, 51, 51, 1);
+          line-height: 37px;
+
+          span {
+            font-size: 27px;
+            font-family: PingFangSC-Medium;
+            font-weight: 500;
+            color: rgba(51, 51, 51, 1);
+            line-height: 37px;
+          }
+        }
+
+        span {
+          height: 17px;
+          font-size: 15px;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(152, 152, 152, 1);
+          line-height: 17px;
+        }
+      }
+    }
+  }
+
   .body {
     height: 1250px;
     // height: 900px;
@@ -85,41 +126,6 @@
     .content-box {
       width: 1200px; // height: 1250px;
 
-      .count {
-        display: flex;
-        height: 94px;
-        width: 1000px;
-
-        .num {
-          width: 200px;
-
-          div {
-            margin-top: 13px;
-            font-size: 27px;
-            font-family: PingFangSC-Medium;
-            font-weight: 500;
-            color: rgba(51, 51, 51, 1);
-            line-height: 37px;
-
-            span {
-              font-size: 27px;
-              font-family: PingFangSC-Medium;
-              font-weight: 500;
-              color: rgba(51, 51, 51, 1);
-              line-height: 37px;
-            }
-          }
-
-          span {
-            height: 17px;
-            font-size: 15px;
-            font-family: PingFangSC-Regular;
-            font-weight: 400;
-            color: rgba(152, 152, 152, 1);
-            line-height: 17px;
-          }
-        }
-      }
 
       .chart {
         width: 1200px;
@@ -207,213 +213,225 @@
   }
 }
 
-@media (max-width: 1200px) {
-  .banner {
-    height: 251px;
-    width: 100%;
 
-    .content-box {
-      width: 1024px;
-      margin: 0 auto;
-      height: 251px;
 
-      .content {
-        height: 251px;
-        margin: 0 auto;
-        width: 852px;
+// @media (max-width: 1200px) {
 
-        .logo {
-          margin-top: 21px;
-          width: 94px;
-          height: 41px;
+//   .banner {
+//     height: 251px;
+//     width: 100%;
 
-          img {
-            width: 94px;
-            height: 41px;
-          }
-        }
+//     .content-box {
+//       width: 1024px;
+//       margin: 0 auto;
+//       height: 251px;
 
-        .language {
-          width: 64px;
-          height: 19px;
-          margin-top: 47px;
-          border-radius: 3px;
-          font-size: 12px;
+//       .content {
+//         height: 251px;
+//         margin: 0 auto;
+//         width: 852px;
 
-          .icon {
-            height: 7px;
-            width: 10px;
-            margin-left: 3px;
-          }
-        }
+//         .logo {
+//           margin-top: 21px;
+//           width: 94px;
+//           height: 41px;
 
-        .search-box {
-          margin: 54px 0 0 94px;
-          width: 666px;
-          height: 43px;
-          border-radius: 21px;
+//           img {
+//             width: 94px;
+//             height: 41px;
+//           }
+//         }
 
-          input {
-            width: 586px;
-            padding-left: 21px;
-            margin-left: 4px;
-            font-size: 14px;
-          }
+//         .language {
+//           width: 64px;
+//           height: 19px;
+//           margin-top: 47px;
+//           border-radius: 3px;
+//           font-size: 12px;
 
-          input:focus {
-            outline: none;
-          }
+//           .icon {
+//             height: 7px;
+//             width: 10px;
+//             margin-left: 3px;
+//           }
+//         }
 
-          .btn {
-            width: 57px;
-            height: 43px;
-            margin-left: 2px;
-            border-radius: 0 21px 21px 0;
+//         .search-box {
+//           margin: 54px 0 0 94px;
+//           width: 666px;
+//           height: 43px;
+//           border-radius: 21px;
 
-            img {
-              height: 14px;
-              width: 14px;
-            }
-          }
-        }
+//           input {
+//             width: 586px;
+//             padding-left: 21px;
+//             margin-left: 4px;
+//             font-size: 14px;
+//           }
 
-        .banner-bottom {
-          width: 852px;
-          height: 27px;
-          margin-top: 65px;
-        }
-      }
-    }
-  }
+//           input:focus {
+//             outline: none;
+//           }
 
-  .body {
-    width: 100%;
+//           .btn {
+//             width: 57px;
+//             height: 43px;
+//             margin-left: 2px;
+//             border-radius: 0 21px 21px 0;
 
-    .content-box {
-      width: 1024px;
-      // height: 760px;
-      height: 1140px;
+//             img {
+//               height: 14px;
+//               width: 14px;
+//             }
+//           }
+//         }
 
-      .count {
-        height: 80px;
-        width: 852px;
+//         .banner-bottom {
+//           width: 852px;
+//           height: 27px;
+//           margin-top: 65px;
+//         }
+//       }
+//     }
+//   }
 
-        .num {
-          width: 170px;
+//   .content-box-total {
+//     position: absolute;
+//     width: 1200px;
+//     height: 224px;
+//     top: 422px;
+//     .count {
+//       height: 80px;
+//       width: 852px;
 
-          div {
-            margin-top: 11px;
-            font-size: 23px;
-            line-height: 32px;
+//       .num {
+//         width: 170px;
 
-            span {
-              font-size: 23px;
-              line-height: 32px;
-            }
-          }
+//         div {
+//           margin-top: 11px;
+//           font-size: 23px;
+//           line-height: 32px;
 
-          span {
-            height: 14px;
-            font-size: 14px;
-            line-height: 15px;
-          }
-        }
-      }
+//           span {
+//             font-size: 23px;
+//             line-height: 32px;
+//           }
+//         }
 
-      .chart {
-        width: 852px; // height: 570px;
-        margin: 17px auto 0;
+//         span {
+//           height: 14px;
+//           font-size: 14px;
+//           line-height: 15px;
+//         }
+//       }
+//     }
+//   }
 
-        .child-chart {
-          width: 419px;
-          background: white;
-        }
-      }
-    }
+//   .body {
+//     width: 100%;
 
-    .block_trade {
-      width: 853px;
-      margin: 17px auto 0;
-      height: 532px;
+//     .content-box {
+//       width: 1024px;
+//       // height: 760px;
+//       height: 1140px;
 
-      .title {
-        height: 18px;
-        font-size: 14px;
 
-        span {
-          font-size: 16px;
-          color: #333;
-        }
 
-        .more {
-          font-size: 12px;
-          margin-right: 18px;
-        }
-      }
 
-      .block {
-        width: 404px;
-        padding: 23px 0 0 14px;
+//       .chart {
+//         width: 852px; // height: 570px;
+//         margin: 17px auto 0;
 
-        .block-content {
-          height: 511px; // margin-top: 10px;
-        }
+//         .child-chart {
+//           width: 419px;
+//           background: white;
+//         }
+//       }
+//     }
 
-        .block-piece {
-          padding-top: 13px;
-          height: 65px;
+//     .block_trade {
+//       width: 853px;
+//       margin: 17px auto 0;
+//       height: 532px;
 
-          .block-id {
-            height: 72px;
-            width: 135px;
-            font-size: 14px;
-          }
+//       .title {
+//         height: 18px;
+//         font-size: 14px;
 
-          .block-detail {
-            margin-left: 14px;
-            font-size: 12px;
-            height: 51px;
-          }
-        }
-      }
+//         span {
+//           font-size: 16px;
+//           color: #333;
+//         }
 
-      .trade {
-        margin-left: 12px;
+//         .more {
+//           font-size: 12px;
+//           margin-right: 18px;
+//         }
+//       }
 
-        .trade-info {
-          font-size: 12px;
+//       .block {
+//         width: 404px;
+//         padding: 23px 0 0 14px;
 
-          span {
-            margin-left: 4px;
-          }
+//         .block-content {
+//           height: 511px; // margin-top: 10px;
+//         }
 
-          .trade-address {
-            margin-top: 4px;
-          }
+//         .block-piece {
+//           padding-top: 13px;
+//           height: 65px;
 
-          .cut {
-            height: 14px;
-            width: 16px;
-          }
+//           .block-id {
+//             height: 72px;
+//             width: 135px;
+//             font-size: 14px;
+//           }
 
-          .trade-id {
-            margin-top: 4px;
+//           .block-detail {
+//             margin-left: 14px;
+//             font-size: 12px;
+//             height: 51px;
+//           }
+//         }
+//       }
 
-            span {
-              width: 129px;
-            }
-          }
+//       .trade {
+//         margin-left: 12px;
 
-          .trade-num {
-            margin-top: 4px;
-          }
-        }
+//         .trade-info {
+//           font-size: 12px;
 
-        .trade-time {
-          font-size: 10px;
-          margin-right: 15px;
-        }
-      }
-    }
-  }
-}
+//           span {
+//             margin-left: 4px;
+//           }
+
+//           .trade-address {
+//             margin-top: 4px;
+//           }
+
+//           .cut {
+//             height: 14px;
+//             width: 16px;
+//           }
+
+//           .trade-id {
+//             margin-top: 4px;
+
+//             span {
+//               width: 129px;
+//             }
+//           }
+
+//           .trade-num {
+//             margin-top: 4px;
+//           }
+//         }
+
+//         .trade-time {
+//           font-size: 10px;
+//           margin-right: 15px;
+//         }
+//       }
+//     }
+//   }
+// }

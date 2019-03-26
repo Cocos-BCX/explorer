@@ -13,7 +13,11 @@
           <div class="email">
             <img src="https://jdi.cocosbcx.net/image/explorer/email.png" alt>
             <p>
-              <a href="mailto:Support@cocosbcx.io" target="_blank">Email:Support@cocosbcx.io</a>
+              <a
+                style="color:white"
+                href="mailto:Support@cocosbcx.io"
+                target="_blank"
+              >Email:Support@cocosbcx.io</a>
             </p>
           </div>
           <div class="file">
@@ -63,6 +67,7 @@
                     name="subscribe"
                     id="mc-embedded-subscribe"
                     class="button"
+                    :style="$i18n.locale === 'cn'? '' : 'font-size:14px'"
                   >
                 </div>
               </div>

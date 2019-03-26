@@ -10,7 +10,7 @@ export default {
     },
     header: {
       homepage: "首页",
-      develop: '开发着',
+      develop: '开发者',
       developPlan: '开发者计划',
       developApi: '开发文档',
       developsq: '开发者社区',

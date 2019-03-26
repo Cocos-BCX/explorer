@@ -1,7 +1,7 @@
 <template>
   <div class="content">
     <div class="nav_box">
-      <div class="nav lt" :style="$i18n.locale === 'cn'? '' : 'font-size:12px'">
+      <div class="nav" :class="$i18n.locale === 'cn'? 'cn' : 'en'">
         <div class="nav_list_box">
           <div class="nav_home lt">
             <a class="nav_home_click">{{$t('home.header.homepage')}}</a>
@@ -27,7 +27,7 @@
           <div class="nav_jl lt">
             <a class="nav_browser_click" target="_blank">{{$t('home.header.jili')}}</a>
           </div>
-          <div class="nav_st lt" v-if="$i18n.locale === 'cn'">
+          <div class="nav_st lt">
             <a class="nav_st_click">{{$t('home.header.stproduct')}}</a>
           </div>
           <div class="nav_action lt">
@@ -75,7 +75,8 @@ export default {
   data() {
     return {
       hover: false,
-      language_box: false
+      language_box: false,
+      baseurl: "http://cocos.dev.cjfan.net"
     };
   },
   computed: {
@@ -152,12 +153,30 @@ export default {
   font-size: 14px;
   height: 568px;
   width: 100%;
-  display: flex;
+  font-family: PingFangSC-Regular, sans-serif;
   // float: left;
-  background: url(https://jdi.cocosbcx.net/image/explorer/bg-banner.png);
-  background-size: cover; //只支持IE9+
+  background: url(https://jdi.cocosbcx.net/image/explorer/bg-banner.png)
+    no-repeat 50%;
+  overflow: hidden;
+  .lt {
+    float: left;
+    margin-left: 47px;
+    font-weight: 300;
+  }
+  .en {
+    .lt {
+      float: left;
+      margin-left: 29px;
+    }
+  }
+  .cn {
+    .nav_list_box {
+      margin-left: 20px;
+    }
+  }
   .nav_box {
     width: 1200px;
+    display: flex;
     margin: auto;
     .lt {
       a {
@@ -174,21 +193,12 @@ export default {
       float: left;
       .nav_list_box {
         transform: skewX(30deg);
-        margin-left: 60px;
         .active {
           color: #2ad9fe;
         }
         display: flex;
+        // justify-content: center;
         align-items: center;
-        .nav_develop,
-        .nav_jl,
-        .nav_st,
-        .nav_action,
-        .nav_browser,
-        .nav_about {
-          float: left;
-          margin-left: 45px;
-        }
         a {
           color: #bebebe;
           line-height: 41px;
@@ -363,12 +373,13 @@ export default {
     .lang_box {
       width: 73px;
       height: 41px;
+      // right: 180px;
       float: left;
       background: rgba(42, 217, 254, 1);
       transform: skewX(-30deg);
       margin-left: 20px;
       cursor: pointer;
-      position: relative;
+      // position: absolute;
 
       .lang {
         transform: skewX(30deg);
