@@ -67,7 +67,7 @@
                     name="subscribe"
                     id="mc-embedded-subscribe"
                     class="button"
-                    :style="$i18n.locale === 'cn'? '' : 'font-size:14px'"
+                    :style="$i18n.locale === 'cn'? '' : 'font-size:12px'"
                   >
                 </div>
               </div>
@@ -496,6 +496,285 @@ export default {
       margin: auto;
       margin-top: 92px;
       text-align: center;
+    }
+  }
+}
+@media screen and (max-width: 1400px) {
+  .footer {
+    width: 100%;
+    // min-width:1600px;
+    height: 529px;
+    background: rgba(31, 31, 31, 1);
+
+    .footer_box {
+      position: relative;
+      // width: 1600px;
+      margin: auto;
+
+      .totop {
+        height: 54px;
+        width: 63px;
+        background: #676767;
+        display: none;
+        // position: absolute;
+        // right: 120px;
+        // top: -27px;
+        position: fixed;
+        transform: skewX(-20deg);
+        cursor: pointer;
+
+        right: 120px;
+        bottom: 150px;
+        transition: all 0.8s;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        .tojt {
+          transform: skewX(20deg);
+          position: relative;
+
+          div {
+            position: absolute;
+            display: inline-block;
+            border-top: 2px solid;
+            border-right: 2px solid;
+            width: 8px;
+            height: 8px;
+            transform: rotate(-45deg);
+            border-color: #fff;
+            margin: 50px auto auto 100px;
+            top: -25px;
+            left: -82px;
+          }
+        }
+      }
+
+      .footer_con {
+        width: 782px;
+        padding-top: 50px;
+        margin: auto;
+        overflow: hidden;
+
+        .footer_con_l {
+          width: 230px;
+
+          .f_til {
+            font-size: 16px;
+            color: rgba(103, 103, 103, 1);
+          }
+
+          .f_line {
+            width: 230px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            margin-top: 16px;
+          }
+
+          .email {
+            overflow: hidden;
+            margin-top: 30px;
+
+            img {
+              display: block;
+              float: left;
+              width: 16px;
+              height: 13px;
+            }
+
+            p {
+              float: left;
+              margin-left: 6px;
+              font-size: 14px;
+              color: rgba(255, 255, 255, 1);
+              line-height: 15px;
+            }
+          }
+
+          .file {
+            display: block;
+            overflow: hidden;
+            margin-top: 22px;
+            box-sizing: border-box;
+
+            img {
+              display: block;
+              float: left;
+              width: 12px;
+              height: 17px;
+              margin-left: 2px;
+              box-sizing: border-box;
+            }
+
+            p {
+              float: left;
+              font-size: 13px;
+              margin-left: 9px;
+              font-weight: 400;
+              color: rgba(255, 255, 255, 1);
+              line-height: 22px;
+              box-sizing: border-box;
+
+              a {
+                color: #fff;
+
+                &:hover {
+                  opacity: 0.8;
+                }
+              }
+            }
+          }
+        }
+
+        .footer_con_r {
+          width: 476px;
+          margin-left: 75px;
+
+          .r_til {
+            font-size: 16px;
+            color: rgba(103, 103, 103, 1);
+          }
+
+          .r_line {
+            width: 261px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            margin-top: 16px;
+          }
+
+          .footer_dy {
+            margin-top: 40px;
+            // background: #ccc;
+            position: relative;
+            height: 51px;
+
+            .input_box {
+              width: 343px;
+              height: 52px;
+              position: relative;
+              margin-left: 26px;
+
+              input {
+                margin-top: 1px;
+                width: 343px;
+                height: 49px;
+                outline: none;
+                font-size: 14px;
+                font-weight: 400;
+                // color: rgba(170, 170, 170, 1);
+                box-sizing: border-box;
+                padding-left: 30px;
+                padding-right: 20px;
+              }
+
+              p {
+                margin-top: 2px;
+                position: absolute;
+                left: 5px;
+                top: 0;
+                height: 49px;
+                line-height: 49px;
+                font-size: 13px;
+                font-weight: 400;
+                color: rgba(170, 170, 170, 1);
+                width: 100%;
+                padding-left: 30px;
+              }
+            }
+
+            .input_l_box {
+              position: absolute;
+              height: 60px;
+              width: 35px;
+              background: #2ad9fe;
+              top: 0;
+              left: 10px;
+              transform: skewX(-25deg);
+            }
+
+            .input_r_box {
+              position: absolute;
+              height: 60px;
+              width: 95px;
+              background: #2ad9fe;
+              top: 0;
+              left: 352px;
+              transform: skewX(-25deg);
+              cursor: pointer;
+
+              .button {
+                background: #2ad9fe;
+                border: none;
+                margin: auto;
+                transform: skewX(25deg);
+                font-size: 16px;
+                font-weight: 400;
+                color: #fff;
+                line-height: 55px;
+                display: block;
+                outline: none;
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+
+      .footer_img {
+        margin: auto;
+        width: 440px;
+        height: 28px;
+        margin: auto;
+        // overflow: hidden;
+        margin-top: 105px;
+
+        img {
+          width: 28px;
+        }
+
+        .wechet_box {
+          display: inline-block;
+          margin-left: 52px;
+          cursor: pointer;
+          position: relative;
+
+          .biao {
+            height: 26px;
+          }
+
+          .ma {
+            display: none;
+            position: absolute;
+            left: -38px;
+            top: 28px;
+            width: 100px;
+            height: 100px;
+          }
+        }
+
+        a {
+          margin-left: 52px;
+
+          &:nth-child(1) {
+            margin-left: 0;
+          }
+
+          img {
+            height: 26px;
+          }
+        }
+      }
+
+      .footer_bottom {
+        font-size: 15px;
+        font-weight: normal;
+        color: rgba(255, 255, 255, 1);
+        opacity: 0.34;
+        margin: auto;
+        margin-top: 92px;
+        text-align: center;
+      }
     }
   }
 }

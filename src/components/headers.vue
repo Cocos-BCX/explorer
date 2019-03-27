@@ -1,6 +1,9 @@
 <template>
   <div class="content">
     <div class="nav_box">
+      <!-- <div class="nav_logo_box">
+        <img src="https://jdi.cocosbcx.net/image/explorer/logow.png" alt>
+      </div>-->
       <div class="nav" :class="$i18n.locale === 'cn'? 'cn' : 'en'">
         <div class="nav_list_box">
           <div class="nav_home lt">
@@ -65,7 +68,7 @@
           </div>
           <div class="nav_about lt">
             <a
-              :href="$i18n.locale === 'en' ? baseurl + ' /about?language=en' : baseurl + ' /about'"
+              :href="$i18n.locale === 'en' ? baseurl + ' /about?language=en' : baseurl + '/about'"
               class="nav_st_click"
             >{{$t('home.header.about')}}</a>
             <!-- <div class="nav_about_more"></div> -->
@@ -209,6 +212,22 @@ export default {
   .cn {
     .nav_list_box {
       margin-left: 20px;
+    }
+  }
+  .nav_logo_box {
+    width: 388px;
+    height: 110px;
+    background: #2ad9fe;
+    position: absolute;
+    transform: skewX(-30deg);
+    top: 12px;
+    left: 10px;
+
+    img {
+      width: 100px;
+      height: 88px;
+      transform: skewX(30deg);
+      margin-left: 70px;
     }
   }
   .nav_box {
