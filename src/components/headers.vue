@@ -1,9 +1,10 @@
 <template>
   <div class="content">
     <div class="nav_box">
-      <!-- <div class="nav_logo_box">
+      <div class="nav_logo_box">
         <img src="https://jdi.cocosbcx.net/image/explorer/logow.png" alt>
-      </div>-->
+      </div>
+      <div class="nav_line"></div>
       <div class="nav" :class="$i18n.locale === 'cn'? 'cn' : 'en'">
         <div class="nav_list_box">
           <div class="nav_home lt">
@@ -51,14 +52,14 @@
           </div>
           <div class="nav_st lt">
             <a
-              :href="$i18n.locale === 'en' ? baseurl + ' /product?language=en' : baseurl + '/product'"
+              :href="$i18n.locale === 'en' ? baseurl + '/product?language=en' : baseurl + '/product'"
               class="nav_st_click"
               target="_blank"
             >{{$t('home.header.stproduct')}}</a>
           </div>
           <div class="nav_action lt">
             <a
-              :href="$i18n.locale === 'en' ? baseurl + ' /action?language=en' : baseurl + '/action'"
+              :href="$i18n.locale === 'en' ? baseurl + '/action?language=en' : baseurl + '/action'"
               class="nav_st_click"
               target="_blank"
             >{{$t('home.header.action')}}</a>
@@ -68,7 +69,7 @@
           </div>
           <div class="nav_about lt">
             <a
-              :href="$i18n.locale === 'en' ? baseurl + ' /about?language=en' : baseurl + '/about'"
+              :href="$i18n.locale === 'en' ? baseurl + '/about?language=en' : baseurl + '/about'"
               class="nav_st_click"
             >{{$t('home.header.about')}}</a>
             <!-- <div class="nav_about_more"></div> -->
@@ -191,7 +192,7 @@ export default {
   width: 100%;
   font-family: PingFangSC-Regular, sans-serif;
   // float: left;
-  background: url(https://jdi.cocosbcx.net/image/explorer/bg-banner.png)
+  background: url(https://jdi.cocosbcx.net/image/explorer/bg-banner.jpg)
     no-repeat 50%;
   overflow: hidden;
   &.no-home {
@@ -224,16 +225,28 @@ export default {
     left: 10px;
 
     img {
-      width: 100px;
+      width: 200px;
       height: 88px;
+      -webkit-transform: skewX(30deg);
       transform: skewX(30deg);
       margin-left: 70px;
+      margin-top: 9px;
     }
   }
+  .nav_line {
+    position: absolute;
+    width: 600px;
+    height: 5px;
+    transform: skewX(-30deg);
+    background: #2ad9fe;
+    top: 41px;
+    left: 350px;
+  }
   .nav_box {
-    width: 1200px;
-    display: flex;
-    margin: auto;
+    width: 1100px;
+    margin: 15px auto auto;
+    font-size: 14px;
+    position: relative;
     .lt {
       a {
         cursor: pointer;
@@ -245,7 +258,7 @@ export default {
       height: 41px;
       background: rgba(103, 103, 103, 1);
       transform: skewX(-30deg);
-      margin-left: 420px;
+      margin-left: 324px;
       float: left;
       .nav_list_box {
         transform: skewX(30deg);
@@ -429,11 +442,12 @@ export default {
     .lang_box {
       width: 73px;
       height: 41px;
-      // right: 180px;
-      float: left;
-      background: rgba(42, 217, 254, 1);
+      background: #2ad9fe;
+      -webkit-transform: skewX(-30deg);
       transform: skewX(-30deg);
       margin-left: 20px;
+      cursor: pointer;
+      position: relative;
       cursor: pointer;
       // position: absolute;
 
