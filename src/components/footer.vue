@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <div class="footer_box">
-      <div class="totop">
+      <div class="totop" @click="toTop()" v-if="getScrollTop > 400">
         <div class="tojt">
           <div></div>
         </div>
@@ -82,11 +82,7 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
-            style="height:24px;width:14px"
-            src="https://jdi.cocosbcx.net/image/explorer/facebook.png"
-            alt
-          >
+          <img src="https://jdi.cocosbcx.net/image/explorer/face.png" alt>
         </a>
         <a
           class="twitter"
@@ -94,53 +90,45 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
-            style="height:20px;width:23px"
-            src="https://jdi.cocosbcx.net/image/explorer/Twitter.png"
-            alt
-          >
+          <img src="https://jdi.cocosbcx.net/image/explorer/Twitter.png" alt>
         </a>
-        <div class="wechet_box">
-          <img
-            style="width:29px;height:23px;"
-            src="https://jdi.cocosbcx.net/image/explorer/wechat.png"
-            class="biao"
-            alt
-          >
-          <img class="ma" alt>
+        <div class="wechet_box" @mouseenter="wx = true" @mouseleave="wx = false">
+          <img src="https://jdi.cocosbcx.net/image/explorer/wechat.png" class="biao" alt>
+          <img v-if="wx" src="https://jdi.cocosbcx.net/image/explorer/wxma.jpg" class="ma" alt>
+        </div>
+        <div class="cocos_box" @mouseenter="cocos = true" @mouseleave="cocos = false">
+          <img src="https://jdi.cocosbcx.net/image/explorer/zs.png" class="biao" alt>
+          <img v-if="cocos" src="https://jdi.cocosbcx.net/image/explorer/zsma.jpg" class="ma" alt>
         </div>
         <a
           href="https://www.weibo.com/p/1006062183715773"
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img
-            style="width:30px;height:24px;"
-            src="https://jdi.cocosbcx.net/image/explorer/weibo.png"
-            alt
-          >
+          <img src="https://jdi.cocosbcx.net/image/explorer/weibo.png" alt>
         </a>
         <a target="_blank" rel="noopener noreferrer">
-          <img
-            style="width:22px;height:22px;"
-            src="https://jdi.cocosbcx.net/image/explorer/telegram.png"
-            alt
-          >
+          <img src="https://jdi.cocosbcx.net/image/explorer/telegram.png" alt>
         </a>
         <a href="https://github.com/cocos-bcx" target="_blank" rel="noopener noreferrer">
-          <img
-            style="width:23px;height:26px;"
-            src="https://jdi.cocosbcx.net/image/explorer/github.png"
-            alt
-          >
+          <img src="https://jdi.cocosbcx.net/image/explorer/github.png" alt>
+        </a>
+        <a href="https://reddit.com/cocosbcx" target="_blank" rel="noopener noreferrer">
+          <img src="https://jdi.cocosbcx.net/image/explorer/reddit.png" alt>
+        </a>
+        <a href="https://discord.gg/jdJMNtC" target="_blank" rel="noopener noreferrer">
+          <img src="https://jdi.cocosbcx.net/image/explorer/discord.png" alt>
         </a>
       </div>
+      <!-- <toTop></toTop> -->
       <div class="footer_bottom">2018 Cocos-BCX All rights reserved.</div>
     </div>
   </div>
 </template>
-<script>
+// <script>
+// import toTop from "./back.vue";
 import axios from "axios";
+import { clearInterval } from "timers";
 export default {
   name: "Foot",
   data() {
@@ -151,11 +139,70 @@ export default {
       warn: false,
       fail: false,
       success: false,
-      cocos_subscribe: ""
+      cocos_subscribe: "",
+      cocos: false,
+      wx: false,
+      getScrollTop: ""
     };
   },
-  mounted() {},
+  mounted() {
+    // this.needScroll();
+    window.onscroll = () => {
+      this.getScrollTop = document.documentElement.scrollTop;
+    };
+  },
+  // components: {
+  //   toTop
+  // },
+  // destroyed(){
+
+  // },
   methods: {
+    // needScroll() {
+    //   let that = this;
+    //   let clientHeight = document.documentElement.clientHeight;
+    //   let obtn = that.$refs.btn;
+    //   window.onscroll = function() {
+    //     let osTop =
+    //       document.documentElement.scrollTop || document.body.scrollTop;
+    //     if (osTop >= clientHeight) {
+    //       obtn.style.display = "block";
+    //     } else {
+    //       obtn.style.display = "none";
+    //     }
+    //     // if (!that.isTop) {
+    //     //   clearInterval(that.timer);
+    //     // }
+    //     that.isTop = false;
+    //   };
+    // },
+    // goTop() {
+    //   let that = this;
+    //   that.timer = setInterval(() => {
+    //     let osTop =
+    //       document.documentElement.scrollTop || document.body.scrollTop;
+    //     let ispeed = Math.floor(-osTop / 5);
+    //     document.documentElement.scrollTop = document.body.scrollTop =
+    //       osTop + ispeed;
+    //     that.isTop = true;
+    //     if (osTop === 0) {
+    //       clearInterval(that.timer);
+    //     }
+    //   }, 30);
+    // },
+    toTop() {
+      var currentScroll =
+        document.documentElement.scrollTop || document.body.scrollTop;
+      if (currentScroll > 0) {
+        window.requestAnimationFrame(this.toTop);
+        window.scrollTo(0, currentScroll - currentScroll / 5);
+      }
+    },
+    goTopEx() {
+      let setScrollTop = value => {
+        document.documentElement.scrollTop = value;
+      };
+    },
     ShowWechat() {
       this.code = true;
     },
@@ -232,7 +279,6 @@ export default {
       height: 54px;
       width: 63px;
       background: #676767;
-      display: none;
       // position: absolute;
       // right: 120px;
       // top: -27px;
@@ -445,18 +491,18 @@ export default {
     }
 
     .footer_img {
-      margin: auto;
-      width: 440px;
+      width: 680px;
       height: 28px;
-      margin: auto;
-      // overflow: hidden;
-      margin-top: 105px;
-      img {
-        width: 28px;
-      }
+      display: flex;
+      justify-content: space-between;
+      margin: 105px auto auto;
+      // overflow: hidden
+      // img {
+      //   width: 28px;
+      // }
       .wechet_box {
         display: inline-block;
-        margin-left: 52px;
+        // margin-left: 52px;
         cursor: pointer;
         position: relative;
 
@@ -465,7 +511,24 @@ export default {
         }
 
         .ma {
-          display: none;
+          position: absolute;
+          left: -38px;
+          top: 28px;
+          width: 100px;
+          height: 100px;
+        }
+      }
+      .cocos_box {
+        display: inline-block;
+        // margin-left: 52px;
+        cursor: pointer;
+        position: relative;
+
+        .biao {
+          height: 26px;
+        }
+
+        .ma {
           position: absolute;
           left: -38px;
           top: 28px;
@@ -475,11 +538,11 @@ export default {
       }
 
       a {
-        margin-left: 52px;
+        // margin-left: 52px;
 
-        &:nth-child(1) {
-          margin-left: 0;
-        }
+        // &:nth-child(1) {
+        //   margin-left: 0;
+        // }
 
         img {
           height: 26px;
@@ -515,7 +578,6 @@ export default {
         height: 54px;
         width: 63px;
         background: #676767;
-        display: none;
         // position: absolute;
         // right: 120px;
         // top: -27px;
@@ -723,15 +785,16 @@ export default {
 
       .footer_img {
         margin: auto;
-        width: 440px;
+        width: 680px;
         height: 28px;
-        margin: auto;
+        display: flex;
+        justify-content: space-between;
         // overflow: hidden;
         margin-top: 105px;
 
-        img {
-          width: 28px;
-        }
+        // img {
+        //   width: 28px;
+        // }
 
         .wechet_box {
           display: inline-block;
@@ -744,7 +807,24 @@ export default {
           }
 
           .ma {
-            display: none;
+            position: absolute;
+            left: -38px;
+            top: 28px;
+            width: 100px;
+            height: 100px;
+          }
+        }
+        .cocos_box {
+          display: inline-block;
+          margin-left: 52px;
+          cursor: pointer;
+          position: relative;
+
+          .biao {
+            height: 26px;
+          }
+
+          .ma {
             position: absolute;
             left: -38px;
             top: 28px;

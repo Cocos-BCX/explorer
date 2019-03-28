@@ -599,11 +599,11 @@ export default {
 //   }
 // }
 .body {
-  height: 1418px;
   width: 100%;
+  padding-bottom: 20px;
   .content-box {
     width: 1440px;
-    height: 1418px;
+    padding-bottom: 60px;
     // height: 1018px;
     margin: 0 auto;
     // background: linear-gradient(
