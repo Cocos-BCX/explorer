@@ -193,7 +193,8 @@ export default {
   font-family: PingFangSC-Regular, sans-serif;
   // float: left;
   background: url(https://jdi.cocosbcx.net/image/explorer/bg-banner.jpg)
-    no-repeat 50%;
+    no-repeat;
+  background-size: cover;
   overflow: hidden;
   &.no-home {
     height: 250px;
