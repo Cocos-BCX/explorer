@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content" :class="$route.name === 'Home' || $route.name === '*' ? '' : 'no-home'">
     <div class="nav_box">
       <div class="nav_logo_box">
         <img src="https://jdi.cocosbcx.net/image/explorer/logow.png" alt>
@@ -148,7 +148,7 @@ export default {
       this.hover = true;
     },
     reload() {
-      window.reload();
+      this.$router.push({ name: "Home" });
     },
     LeaveDevs() {
       this.hover = false;
@@ -198,7 +198,9 @@ export default {
   overflow: hidden;
   &.no-home {
     height: 250px;
-    background: url(https://jdi.cocosbcx.net/image/explorer/bg-banner-child.png);
+    background: url(https://jdi.cocosbcx.net/image/explorer/bg-banner-child.png)
+      no-repeat;
+    background-size: cover;
   }
   .lt {
     float: left;

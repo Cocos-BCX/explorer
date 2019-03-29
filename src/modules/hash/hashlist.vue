@@ -50,7 +50,7 @@
   </div>
 </template>
 <script>
-import Header from "../../components/header.vue";
+import Header from "../../components/headers.vue";
 import Foot from "../../components/footer.vue";
 import api from "../../http/api.js";
 import moment from "moment";
