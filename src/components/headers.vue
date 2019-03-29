@@ -86,13 +86,13 @@
               class="chinese"
               @click="updateOption({     
              name: '中文',
-      type: 'en'})"
+      type: 'cn'})"
             >中文</div>
             <div
               class="english"
               @click="updateOption( {
       name: 'English',
-      type: 'cn'
+      type: 'en'
     })"
             >English</div>
           </div>
