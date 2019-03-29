@@ -146,50 +146,11 @@ export default {
     };
   },
   mounted() {
-    // this.needScroll();
     window.onscroll = () => {
       this.getScrollTop = document.documentElement.scrollTop;
     };
   },
-  // components: {
-  //   toTop
-  // },
-  // destroyed(){
-
-  // },
   methods: {
-    // needScroll() {
-    //   let that = this;
-    //   let clientHeight = document.documentElement.clientHeight;
-    //   let obtn = that.$refs.btn;
-    //   window.onscroll = function() {
-    //     let osTop =
-    //       document.documentElement.scrollTop || document.body.scrollTop;
-    //     if (osTop >= clientHeight) {
-    //       obtn.style.display = "block";
-    //     } else {
-    //       obtn.style.display = "none";
-    //     }
-    //     // if (!that.isTop) {
-    //     //   clearInterval(that.timer);
-    //     // }
-    //     that.isTop = false;
-    //   };
-    // },
-    // goTop() {
-    //   let that = this;
-    //   that.timer = setInterval(() => {
-    //     let osTop =
-    //       document.documentElement.scrollTop || document.body.scrollTop;
-    //     let ispeed = Math.floor(-osTop / 5);
-    //     document.documentElement.scrollTop = document.body.scrollTop =
-    //       osTop + ispeed;
-    //     that.isTop = true;
-    //     if (osTop === 0) {
-    //       clearInterval(that.timer);
-    //     }
-    //   }, 30);
-    // },
     toTop() {
       var currentScroll =
         document.documentElement.scrollTop || document.body.scrollTop;

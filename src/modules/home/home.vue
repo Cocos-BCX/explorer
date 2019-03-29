@@ -129,7 +129,7 @@
 <script>
 import api from "../../http/api.js";
 import VueI18n from "vue-i18n";
-import Vue from "vue";
+// import Vue from "vue";
 import Foot from "../../components/footer";
 import Highcharts from "../../components/hightcart";
 import { throws } from "assert";

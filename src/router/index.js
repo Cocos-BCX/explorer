@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../modules/home'
 import Block from '../modules/block'
