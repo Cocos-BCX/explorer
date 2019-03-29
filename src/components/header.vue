@@ -24,8 +24,8 @@ export default {
   name: "Header",
   data() {
     return {
-      select: [{ name: "English", type: "en" }, { name: "中文", type: "cn" }],
-      selected: { name: "中文", type: "cn" }
+      select: [{ name: "中文", type: "en" }, { name: "English", type: "cn" }],
+      selected: { name: "English", type: "cn" }
     };
   },
   components: {

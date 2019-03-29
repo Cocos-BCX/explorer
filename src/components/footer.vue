@@ -230,7 +230,7 @@ export default {
 .footer {
   width: 100%;
   // min-width:1600px;
-  height: 529px;
+  height: 453px;
   background: rgba(31, 31, 31, 1);
   .footer_box {
     position: relative;
@@ -456,7 +456,7 @@ export default {
       height: 28px;
       display: flex;
       justify-content: space-between;
-      margin: 105px auto auto;
+      margin: 90px auto auto;
       // overflow: hidden
       // img {
       //   width: 28px;
@@ -518,7 +518,7 @@ export default {
       color: rgba(255, 255, 255, 1);
       opacity: 0.34;
       margin: auto;
-      margin-top: 92px;
+      margin-top: 60px;
       text-align: center;
     }
   }
