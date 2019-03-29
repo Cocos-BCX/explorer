@@ -78,7 +78,7 @@
       </div>
       <div class="lang_box lt" @click="chooseLanguage">
         <div class="lang">
-          <div class="now">{{language.name }}</div>
+          <div class="now">{{$i18n.locale=== 'cn' ? 'English' : '中文'}}</div>
         </div>
         <transition name="slide-fade">
           <div class="choose_lang_box" v-if="language_box">
