@@ -602,7 +602,7 @@ export default {
   width: 100%;
   padding-bottom: 20px;
   .content-box {
-    width: 1440px;
+    width: 1200px;
     padding-bottom: 60px;
     // height: 1018px;
     margin: 0 auto;

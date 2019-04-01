@@ -113,7 +113,7 @@
         <a href="https://github.com/cocos-bcx" target="_blank" rel="noopener noreferrer">
           <img src="https://jdi.cocosbcx.net/image/explorer/github.png" alt>
         </a>
-        <a href="https://reddit.com/cocosbcx" target="_blank" rel="noopener noreferrer">
+        <a href="https://www.reddit.com/user/cocos-bcx/" target="_blank" rel="noopener noreferrer">
           <img src="https://jdi.cocosbcx.net/image/explorer/reddit.png" alt>
         </a>
         <a href="https://discord.gg/jdJMNtC" target="_blank" rel="noopener noreferrer">
