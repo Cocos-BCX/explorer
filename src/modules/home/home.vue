@@ -78,7 +78,7 @@
                     <span>{{block.witness_name}}</span>
                   </p>
                   <p class="trade-num" @click="queryBlock(block.block_height)">
-                    <span>{{block.trx_count}}{{$t('home.list.block.block_detail.trade')}}</span>
+                    <span>{{block.trx_count}} {{$t('home.list.block.block_detail.trade')}}</span>
                     {{$t('home.list.block.block_detail.by')}}{{block.time}}
                   </p>
                   <p class="award">{{$t('home.list.block.block_detail.reward')}} 0 COCOS</p>

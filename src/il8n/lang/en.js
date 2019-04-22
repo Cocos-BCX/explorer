@@ -40,7 +40,7 @@ export default {
           block: 'Block',
           minutes: 'minutes',
           second: 'seconds',
-          trade: 'transfers',
+          trade: 'transaction',
           produced: 'Produced by',
           by: 'by ',
           time: 'seconds ago',
@@ -49,10 +49,10 @@ export default {
         }
       },
       trade: {
-        title: 'TRANSFER',
+        title: 'Transactions',
         more: 'Show All',
         trade_detail: {
-          trade: 'Transfers #',
+          trade: 'Tx #',
           from: 'From',
           to: 'To',
           time: 'seconds ago',

@@ -174,7 +174,7 @@ export default {
           font-size: 20px;
         }
         width: 1148px;
-        height: 147px;
+        height: 180px;
         background: rgba(246, 246, 252, 1);
         margin-top: 20px;
         display: flex;
