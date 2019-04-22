@@ -196,6 +196,7 @@ export default {
             transactions.push(params);
           });
           that.transactions = transactions;
+          that.trans_length = result.count;
         })
         .catch(err => {
           this.$message.error(err.errmsg);
