@@ -2,7 +2,7 @@ export default {
   home: {
     search: 'Search Address,Block,Transaction Hash',
     banner: {
-      node: 'Testing nodes',
+      node: 'Testing Nodes',
       block: 'Block Height',
       trade: 'Transactions Last Day',
       count: 'Total Accounts',
