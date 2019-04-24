@@ -107,7 +107,7 @@
         >
           <img src="https://jdi.cocosbcx.net/image/explorer/weibo.png" alt>
         </a>
-        <a target="_blank" href="https://t.me/CocosBCX" rel="noopener noreferrer">
+        <a target="_blank" :href="$i18n.locale === 'en' ? 'https://t.me/cocosblockchainexpedition' : 'https://t.me/CocosBCX'" rel="noopener noreferrer">
           <img src="https://jdi.cocosbcx.net/image/explorer/telegram.png" alt>
         </a>
         <a href="https://github.com/cocos-bcx" target="_blank" rel="noopener noreferrer">

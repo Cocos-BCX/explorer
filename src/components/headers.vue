@@ -110,7 +110,7 @@ export default {
     return {
       hover: false,
       language_box: false,
-      baseurl: "http://wwww.cocosbcx.io"
+      baseurl: "http://www.cocosbcx.io"
     };
   },
   computed: {
