@@ -110,7 +110,7 @@ export default {
     return {
       hover: false,
       language_box: false,
-      baseurl: "http://cocos.dev.cjfan.net"
+      baseurl: "http://cocosbcx.io"
     };
   },
   computed: {
