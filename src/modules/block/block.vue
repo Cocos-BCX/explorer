@@ -245,7 +245,6 @@ export default {
   .detail {
     width: 1440px;
     margin: 0 auto;
-    max-height: 1674px;
     margin-bottom: 117px;
     .content {
       margin: 0 auto;
@@ -349,32 +348,32 @@ export default {
           }
         }
         .list:nth-of-type(1) {
-          width: 220px;
-          margin-left: 25px;
+          width: 18.3%;
+          margin-left: 2.1%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(2) {
-          width: 118px;
-          margin-left: 52px;
+          width: 9.8%;
+          margin-left: 4.3%;
         }
         .list:nth-of-type(3) {
-          width: 221px;
-          margin-left: 61px;
+          width: 18.41%;
+          margin-left: 5%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(4) {
-          width: 221px;
-          margin-left: 61px;
+          width: 18.41%;
+          margin-left: 5%;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
         }
         .list:nth-of-type(5) {
-          margin-left: 61px;
+          margin-left: 5%;
         }
       }
     }
@@ -386,7 +385,6 @@ export default {
     .detail {
       width: 1200px;
       margin: 0 auto;
-      max-height: 1674px;
       margin-bottom: 117px;
       .content {
         margin: 0 auto;
@@ -488,34 +486,6 @@ export default {
             .cursor {
               color: #4990ed;
             }
-          }
-          .list:nth-of-type(1) {
-            width: 18.3%;
-            margin-left: 2.1%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-          .list:nth-of-type(2) {
-            width: 9.8%;
-            margin-left: 4.3%;
-          }
-          .list:nth-of-type(3) {
-            width: 221px;
-            margin-left: 61px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-          .list:nth-of-type(4) {
-            width: 18.41;
-            margin-left: 5%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-          .list:nth-of-type(5) {
-            margin-left: 5%;
           }
         }
       }
