@@ -285,7 +285,6 @@ export default {
     width: 100%;
     background: rgba(51, 51, 51, 1);
     font-size: 12px;
-    font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(153, 153, 153, 1);
   }

@@ -226,15 +226,15 @@ export default {
     handleSizeChange(e) {},
     handleCurrentChange(e) {
       this.pageMarket = parseInt(e);
-      this.queryTrade();
+      this.queryTrade(this.$route.params.block_height);
     },
     pageNext() {
       this.pageMarket++;
-      this.queryTrade();
+      this.queryTrade(this.$route.params.block_height);
     },
     pagePrev() {
       this.pageMarket--;
-      this.queryTrade();
+      this.queryTrade(this.$route.params.block_height);
     }
   }
 };
