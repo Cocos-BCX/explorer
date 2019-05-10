@@ -1,9 +1,9 @@
 <template>
   <div class="content" :class="$route.name === 'Home' || $route.name === '*' ? '' : 'no-home'">
     <div class="nav_box">
-      <div class="nav_logo_box">
+      <a class="nav_logo_box" :href="$i18n.locale === 'en' ? baseurl + '?language=en' : baseurl">
         <img src="https://jdi.cocosbcx.net/image/explorer/logow.png" alt>
-      </div>
+      </a>
       <div class="nav_line"></div>
       <div class="nav" :class="$i18n.locale === 'cn'? 'cn' : 'en'">
         <div class="nav_list_box">
@@ -190,7 +190,6 @@ export default {
   font-size: 14px;
   height: 568px;
   width: 100%;
-  font-family: PingFangSC-Regular, sans-serif;
   // float: left;
   background: url(https://jdi.cocosbcx.net/image/explorer/bg-banner.jpg)
     no-repeat;
@@ -465,7 +464,6 @@ export default {
           margin-top: 13px;
           font-size: 11px;
           width: 100%;
-          font-family: PingFang-SC-Regular;
           font-weight: 400;
           color: rgba(255, 255, 255, 1);
           text-align: center;

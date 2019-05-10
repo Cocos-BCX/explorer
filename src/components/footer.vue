@@ -291,7 +291,6 @@ export default {
 
         .f_til {
           font-size: 18px;
-          font-family: FjallaOne;
           color: rgba(103, 103, 103, 1);
         }
 
@@ -317,7 +316,6 @@ export default {
             float: left;
             margin-left: 7px;
             font-size: 15px;
-            font-family: MyriadPro-Regular;
             color: rgba(255, 255, 255, 1);
             line-height: 17px;
           }
@@ -341,7 +339,6 @@ export default {
             float: left;
             font-size: 15px;
             margin-left: 12px;
-            // font-family: MyriadPro-Regular;
             font-weight: 400;
             color: rgba(255, 255, 255, 1);
             line-height: 24px;
@@ -363,7 +360,6 @@ export default {
         float: left;
         .r_til {
           font-size: 18px;
-          font-family: FjallaOne;
           color: rgba(103, 103, 103, 1);
         }
 
@@ -392,7 +388,6 @@ export default {
               height: 54px;
               outline: none;
               font-size: 14px;
-              font-family: MyriadPro-Regular;
               font-weight: 400;
               // color: rgba(170, 170, 170, 1);
               box-sizing: border-box;
@@ -408,7 +403,6 @@ export default {
               height: 54px;
               line-height: 54px;
               font-size: 14px;
-              font-family: MyriadPro-Regular;
               font-weight: 400;
               color: rgba(170, 170, 170, 1);
               width: 100%;
@@ -442,7 +436,6 @@ export default {
               margin: auto;
               transform: skewX(25deg);
               font-size: 16px;
-              font-family: FjallaOne;
               font-weight: 400;
               color: #fff;
               line-height: 60px;
@@ -517,7 +510,6 @@ export default {
 
     .footer_bottom {
       font-size: 15px;
-      font-family: HiraginoSansGB-W3;
       font-weight: normal;
       color: rgba(255, 255, 255, 1);
       opacity: 0.34;

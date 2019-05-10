@@ -508,13 +508,11 @@ export default {
       }
       div {
         font-size: 33px;
-        font-family: PingFangSC-Medium;
         font-weight: 500;
         color: rgba(51, 51, 51, 1);
         line-height: 45px;
         span {
           font-size: 33px;
-          font-family: PingFangSC-Medium;
           font-weight: 500;
           color: rgba(51, 51, 51, 1);
           line-height: 45px;
@@ -523,7 +521,6 @@ export default {
       span {
         height: 20px;
         font-size: 18px;
-        font-family: PingFangSC-Regular;
         font-weight: 400;
         color: rgba(152, 152, 152, 1);
         line-height: 21px;
@@ -645,7 +642,6 @@ export default {
       }
       .more {
         font-size: 14px;
-        font-family: PingFangSC-Regular;
         color: rgba(56, 141, 244, 1);
         margin-right: 21px;
         cursor: pointer;
@@ -757,7 +753,6 @@ export default {
       }
       .trade-time {
         font-size: 14px;
-        font-family: PingFangSC-Regular;
         font-weight: 400;
         margin-right: 22px;
         color: rgba(152, 152, 152, 1);

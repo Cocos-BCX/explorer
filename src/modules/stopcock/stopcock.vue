@@ -38,14 +38,12 @@ export default {
   align-items: center;
   .title {
     font-size: 24px;
-    font-family: PingFangSC-Medium;
     font-weight: 500;
     color: rgba(51, 51, 51, 1);
     margin-top: 49px;
   }
   .prompt {
     font-size: 13px;
-    font-family: PingFangSC-Regular;
     font-weight: 400;
     color: rgba(152, 152, 152, 1);
     line-height: 18px;
@@ -75,7 +73,6 @@ export default {
     align-items: center;
     justify-content: center;
     font-size: 16px;
-    font-family: PingFangSC-Medium;
     font-weight: 500;
     color: rgba(255, 255, 255, 1);
     margin-top: 26px;
