@@ -82,7 +82,11 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src="https://jdi.cocosbcx.net/image/explorer/face.png" alt>
+          <img
+            :src="imgs.face"
+            @mouseenter="imgs.face = 'https://jdi.cocosbcx.net/image/explorer/mediumb.png'"
+            @mouseleave="imgs.face = 'https://jdi.cocosbcx.net/image/explorer/face.png'"
+          >
         </a>
         <a
           class="twitter"
@@ -90,14 +94,26 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src="https://jdi.cocosbcx.net/image/explorer/Twitter.png" alt>
+          <img
+            :src="imgs.twitter"
+            @mouseenter="imgs.twitter = 'https://jdi.cocosbcx.net/image/explorer/Twitterb.png'"
+            @mouseleave="imgs.twitter = 'https://jdi.cocosbcx.net/image/explorer/Twitter.png'"
+          >
         </a>
-        <div class="wechet_box" @mouseenter="wx = true" @mouseleave="wx = false">
-          <img src="https://jdi.cocosbcx.net/image/explorer/wechat.png" class="biao" alt>
+        <div
+          class="wechet_box"
+          @mouseenter="wx = true; imgs.wechat = 'https://jdi.cocosbcx.net/image/explorer/wechatb.png'"
+          @mouseleave="wx = false ;imgs.wechat = 'https://jdi.cocosbcx.net/image/explorer/wechat.png'"
+        >
+          <img :src="imgs.wechat" class="biao" alt>
           <img v-if="wx" src="https://jdi.cocosbcx.net/image/explorer/wxma.jpg" class="ma" alt>
         </div>
-        <div class="cocos_box" @mouseenter="cocos = true" @mouseleave="cocos = false">
-          <img src="https://jdi.cocosbcx.net/image/explorer/zs.png" class="biao" alt>
+        <div
+          class="cocos_box"
+          @mouseenter="cocos = true;imgs.cocos = 'https://jdi.cocosbcx.net/image/explorer/zs.png'"
+          @mouseleave="cocos = false;imgs.cocos = 'https://jdi.cocosbcx.net/image/explorer/zs.png'"
+        >
+          <img :src="imgs.cocos" style="width:20px;height:26px" class="biao" alt>
           <img v-if="cocos" src="https://jdi.cocosbcx.net/image/explorer/zsma.jpg" class="ma" alt>
         </div>
         <a
@@ -105,23 +121,47 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <img src="https://jdi.cocosbcx.net/image/explorer/weibo.png" alt>
+          <img
+            :src="imgs.weibo"
+            @mouseenter="imgs.weibo = 'https://jdi.cocosbcx.net/image/explorer/weibob.png'"
+            @mouseleave="imgs.weibo = 'https://jdi.cocosbcx.net/image/explorer/weibo.png'"
+            alt
+          >
         </a>
         <a
           target="_blank"
           :href="$i18n.locale === 'en' ? 'https://t.me/cocosbcxen' : 'https://t.me/CocosBCX'"
           rel="noopener noreferrer"
         >
-          <img src="https://jdi.cocosbcx.net/image/explorer/telegram.png" alt>
+          <img
+            :src="imgs.tel"
+            @mouseenter="imgs.tel = 'https://jdi.cocosbcx.net/image/explorer/telegramb.png'"
+            @mouseleave="imgs.tel = 'https://jdi.cocosbcx.net/image/explorer/telegram.png'"
+            alt
+          >
         </a>
         <a href="https://github.com/cocos-bcx" target="_blank" rel="noopener noreferrer">
-          <img src="https://jdi.cocosbcx.net/image/explorer/github.png" alt>
+          <img
+            :src="imgs.github"
+            @mouseenter="imgs.github = 'https://jdi.cocosbcx.net/image/explorer/githubb.png'"
+            @mouseleave="imgs.github = 'https://jdi.cocosbcx.net/image/explorer/github.png'"
+            alt
+          >
         </a>
         <a href="https://www.reddit.com/user/cocos-bcx/" target="_blank" rel="noopener noreferrer">
-          <img src="https://jdi.cocosbcx.net/image/explorer/reddit.png" alt>
+          <img
+            :src="imgs.reb"
+            @mouseenter="imgs.reb = 'https://jdi.cocosbcx.net/image/explorer/redditb.png'"
+            @mouseleave="imgs.reb = 'https://jdi.cocosbcx.net/image/explorer/reddit.png'"
+          >
         </a>
         <a href="https://discord.gg/jdJMNtC" target="_blank" rel="noopener noreferrer">
-          <img src="https://jdi.cocosbcx.net/image/explorer/discord.png" alt>
+          <img
+            :src="imgs.dis"
+            @mouseenter="imgs.dis = 'https://jdi.cocosbcx.net/image/explorer/disb.png'"
+            @mouseleave="imgs.dis = 'https://jdi.cocosbcx.net/image/explorer/discord.png'"
+            alt
+          >
         </a>
       </div>
       <!-- <toTop></toTop> -->
@@ -146,7 +186,18 @@ export default {
       cocos_subscribe: "",
       cocos: false,
       wx: false,
-      getScrollTop: ""
+      getScrollTop: "",
+      imgs: {
+        face: "https://jdi.cocosbcx.net/image/explorer/face.png",
+        tel: "https://jdi.cocosbcx.net/image/explorer/telegram.png",
+        wechat: "https://jdi.cocosbcx.net/image/explorer/wechat.png",
+        cocos: "https://jdi.cocosbcx.net/image/explorer/zs.png",
+        twitter: "https://jdi.cocosbcx.net/image/explorer/Twitter.png",
+        weibo: "https://jdi.cocosbcx.net/image/explorer/weibo.png",
+        github: "https://jdi.cocosbcx.net/image/explorer/github.png",
+        reb: "https://jdi.cocosbcx.net/image/explorer/reddit.png",
+        dis: "https://jdi.cocosbcx.net/image/explorer/discord.png"
+      }
     };
   },
   mounted() {
@@ -483,6 +534,7 @@ export default {
         position: relative;
 
         .biao {
+          width: 20px;
           height: 26px;
         }
 
