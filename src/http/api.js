@@ -74,7 +74,9 @@ axios.interceptors.response.use(
 )
 
 axios.defaults.baseURL =
-  process.env.NODE_ENV === 'development' ? 'https://explorer.cocosbcx.io/api/' : 'https://explorer.cocosbcx.io/api/'
+  process.env.NODE_ENV === 'development'
+    ? 'https://explorer.cocosbcx.io/api/'
+    : 'https://explorer.cocosbcx.io/api/'
 axios.defaults.headers = {
   'X-Requested-With': 'XMLHttpRequest',
   'Content-Type': 'application/json;charset=UTF-8'
@@ -85,13 +87,13 @@ export default {
   get(url, param) {
     return new Promise((resolve, reject) => {
       axios({
-          method: 'get',
-          url,
-          params: param
-          // cancelToken: new CancelToken(c => {
-          //   cancel = c
-          // })
-        })
+        method: 'get',
+        url,
+        params: param
+        // cancelToken: new CancelToken(c => {
+        //   cancel = c
+        // })
+      })
         .then(res => {
           resolve(res.data)
         })
@@ -103,13 +105,13 @@ export default {
   post(url, param) {
     return new Promise((resolve, reject) => {
       axios({
-          method: 'post',
-          url,
-          data: param,
-          cancelToken: new CancelToken(c => {
-            cancel = c
-          })
+        method: 'post',
+        url,
+        data: param,
+        cancelToken: new CancelToken(c => {
+          cancel = c
         })
+      })
         .then(res => {
           resolve(res.data)
         })

@@ -51,12 +51,12 @@
     <div class="body">
       <div class="content-box">
         <div class="chart">
-          <div class="child-chart trade-chart">
+          <!-- <div class="child-chart trade-chart">
             <Highcharts :options="options" ref="tradeCharts"></Highcharts>
           </div>
           <div class="child-chart address-chart">
             <Highcharts :options="address_options" ref="addressCharts"></Highcharts>
-          </div>
+          </div>-->
         </div>
         <div class="block_trade">
           <div class="block">
@@ -205,52 +205,49 @@ export default {
     // ...mapMutations({ setLanguage: 'updateOption' })
   },
   mounted() {
-    api
-      .get("/chart", {})
-      .then(result => {
-        let trade_categories = [];
-        let trade_series = [
-          {
-            data: []
-          }
-        ];
-        result.counts.forEach(item => {
-          trade_categories.push(item.date);
-          trade_series[0].data.push(item.count);
-        });
-        that.options = {
-          categories: trade_categories,
-          series: trade_series,
-          yCompany: "transaction",
-          title: that.defaults.trade
-        };
-        let address_categories = [];
-        let address_series = [
-          {
-            data: []
-          }
-        ];
-        result.address.forEach(item => {
-          address_categories.push(item.date);
-          address_series[0].data.push(item.count);
-        });
-        that.address_options = {
-          categories: address_categories,
-          series: address_series,
-          yCompany: "address",
-          title: that.defaults.address
-        };
-      })
-      .catch(err => {
-        this.$message.error(err.data.errmsg);
-      });
-    const that = this;
-    that.search = localStorage.getItem("search");
-    // console.log(this.urls);
-    // that.$nextTick(function() {
-    //   that.address_options.title = that.defaults.address;
-    //   that.options.title = that.defaults.trade;
-    // });
+    // api
+    //   .get("/chart", {})
+    //   .then(result => {
+    //     let trade_categories = [];
+    //     let trade_series = [
+    //       {
+    //         data: []
+    //       }
+    //     ];
+    //     result.counts.forEach(item => {
+    //       console.log(item);
+    //       trade_categories.push(item.date);
+    //       trade_series[0].data.push(item.count);
+    //     });
+    //     that.options = {
+    //       categories: trade_categories,
+    //       series: trade_series,
+    //       yCompany: "transaction",
+    //       title: that.defaults.trade
+    //     };
+    //     let address_categories = [];
+    //     let address_series = [
+    //       {
+    //         data: []
+    //       }
+    //     ];
+    //     result.address.forEach(item => {
+    //       console.log(item);
+    //       address_categories.push(item.date);
+    //       address_series[0].data.push(item.count);
+    //     });
+    //     that.address_options = {
+    //       categories: address_categories,
+    //       series: address_series,
+    //       yCompany: "address",
+    //       title: that.defaults.address
+    //     };
+    //   })
+    //   .catch(err => {
+    //     this.$message.error(err.data.errmsg);
+    //   });
+    // const that = this;
+    // that.search = localStorage.getItem("search");
   },
   updated() {},
   destroyed() {
