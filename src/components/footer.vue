@@ -110,7 +110,7 @@
         </div>
         <div
           class="cocos_box"
-          @mouseenter="cocos = true;imgs.cocos = 'https://jdi.cocosbcx.net/image/explorer/zs.png'"
+          @mouseenter="cocos = true;imgs.cocos = 'https://jdi.cocosbcx.net/image/explorer/zsb.png'"
           @mouseleave="cocos = false;imgs.cocos = 'https://jdi.cocosbcx.net/image/explorer/zs.png'"
         >
           <img :src="imgs.cocos" style="width:20px;height:26px" class="biao" alt>
