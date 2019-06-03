@@ -534,7 +534,7 @@ export default {
         position: relative;
 
         .biao {
-          width: 26px;
+          width: 26px !important;
           height: 26px;
         }
 
