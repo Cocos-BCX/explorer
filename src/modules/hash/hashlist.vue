@@ -236,6 +236,9 @@ export default {
         .list:nth-of-type(5) {
           width: 19%;
           margin-left: 5%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
       }
     }

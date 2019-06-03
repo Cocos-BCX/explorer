@@ -113,7 +113,7 @@
           @mouseenter="cocos = true;imgs.cocos = 'https://jdi.cocosbcx.net/image/explorer/zsb.png'"
           @mouseleave="cocos = false;imgs.cocos = 'https://jdi.cocosbcx.net/image/explorer/zs.png'"
         >
-          <img :src="imgs.cocos" style="width:20px;height:26px" class="biao" alt>
+          <img :src="imgs.cocos" style="width:28px;height:26px" class="biao" alt>
           <img v-if="cocos" src="https://jdi.cocosbcx.net/image/explorer/zsma.jpg" class="ma" alt>
         </div>
         <a
@@ -534,7 +534,7 @@ export default {
         position: relative;
 
         .biao {
-          width: 20px;
+          width: 26px;
           height: 26px;
         }
 
