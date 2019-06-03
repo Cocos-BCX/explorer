@@ -1,7 +1,7 @@
 export default {
   home: {
     prompt: 'Prompt',
-    content: 'Under maintenance, the public beta chain data will soon be online',
+    content: "Under maintenance, the main net public beta chain's data is about to be online ",
     button: {
       cancel: 'cancel',
       confirm: 'confirm',
