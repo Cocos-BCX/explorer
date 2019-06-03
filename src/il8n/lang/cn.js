@@ -1,5 +1,11 @@
 export default {
   home: {
+    prompt: '温馨提示',
+    content: '正在维护中，主网公测链数据即将上线',
+    button: {
+      cancel: '取消',
+      confirm: '确认',
+    },
     search: '搜索地址、区块、交易hash',
     banner: {
       node: '测试节点',

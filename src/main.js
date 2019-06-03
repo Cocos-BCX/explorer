@@ -14,11 +14,13 @@ import en from './il8n/lang/en'
 import {
   Pagination,
   MessageBox,
+  Dialog
 } from 'element-ui';
 // import VuePaginate from 'vue-paginate'
 // import defaults from './http/api';
 Vue.component(MessageBox)
 Vue.component(Pagination)
+Vue.component(Dialog)
 Vue.prototype.$qs = qs;
 Vue.use(Vuex)
 Vue.use(VueLazyload)

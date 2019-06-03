@@ -1,5 +1,11 @@
 export default {
   home: {
+    prompt: 'Prompt',
+    content: 'Under maintenance, the public beta chain data will soon be online',
+    button: {
+      cancel: 'cancel',
+      confirm: 'confirm',
+    },
     search: 'Search Address,Block,Transaction Hash',
     banner: {
       node: 'Testing Nodes',

@@ -62,6 +62,12 @@ a {
   margin-top: 39px;
 }
 
+.el-dialog__header,
+.el-dialog__body,
+.el-dialog__footer {
+  text-align: center
+}
+
 .el-pagination.is-background .btn-prev {
   border-left: 1px solid #e6e6e6;
 }
