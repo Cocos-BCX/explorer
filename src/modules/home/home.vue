@@ -69,7 +69,7 @@
               <div class="block-piece" v-for="block in blocks" :key="block.id">
                 <div class="block-id" @click="queryBlock(block.block_height)">
                   <p>{{$t('home.list.block.block_detail.block')}}{{block.block_height}}</p>
-                  <!-- <p>>{{block.time}}</p> -->
+                  <p>>{{block.time}}</p>
                   <!-- {{$t('home.list.block.block_detail.second')}} -->
                 </div>
                 <div class="block-detail">
@@ -114,7 +114,7 @@
                     class="trade-num"
                   >{{$t('home.list.trade.trade_detail.num')}} {{tran.parse_operations.amount}}</div>
                 </div>
-                <!-- <div class="trade-time">>{{tran.date}}</div> -->
+                <div class="trade-time">>{{tran.date}}</div>
                 <!-- {{$t('home.list.trade.trade_detail.eth')}} -->
                 <!-- {{$t('home.list.trade.trade_detail.time')}} -->
               </div>

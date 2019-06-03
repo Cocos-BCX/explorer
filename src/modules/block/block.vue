@@ -20,7 +20,7 @@
               v-if="block.witness_signature"
             >{{$t('block.detail.status.enter')}}</span>
           </div>
-          <!-- <div class="time piece" v-if="block.time">
+          <div class="time piece" v-if="block.time">
             <span>{{$t('block.detail.time.name')}}</span>
             <p class="center">
               <span v-if="block.time.days">{{block.time.days}}{{$t('block.detail.time.day')}}</span>
@@ -31,7 +31,7 @@
               ({{block.time.times}})
               {{$t('block.detail.time.trade')}}
             </p>
-          </div>-->
+          </div>
           <div class="hash piece">
             <span>{{$t('block.detail.hash')}}</span>
             <span class="center">{{block.block_id}}</span>
