@@ -7,14 +7,14 @@
         <div class="table" v-if="blocks && blocks.length">
           <div class="th">
             <div class="list click">{{$t('block.list.high')}}</div>
-            <div class="list">{{$t('block.list.age')}}</div>
+            <!-- <div class="list">{{$t('block.list.age')}}</div> -->
             <div class="list">{{$t('block.list.trade')}}</div>
             <div class="list click">{{$t('block.list.produced')}}</div>
             <!-- <div class="list">{{$t('block.list.bit')}}</div> -->
           </div>
           <div class="td th" v-for="(item,index) in blocks" :key="index">
             <div class="list click" @click="queryItemBlock(item.block_height)">{{item.block_height}}</div>
-            <div class="list">{{item.time}}</div>
+            <!-- <div class="list">{{item.time}}</div> -->
             <div class="list">{{item.trx_count}}</div>
             <div
               class="list click"
