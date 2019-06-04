@@ -26,7 +26,7 @@
         <div class="num block">
           <img src="https://jdi.cocosbcx.net/image/explorer/gaodu.png" alt>
           <div @click="moreBlock()">
-            <countTo :startVal="startVal" :endVal="count.block_height" :duration="3000"></countTo>
+            <countTo :startVal="startVal" :endVal="blocks[0].block_height" :duration="3000"></countTo>
           </div>
           <span @click="moreBlock()">{{$t('home.banner.block')}}</span>
         </div>
