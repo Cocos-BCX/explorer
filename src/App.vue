@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <router-view/>
-    <el-dialog :title="$t('home.prompt')" :visible.sync="dialogVisible" width="40%">
+    <!-- <el-dialog :title="$t('home.prompt')" :visible.sync="dialogVisible" width="40%">
       <span>{{$t('home.content')}}</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{$t('home.button.cancel')}}</el-button>
         <el-button type="primary" @click="dialogVisible = false">{{$t('home.button.confirm')}}</el-button>
       </span>
-    </el-dialog>
+    </el-dialog>-->
   </div>
 </template>
 
