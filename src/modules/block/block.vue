@@ -90,7 +90,6 @@
                 class="list cursor"
                 @click="queryHash(item.trx_id)"
               >{{item.trx_id}}</div>
-              <div class="list cursor" @click="queryBlock(item.block_num)">{{item.block_num}}</div>
               <div class="list">{{item.date}}</div>
               <div
                 v-if="item.parse_operations.from"
@@ -113,7 +112,6 @@
                 class="list cursor"
                 @click="queryHash(item.trx_id)"
               >{{item.trx_id}}</div>
-              <div class="list cursor" @click="queryBlock(item.block_num)">{{item.block_num}}</div>
               <div class="list">{{item.date}}</div>
               <div
                 v-if="item.parse_operations.caller"
@@ -132,7 +130,6 @@
                 class="list cursor"
                 @click="queryHash(item.trx_id)"
               >{{item.trx_id}}</div>
-              <!-- <div class="list cursor" @click="queryBlock(item.block_num)">{{item.block_num}}</div> -->
               <div class="list">{{item.date}}</div>
               <div
                 v-if="item.parse_operations.registrar"
@@ -153,7 +150,6 @@
                 class="list cursor"
                 @click="queryHash(item.trx_id)"
               >{{item.trx_id}}</div>
-              <div class="list cursor" @click="queryBlock(item.block_num)">{{item.block_num}}</div>
               <div class="list">{{item.date}}</div>
             </div>
           </div>
