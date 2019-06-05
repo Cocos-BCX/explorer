@@ -114,7 +114,6 @@ export default {
         })
         .then(response => {
           var data = JSON.parse(response.body);
-          console.log(data);
           if (data.status == 1) {
             //  alert(response.body.msg)
             that.cocos_subscribe = "";

@@ -157,7 +157,6 @@ export default {
       this.language_box = !this.language_box;
     },
     updateOption(option) {
-      console.log(this.language_box);
       localStorage.setItem("language_name", option.name);
       localStorage.setItem("language_type", option.type);
       this.$store.commit("setLanguage", option);

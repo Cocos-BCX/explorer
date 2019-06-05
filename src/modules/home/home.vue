@@ -381,8 +381,6 @@ export default {
             };
             trans.push(list);
           });
-          console.log(trans);
-
           that.trans = trans;
         })
         .catch(err => {
