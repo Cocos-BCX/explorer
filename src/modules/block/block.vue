@@ -80,18 +80,82 @@
             <div class="list">{{$t('block.trade.to')}}</div>
             <div class="list">{{$t('block.trade.num')}}</div>
           </div>
-          <div class="td th" v-for="(item,index) in transactions" :key="index">
-            <div class="list cursor" @click="queryHash(item.trx_id)">{{item.trx_id}}</div>
-            <div class="list">{{item.date}}</div>
+          <div v-for="(item,index) in transactions" :key="index">
             <div
-              class="list cursor"
-              @click="queryAddress(item.parse_operations.from)"
-            >{{item.parse_operations.from}}</div>
+              class="td th"
+              v-if="item.parse_ops.length && item.parse_ops[0].type === 'transfer'"
+            >
+              <div
+                :title="item.trx_id"
+                class="list cursor"
+                @click="queryHash(item.trx_id)"
+              >{{item.trx_id}}</div>
+              <div class="list cursor" @click="queryBlock(item.block_num)">{{item.block_num}}</div>
+              <div class="list">{{item.date}}</div>
+              <div
+                v-if="item.parse_operations.from"
+                class="list cursor"
+                @click="queryAddress(item.parse_operations.from)"
+              >{{item.parse_operations.from}}</div>
+              <div
+                v-if="item.parse_operations.to"
+                class="list cursor"
+                @click="queryAddress(item.parse_operations.to)"
+              >{{item.parse_operations.to}}</div>
+              <div class="list" v-if="item.parse_operations.amount">{{item.parse_operations.amount}}</div>
+            </div>
             <div
-              class="list cursor"
-              @click="queryAddress(item.parse_operations.to)"
-            >{{item.parse_operations.to}}</div>
-            <div class="list">{{item.parse_operations.amount}}</div>
+              class="td th"
+              v-if="item.parse_ops.length && item.parse_ops[0].type === 'call_contract_function'"
+            >
+              <div
+                :title="item.trx_id"
+                class="list cursor"
+                @click="queryHash(item.trx_id)"
+              >{{item.trx_id}}</div>
+              <div class="list cursor" @click="queryBlock(item.block_num)">{{item.block_num}}</div>
+              <div class="list">{{item.date}}</div>
+              <div
+                v-if="item.parse_operations.caller"
+                class="list cursor"
+                @click="queryAddress(item.parse_operations.caller)"
+              >{{item.parse_operations.caller}}</div>
+              <div class="list black">{{item.parse_operations.contract_name}}</div>
+              <div class="list" v-if="item.parse_operations.fee">{{item.parse_operations.fee}}</div>
+            </div>
+            <div
+              class="td th"
+              v-if="item.parse_ops.length && item.parse_ops[0].type === 'account_create'"
+            >
+              <div
+                :title="item.trx_id"
+                class="list cursor"
+                @click="queryHash(item.trx_id)"
+              >{{item.trx_id}}</div>
+              <!-- <div class="list cursor" @click="queryBlock(item.block_num)">{{item.block_num}}</div> -->
+              <div class="list">{{item.date}}</div>
+              <div
+                v-if="item.parse_operations.registrar"
+                class="list"
+              >{{item.parse_operations.registrar}}</div>
+              <div
+                class="list cursor"
+                @click="queryAddress(item.parse_operations.new_account)"
+              >{{item.parse_operations.new_account}}</div>
+              <div class="list" v-if="item.parse_operations.fee">{{item.parse_operations.fee}}</div>
+            </div>
+            <div
+              class="td th"
+              v-if="!item.parse_ops.length || (item.parse_ops[0].type !== 'transfer' && item.parse_ops[0].type !== 'account_create' && item.parse_ops[0].type !== 'call_contract_function')"
+            >
+              <div
+                :title="item.trx_id"
+                class="list cursor"
+                @click="queryHash(item.trx_id)"
+              >{{item.trx_id}}</div>
+              <div class="list cursor" @click="queryBlock(item.block_num)">{{item.block_num}}</div>
+              <div class="list">{{item.date}}</div>
+            </div>
           </div>
         </div>
         <el-pagination
@@ -145,8 +209,28 @@ export default {
         data.time = util(data.time);
         // data.transaction_merkle_root = parseInt(data.transaction_merkle_root,2);
         that.block = data;
+        const trans = [];
+
         if (data.transactions && data.transactions.length) {
-          that.queryTrade(block_height);
+          that.trans_length = data.transactions.length;
+          data.transactions.forEach(item => {
+            let option;
+            if (item.parse_ops.length) {
+              option = item.parse_ops[0];
+            }
+            let list = {
+              block_num: option ? option.block_num : item.block,
+              parse_ops: item.parse_ops,
+              parse_operations: option ? option.parse_operations : [],
+              trx_id: item.trx_id,
+              date: option
+                ? moment(new Date()).to(moment(new Date(option.date)))
+                : ""
+              // signatures: item.signatures
+            };
+            trans.push(list);
+            that.transactions = trans;
+          });
         }
       })
       .catch(err => {
@@ -163,45 +247,33 @@ export default {
     queryHash(trans) {
       this.$router.push({ name: "Hash", params: { trans_id: trans } });
     },
-    queryTrade(block_height) {
-      const that = this;
-      let params = {
-        limit: 20,
-        page: this.pageMarket
-      };
-      console.log(block_height);
-      api
-        .get(`/query_tranfer_block/${block_height}`, params)
-        .then(result => {
-          // result.transactions.forEach(item => {
-          // if (item.parse_ops && item.parse_ops.length) {
-          //   item.parse_ops[0].parse_operations.trx_id = item.trx_id;
-          //   if (item.parse_ops[0].type === "transfer") {
-          //     item.parse_ops[0].parse_operations.date = moment(new Date()).to(
-          //       moment(new Date(item.parse_ops[0].date))
-          //     );
-          //     that.transactions.push(item.parse_ops[0]);
-          //   }
-          //   that.trans_length = result.trans_length;
-          // }
-          // });
-          const transactions = [];
-          result.transfer.forEach(item => {
-            let params = {
-              parse_operations: item.parse_operations,
-              trx_id: item.trx_id,
-              date: moment(new Date()).to(moment(new Date(item.date)))
-              // signatures: item.signatures
-            };
-            transactions.push(params);
-          });
-          that.transactions = transactions;
-          that.trans_length = result.count;
-        })
-        .catch(err => {
-          this.$message.error(err.errmsg);
-        });
-    },
+    // queryTrade(block_height) {
+    //   const that = this;
+    //   let params = {
+    //     limit: 20,
+    //     page: this.pageMarket
+    //   };
+    //   console.log(block_height);
+    //   api
+    //     .get(`/query_tranfer_block/${block_height}`, params)
+    //     .then(result => {
+    //       const transactions = [];
+    //       result.transfer.forEach(item => {
+    //         let params = {
+    //           parse_operations: item.parse_operations,
+    //           trx_id: item.trx_id,
+    //           date: moment(new Date()).to(moment(new Date(item.date)))
+    //           // signatures: item.signatures
+    //         };
+    //         transactions.push(params);
+    //       });
+    //       that.transactions = transactions;
+    //       that.trans_length = result.count;
+    //     })
+    //     .catch(err => {
+    //       this.$message.error(err.errmsg);
+    //     });
+    // },
     queryAddress(address) {
       const that = this;
       api

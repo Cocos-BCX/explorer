@@ -214,7 +214,7 @@ export default {
               option = item.parse_ops[0];
             }
             let list = {
-              block_num: item.block,
+              block_num: option ? option.block_num : item.block,
               parse_ops: item.parse_ops,
               parse_operations: option ? option.parse_operations : [],
               trx_id: item.trx_id,

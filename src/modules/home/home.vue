@@ -364,15 +364,13 @@ export default {
         .then(result => {
           const trans = [];
           that.trade_right = true;
-
           result.transfer.forEach(item => {
             let option;
-
             if (item.parse_ops.length) {
               option = item.parse_ops[0];
             }
             let list = {
-              block_num: item.block,
+              block_num: option ? option.block_num : item.block,
               parse_ops: item.parse_ops,
               parse_operations: option ? option.parse_operations : [],
               trx_id: item.trx_id,
