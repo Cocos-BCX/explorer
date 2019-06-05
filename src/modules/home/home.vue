@@ -103,7 +103,10 @@
                     <div>{{$t('home.list.trade.trade_detail.trade')}}</div>
                     <span>{{tran.trx_id}}</span>
                   </div>
-                  <div class="trade-address">
+                  <div
+                    class="trade-address"
+                    v-if="tran.parse_ops && tran.parse_ops[0].type === 'transfer'"
+                  >
                     <div>{{$t('home.list.trade.trade_detail.from')}}</div>
                     <span
                       @click="queryAddress(tran.parse_operations.from)"
@@ -116,11 +119,50 @@
                   </div>
                   <div
                     class="trade-num"
+                    v-if="tran.parse_ops && tran.parse_ops[0].type === 'transfer'"
                   >{{$t('home.list.trade.trade_detail.num')}} {{tran.parse_operations.amount}}</div>
+                  <div
+                    class="trade-address"
+                    v-if="tran.parse_ops && tran.parse_ops[0].type === 'call_contract_function'"
+                  >
+                    <div>{{$t('home.list.trade.trade_detail.from')}}</div>
+                    <span
+                      @click="queryAddress(tran.parse_operations.caller)"
+                    >{{tran.parse_operations.caller}}</span>
+                    <span class="cut"></span>
+                    <div>{{$t('trade.trade_detail.contract')}}</div>
+                    <span class="black">{{tran.parse_operations.contract_name}}</span>
+                  </div>
+                  <div
+                    class="trade-num"
+                    v-if="tran.parse_ops && tran.parse_ops[0].type === 'call_contract_function'"
+                  >{{$t('home.list.trade.trade_detail.num')}} {{tran.parse_operations.fee}}</div>
+                  <div
+                    class="trade-address"
+                    v-if="tran.parse_ops && tran.parse_ops[0].type === 'account_create'"
+                  >
+                    <div>{{$t('trade.trade_detail.create')}}</div>
+                    <span
+                      @click="queryAddress(tran.parse_operations.registrar)"
+                    >{{tran.parse_operations.registrar}}</span>
+                    <span class="cut"></span>
+                    <div>{{$t('trade.trade_detail.account')}}</div>
+                    <span
+                      @click="queryAddress(tran.parse_operations.new_account)"
+                    >{{tran.parse_operations.new_account}}</span>
+                  </div>
+                  <div
+                    class="trade-num"
+                    v-if="tran.parse_ops && tran.parse_ops[0].type === 'account_create'"
+                  >{{$t('home.list.trade.trade_detail.num')}} {{tran.parse_operations.fee}}</div>
+                  <div
+                    class="trade-address"
+                    v-if="!tran.parse_ops || (tran.parse_ops[0].type !== 'account_create' && tran.parse_ops[0].type !== 'call_contract_function' && tran.parse_ops[0].type !== 'transfer')"
+                  >
+                    <div>{{tran.parse_operations}}</div>
+                  </div>
                 </div>
                 <div class="trade-time">>{{tran.date}}</div>
-                <!-- {{$t('home.list.trade.trade_detail.eth')}} -->
-                <!-- {{$t('home.list.trade.trade_detail.time')}} -->
               </div>
             </div>
           </div>
@@ -322,15 +364,27 @@ export default {
         .then(result => {
           const trans = [];
           that.trade_right = true;
+
           result.transfer.forEach(item => {
-            let params = {
-              parse_operations: item.parse_operations,
+            let option;
+
+            if (item.parse_ops.length) {
+              option = item.parse_ops[0];
+            }
+            let list = {
+              block_num: item.block,
+              parse_ops: item.parse_ops,
+              parse_operations: option ? option.parse_operations : [],
               trx_id: item.trx_id,
-              date: moment(new Date()).to(moment(new Date(item.date)))
+              date: option
+                ? moment(new Date()).to(moment(new Date(option.date)))
+                : ""
               // signatures: item.signatures
             };
-            trans.push(params);
+            trans.push(list);
           });
+          console.log(trans);
+
           that.trans = trans;
         })
         .catch(err => {

@@ -146,7 +146,10 @@ export default {
       address: '地址间转账通证',
       from: '发送人',
       to: '接受人',
-      num: '数量'
+      num: '数量',
+      contract: '合约',
+      create: '创建人',
+      account: '账户',
     },
     list: {
       hash: '交易 #',

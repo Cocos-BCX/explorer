@@ -42,7 +42,10 @@
           {{$t('trade.trade_detail.trade')}}
           <span>{{$t('trade.trade_detail.address')}}</span>
         </div>
-        <div class="info trade-info" v-if="transactions.parse_operations">
+        <div
+          class="info trade-info"
+          v-if="transactions.parse_operations && transactions.type === 'transfer'"
+        >
           <div
             class="height piece address"
             @click="queryAddress(transactions.parse_operations.from)"
@@ -58,6 +61,55 @@
             <span>{{$t('trade.trade_detail.num')}}</span>
             <span class="center address">{{transactions.parse_operations.amount}}</span>
           </div>
+        </div>
+        <div
+          class="info trade-info"
+          v-if="transactions.parse_operations && transactions.type === 'call_contract_function'"
+        >
+          <div
+            class="height piece address"
+            @click="queryAddress(transactions.parse_operations.caller)"
+          >
+            <span>{{$t('trade.trade_detail.from')}}</span>
+            <span class="center">{{transactions.parse_operations.caller}}</span>
+          </div>
+          <div class="status piece address">
+            <span>{{$t('trade.trade_detail.contract')}}</span>
+            <span class="center">{{transactions.parse_operations.contract_name}}</span>
+          </div>
+          <div class="status piece">
+            <span>{{$t('trade.trade_detail.num')}}</span>
+            <span class="center address">{{transactions.parse_operations.fee}}</span>
+          </div>
+        </div>
+        <div
+          class="info trade-info"
+          v-if="transactions.parse_operations && transactions.type === 'account_create'"
+        >
+          <div
+            class="height piece address"
+            @click="queryAddress(transactions.parse_operations.registrar)"
+          >
+            <span>{{$t('trade.trade_detail.create')}}</span>
+            <span class="center">{{transactions.parse_operations.registrar}}</span>
+          </div>
+          <div
+            class="status piece address"
+            @click="queryAddress(transactions.parse_operations.new_account)"
+          >
+            <span>{{$t('trade.trade_detail.account')}}</span>
+            <span class="center">{{transactions.parse_operations.new_account}}</span>
+          </div>
+          <div class="status piece">
+            <span>{{$t('trade.trade_detail.num')}}</span>
+            <span class="center address">{{transactions.parse_operations.fee}}</span>
+          </div>
+        </div>
+        <div
+          class="info trade-info"
+          v-if="!transactions.parse_operations || (transactions.type !== 'account_create' && transactions.type !== 'call_contract_function' && transactions.type !== 'transfer')"
+        >
+          <div class="piece status">{{transactions.parse_operations}}</div>
         </div>
       </div>
     </div>
@@ -78,7 +130,7 @@ export default {
   name: "Hash",
   data() {
     return {
-      transactions: ""
+      transactions: {}
     };
   },
   mounted() {

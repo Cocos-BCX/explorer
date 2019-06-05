@@ -147,7 +147,10 @@ export default {
       address: 'TRX transfer between address',
       from: 'From',
       to: 'To',
-      num: 'VALUE'
+      num: 'VALUE',
+      contract: 'Contract',
+      create: 'Registrar',
+      account: 'Account',
     },
     list: {
       hash: 'TRANSACTION #',

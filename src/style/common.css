@@ -68,6 +68,10 @@ a {
   text-align: center
 }
 
+.black {
+  color: #bbb !important
+}
+
 .el-pagination.is-background .btn-prev {
   border-left: 1px solid #e6e6e6;
 }

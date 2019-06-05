@@ -82,6 +82,7 @@ export default {
             item.timestamp = moment(new Date()).to(
               moment(new Date(item.timestamp))
             );
+            
             blocks.push(item);
           });
           that.blocks = blocks;
