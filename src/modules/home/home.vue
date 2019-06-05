@@ -767,7 +767,7 @@ export default {
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
-          // width: 150px;
+          width: 70px;
           margin-left: 4px;
           cursor: pointer;
         }
@@ -806,6 +806,8 @@ export default {
         font-size: 14px;
         font-weight: 400;
         margin-right: 22px;
+        display: flex;
+        align-items: center;
         color: rgba(152, 152, 152, 1);
       }
     }
