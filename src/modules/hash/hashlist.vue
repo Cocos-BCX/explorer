@@ -88,13 +88,6 @@
               >{{item.trx_id}}</div>
               <div class="list cursor" @click="queryBlock(item.block_num)">{{item.block_num}}</div>
               <div class="list">{{item.date}}</div>
-              <!-- <div
-                v-if="item.parse_operations.new_account"
-                class="list cursor"
-                @click="queryAddress(item.parse_operations.new_account)"
-              >{{item.parse_operations.new_account}}</div>
-              <div class="list">{{item.parse_operations.registrar}}</div>
-              <div class="list" v-if="item.parse_operations.fee">{{item.parse_operations.fee}}</div>-->
             </div>
           </div>
         </div>
