@@ -63,10 +63,10 @@
             <span>{{$t('block.detail.num')}}</span>
             <span>{{block.trx_count}} transactions</span>
           </div>
-          <div class="size piece">
+          <!-- <div class="size piece">
             <span>{{$t('block.detail.size')}}</span>
             <span>0 {{$t('block.detail.bit')}}</span>
-          </div>
+          </div>-->
         </div>
         <div
           class="title"
@@ -327,7 +327,7 @@ export default {
       }
       .info {
         width: 1148px;
-        height: 312px;
+        height: 270px;
         background: rgba(246, 246, 252, 1);
         margin-top: 20px;
         display: flex;
