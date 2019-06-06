@@ -85,7 +85,7 @@
                     <span>{{block.trx_count}} {{$t('home.list.block.block_detail.trade')}}</span>
                     {{$t('home.list.block.block_detail.by')}}{{block.time}}
                   </p>
-                  <p class="award">{{$t('home.list.block.block_detail.reward')}} 0 COCOS</p>
+                  <p class="award">{{$t('home.list.block.block_detail.reward')}} 10 COCOS</p>
                 </div>
               </div>
             </div>
@@ -300,17 +300,6 @@ export default {
     clearInterval(this.myInterval);
   },
   methods: {
-    contract() {
-      window.BcxWeb.tranferCount({
-        type: "signature",
-        payload: {
-          toAccount: "cocos000",
-          amount: "100",
-          memo: "",
-          assetId: "COCOS"
-        }
-      });
-    },
     timeUpdate() {
       const that = this;
       clearInterval(that.myInterval);
