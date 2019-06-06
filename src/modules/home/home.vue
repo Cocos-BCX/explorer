@@ -159,7 +159,7 @@
                     class="trade-address"
                     v-if="!tran.parse_ops || (tran.parse_ops[0].type !== 'account_create' && tran.parse_ops[0].type !== 'call_contract_function' && tran.parse_ops[0].type !== 'transfer')"
                   >
-                    <div>{{tran.parse_operations}}</div>
+                    <!-- <div>{{tran.parse_operations}}</div> -->
                   </div>
                 </div>
                 <div class="trade-time">>{{tran.date}}</div>
