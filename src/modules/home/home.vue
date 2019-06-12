@@ -54,14 +54,14 @@
 
     <div class="body">
       <div class="content-box">
-        <!-- <div class="chart">
-          <div class="child-chart trade-chart">
+        <div class="chart">
+          <!-- <div class="child-chart trade-chart">
             <Highcharts :options="options" ref="tradeCharts"></Highcharts>
           </div>
           <div class="child-chart address-chart">
             <Highcharts :options="address_options" ref="addressCharts"></Highcharts>
-          </div>
-        </div>-->
+          </div>-->
+        </div>
         <div class="block_trade">
           <div class="block">
             <div class="title">
