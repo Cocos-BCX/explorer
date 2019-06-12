@@ -25,11 +25,7 @@
           </div>
           <div class="hash piece">
             <span>{{$t('address.detail.balance')}}</span>
-            <p
-              class="center"
-              v-for="item in user.counts"
-              :key="item.id"
-            >{{item.balance}} {{item.symbol}}</p>
+            <p class="center" v-for="item in counts" :key="item.id">{{item.balance}} {{item.symbol}}</p>
           </div>
         </div>
         <div class="title">{{$t('address.trade.title')}}</div>
@@ -94,7 +90,8 @@ export default {
       pageMarket: 1,
       num: "",
       trans: [],
-      trans_count: 0
+      trans_count: 0,
+      counts: []
     };
   },
   mounted() {
@@ -118,6 +115,9 @@ export default {
         limit: 10,
         page: this.pageMarket
       };
+      api.get(`/query_user_account/${address_name}`, {}).then(res => {
+        this.counts = res.counts;
+      });
       //查询转账信息
       api
         .get(`query_user_block/${address_name}`, params)
