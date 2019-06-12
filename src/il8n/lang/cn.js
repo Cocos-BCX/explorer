@@ -97,9 +97,9 @@ export default {
     trade: {
       title: '转账',
       hash: '哈希值',
-      age: '年龄',
+      age: '块龄',
       from: '发送人',
-      to: '接受人',
+      to: '接收人',
       num: '数量'
     },
     list: {
@@ -121,9 +121,9 @@ export default {
     trade: {
       title: '转账',
       hash: '哈希值',
-      age: '年龄',
+      age: '块龄',
       from: '发送人',
-      to: '接受人',
+      to: '接收人',
       num: '数量',
       copy: '复制'
     }
@@ -145,7 +145,7 @@ export default {
       trade: '交易信息',
       address: '地址间转账通证',
       from: '发送人',
-      to: '接受人',
+      to: '接收人',
       num: '数量',
       contract: '合约',
       create: '创建人',
@@ -156,7 +156,7 @@ export default {
       block: '区块',
       time: '创建时间',
       from: '发送人',
-      to: '接受人',
+      to: '接收人',
       count: '价值'
     }
   },
