@@ -67,7 +67,7 @@
           @next-click="pageNext"
           :current-page="pageMarket"
           :page-sizes="[100, 200, 300, 400]"
-          :page-size="20"
+          :page-size="10"
           layout="prev, pager, next, total"
           :total="trans_count"
           v-if="trans && trans.length"
