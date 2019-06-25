@@ -26,8 +26,8 @@ export default {
       action: '动态',
       browser: '浏览器',
       about: '关于我们',
-      whiteBook: 'WHITE PAPER',
-      team: 'Team & Partners',
+      whiteBook: '白皮书',
+      team: '团队与合作单位',
     },
     footer: {
       contact: '联系方式',
