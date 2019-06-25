@@ -106,7 +106,7 @@
           @mouseleave="wx = false ;imgs.wechat = 'https://jdi.cocosbcx.net/image/explorer/wechat.png'"
         >
           <img :src="imgs.wechat" class="biao" alt>
-          <img v-if="wx" src="https://jdi.cocosbcx.net/image/explorer/wxma.jpg" class="ma" alt>
+          <img v-if="wx" src="https://jdi.cocosbcx.net/image/explorer/kcode.jpeg" class="ma" alt>
         </div>
         <div
           class="cocos_box"
@@ -158,7 +158,7 @@
         <a href="https://discord.gg/jdJMNtC" target="_blank" rel="noopener noreferrer">
           <img
             :src="imgs.dis"
-            @mouseenter="imgs.dis = 'https://jdi.cocosbcx.net/image/explorer/disb.png'"
+            @mouseenter="imgs.dis = 'https://jdi.cocosbcx.net/image/explorer/disb.jpg'"
             @mouseleave="imgs.dis = 'https://jdi.cocosbcx.net/image/explorer/discord.png'"
             alt
           >
@@ -767,7 +767,7 @@ export default {
             .input_r_box {
               position: absolute;
               height: 60px;
-              width: 95px;
+              width: 104px;
               background: #2ad9fe;
               top: 0;
               left: 352px;

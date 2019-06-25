@@ -45,10 +45,17 @@
           </div>
           <div class="nav_jl lt">
             <a
-              :href="$i18n.locale === 'cn'? 'https://bcx.cocos.com/' : 'https://bcx.cocos.com/en'"
+              :href="$i18n.locale === 'cn'? 'https://bounty.cocosbcx.io' : 'https://bounty.cocosbcx.io/?en'"
               class="nav_browser_click"
               target="_blank"
             >{{$t('home.header.jili')}}</a>
+          </div>
+          <div class="nav_jl lt">
+            <a
+              href="https://medium.com/cocosbcx/cocos-bcx-bounty-program-kick-off-8f325ae01f0b"
+              class="nav_browser_click"
+              target="_blank"
+            >{{$t('home.header.ct')}}</a>
           </div>
           <div class="nav_st lt">
             <a
@@ -71,7 +78,29 @@
             <a
               :href="$i18n.locale === 'en' ? baseurl + '/about?language=en' : baseurl + '/about'"
               class="nav_st_click"
-            >{{$t('home.header.about')}}</a>
+              @mouseenter="About()"
+            >
+              <span :class="about? 'active' : ''">{{$t('home.header.about')}}</span>
+            </a>
+            <div class="nav_develop_more" v-if="!about"></div>
+            <div class="nav_develop_more_close" v-if="about"></div>
+            <div class="nav_develop_list more" @mouseleave="LeaveAbout()">
+              <transition name="slide-fade">
+                <div class="nav_develop_list_box more" v-if="about">
+                  <!-- <div class="nav_develop_list_trans"> -->
+                  <a
+                    :href="$i18n.locale === 'cn'? 'https://www.cocosbcx.io/static/Whitepaper_zh.pdf' :'https://www.cocosbcx.io/static/Whitepaper_en.pdf'"
+                    class="dev_a"
+                    target="_blank"
+                  >{{$t('home.header.whiteBook')}}</a>
+                  <a
+                    :href="$i18n.locale === 'cn'? 'https://www.cocosbcx.io/about' : 'https://www.cocosbcx.io/about?language=en'"
+                    class="dev_a"
+                  >{{$t('home.header.team')}}</a>
+                  <!-- </div> -->
+                </div>
+              </transition>
+            </div>
             <!-- <div class="nav_about_more"></div> -->
           </div>
         </div>
@@ -110,6 +139,7 @@ export default {
     return {
       hover: false,
       language_box: false,
+      about: false,
       baseurl: "http://www.cocosbcx.io"
     };
   },
@@ -147,8 +177,14 @@ export default {
     Devs() {
       this.hover = true;
     },
+    About() {
+      this.about = true;
+    },
     reload() {
       this.$router.push({ name: "Home" });
+    },
+    LeaveAbout() {
+      this.about = false;
     },
     LeaveDevs() {
       this.hover = false;
@@ -250,17 +286,23 @@ export default {
     position: relative;
     .lt {
       a {
+        color: #2ad9fe;
         cursor: pointer;
       }
     }
     margin-top: 15px;
     .nav {
-      width: 683px;
+      width: 810px;
       height: 41px;
       background: rgba(103, 103, 103, 1);
       transform: skewX(-30deg);
-      margin-left: 324px;
+      margin-left: 190px;
       float: left;
+      font-size: 15px;
+      font-family: PingFangSC-Regular, sans-serif !important;
+      .nav_home {
+        margin-left: 58px;
+      }
       .nav_list_box {
         transform: skewX(30deg);
         .active {
@@ -277,6 +319,78 @@ export default {
             color: #2ad9fe;
           }
         }
+        .nav_develop_more_close {
+          // display: none;
+          width: 0;
+          height: 0;
+          border-width: 0 4px 6px;
+          border-style: solid;
+          border-color: transparent transparent #2ad9fe;
+          position: absolute;
+          top: 17px;
+          right: -14px;
+          cursor: pointer;
+        }
+
+        .nav_develop_more {
+          width: 0;
+          height: 0;
+          border-width: 6px 4px 0;
+          border-style: solid;
+          border-color: #bebebe transparent transparent;
+          position: absolute;
+          top: 18px;
+          right: -14px;
+          cursor: pointer;
+        }
+
+        .nav_develop_list {
+          position: absolute;
+          width: 83px;
+          top: 0px;
+          left: -10px;
+          cursor: pointer;
+          &.more {
+            width: 110px;
+          }
+
+          .nav_develop_list_box {
+            margin-top: 46px;
+            width: 83px;
+            height: 88px;
+            overflow: hidden;
+            background: rgba(51, 51, 51, 1);
+            opacity: 0.76;
+            &.more {
+              height: 60px;
+              width: 110px;
+            }
+            .nav_develop_list_trans {
+              padding-top: 2px;
+              width: 83px;
+              height: 86px;
+              background: rgba(51, 51, 51, 1);
+              opacity: 0.76;
+              transform: translateY(-88px);
+              transition: all 0.3s;
+              overflow: hidden;
+            }
+          }
+
+          .dev_a {
+            display: block;
+            margin-top: 12px;
+            height: 12px;
+            line-height: 12px;
+            margin-left: 11px;
+            font-size: 12px;
+            color: #bebebe;
+
+            &:hover {
+              color: #2ad9fe;
+            }
+          }
+        }
         .nav_develop {
           position: relative;
           span.active {
@@ -284,72 +398,6 @@ export default {
           }
           .nav_develop_click {
             z-index: 3;
-          }
-
-          .nav_develop_more_close {
-            // display: none;
-            width: 0;
-            height: 0;
-            border-width: 0 4px 6px;
-            border-style: solid;
-            border-color: transparent transparent #2ad9fe;
-            position: absolute;
-            top: 17px;
-            right: -14px;
-            cursor: pointer;
-          }
-
-          .nav_develop_more {
-            width: 0;
-            height: 0;
-            border-width: 6px 4px 0;
-            border-style: solid;
-            border-color: #bebebe transparent transparent;
-            position: absolute;
-            top: 18px;
-            right: -14px;
-            cursor: pointer;
-          }
-
-          .nav_develop_list {
-            position: absolute;
-            width: 83px;
-            top: 0px;
-            left: -10px;
-            cursor: pointer;
-
-            .nav_develop_list_box {
-              margin-top: 46px;
-              width: 83px;
-              height: 88px;
-              overflow: hidden;
-              background: rgba(51, 51, 51, 1);
-              opacity: 0.76;
-              .nav_develop_list_trans {
-                padding-top: 2px;
-                width: 83px;
-                height: 86px;
-                background: rgba(51, 51, 51, 1);
-                opacity: 0.76;
-                transform: translateY(-88px);
-                transition: all 0.3s;
-                overflow: hidden;
-              }
-            }
-
-            .dev_a {
-              display: block;
-              margin-top: 12px;
-              height: 12px;
-              line-height: 12px;
-              margin-left: 11px;
-              font-size: 12px;
-              color: #bebebe;
-
-              &:hover {
-                color: #2ad9fe;
-              }
-            }
           }
         }
 

@@ -21,6 +21,7 @@ export default {
       developApi: 'DOC',
       developsq: 'FORUM',
       jili: 'BOUNTY',
+      ct: 'CONTRIBUTION',
       stproduct: 'ECOSYSTEM',
       action: 'NEWS',
       browser: 'EXPLORER',
