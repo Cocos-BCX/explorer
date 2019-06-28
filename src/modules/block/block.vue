@@ -196,28 +196,28 @@ export default {
     };
   },
   mounted() {
-    (async () => {
-      let length, total;
-      await api.get("/query_count", {}).then(result => {
-        total = result.info.trans;
-        length =
-          total % 500 === 0 ? parseInt(total / 500) : parseInt(total / 500) + 1;
-      });
-      let trans = [];
-      for (let i = 1; i <= length; i++) {
-        let params = {
-          limit: 500,
-          page: i
-        };
-        await api.get("/query_daily_trans", params).then(res => {
-          res.trans.forEach(item => {
-            trans.push(item);
-          });
-        });
-      }
-      trans.forEach(item => {});
-      console.log(trans);
-    })();
+    // (async () => {
+    //   let length, total;
+    //   await api.get("/query_count", {}).then(result => {
+    //     total = result.info.trans;
+    //     length =
+    //       total % 500 === 0 ? parseInt(total / 500) : parseInt(total / 500) + 1;
+    //   });
+    //   let trans = [];
+    //   for (let i = 1; i <= length; i++) {
+    //     let params = {
+    //       limit: 500,
+    //       page: i
+    //     };
+    //     await api.get("/query_daily_trans", params).then(res => {
+    //       res.trans.forEach(item => {
+    //         trans.push(item);
+    //       });
+    //     });
+    //   }
+    //   trans.forEach(item => {});
+    //   console.log(trans);
+    // })();
     const that = this;
     let block_height = that.$route.params.block_height;
     api
