@@ -245,13 +245,13 @@ export default {
             border: 0;
             background-color: transparent;
             outline: none;
-            width: 36px;
-            height: 16px;
+            width: 46px;
+            height: 18px;
             border-radius: 50px;
             border: 1px solid #4990ed;
             color: #4990ed;
-            line-height: 16px;
-            margin: 4px 0 0 6px;
+            line-height: 18px;
+            margin-left: 6px;
             cursor: pointer;
           }
           button:after {
