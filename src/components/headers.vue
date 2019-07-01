@@ -2,7 +2,7 @@
   <div class="content" :class="$route.name === 'Home' || $route.name === '*' ? '' : 'no-home'">
     <div class="nav_box">
       <a class="nav_logo_box" :href="$i18n.locale === 'en' ? baseurl + '?language=en' : baseurl">
-        <img src="https://jdi.cocosbcx.net/image/explorer/logow.png" alt>
+        <img src="https://jdi.cocosbcx.net/image/explorer/logow.png" alt />
       </a>
       <div class="nav_line"></div>
       <div class="nav" :class="$i18n.locale === 'cn'? 'cn' : 'en'">
@@ -24,7 +24,7 @@
                 <div class="nav_develop_list_box" v-if="hover">
                   <!-- <div class="nav_develop_list_trans"> -->
                   <a
-                    :href="$i18n.locale === 'cn'? 'https://mp.weixin.qq.com/s/EuM8mGfXh3QpwKLN7i9ITA' :'https://medium.com/@CocosBCX/cocos-bcx-alpha-testing-now-open-to-developers-globally-908880f67de7'"
+                    :href="$i18n.locale === 'cn'? 'https://mp.weixin.qq.com/s/bbtYU76j26PTxri8ytrxsA' :'https://medium.com/@CocosBCX/cocos-bcx-successfully-launched-testnet-1-0-gang-rinpoche-99609ea72c0e'"
                     class="dev_a"
                     target="_blank"
                   >{{$t('home.header.developPlan')}}</a>
