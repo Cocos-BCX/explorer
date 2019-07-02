@@ -51,6 +51,9 @@ export default {
     placeholder: [String]
   },
   mounted() {
+    var lang = navigator.language || navigator.userLanguage; //常规浏览器语言和IE浏览器
+    lang = lang.substr(0, 2);
+    this.$i18n.locale = lang === "zh" ? "zh" : "en";
     this.selectedOption = this.selected;
     if (this.placeholder) {
       this.placeholderText = "English";
