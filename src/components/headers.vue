@@ -202,6 +202,7 @@ export default {
       //   let language = this.$i18n.messages[this.$i18n.locale];
       //   this.$store.commit("setDefault", language);
       // this.$store.commit("setDefault", this.$t("home.charts"));
+      // language ['en','cn']
     },
     getQueryVariable(variable) {
       var query = window.location.search.substring(1);
