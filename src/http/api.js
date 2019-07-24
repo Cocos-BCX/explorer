@@ -2,18 +2,7 @@ import axios from 'axios'
 import qs from 'qs'
 let cancel,
   promiseArr = {}
-// const CancelToken = axios.CancelToken;
-// axios.interceptors.request.use(config => {
-//   // if (promiseArr[config.url]) {
-//   //   promiseArr[config.url]('操作取消')
-//   //   promiseArr[config.url] = cancel
-//   // } else {
-//   //   promiseArr[config.url] = cancel
-//   // }
-//   return config
-// }, error => {
-//   return Promise.reject(error)
-// })
+
 
 axios.interceptors.response.use(
   response => {
@@ -72,6 +61,7 @@ axios.interceptors.response.use(
     return Promise.reject(error.response)
   }
 )
+
 
 axios.defaults.baseURL =
   process.env.NODE_ENV === 'development' ?
