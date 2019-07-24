@@ -17,8 +17,8 @@ import {
   MessageBox,
   Dialog
 } from 'element-ui';
-// import VuePaginate from 'vue-paginate'
-// import defaults from './http/api';
+import VuePaginate from 'vue-paginate'
+import defaults from './http/api';
 Vue.component(MessageBox)
 Vue.component(Pagination)
 Vue.component(Dialog)
