@@ -1,6 +1,8 @@
 # explorer-front
 
-> Cocos-BCX Block Explorer
+> Simple Block Explorer For Cocos-BCX
+
+Visit on https://explorer.cocosbcx.io/
 
 ## Build Setup
 
