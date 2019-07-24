@@ -676,6 +676,7 @@ export default {
               height: 17px;
               margin-left: 2px;
               box-sizing: border-box;
+              
             }
 
             p {
