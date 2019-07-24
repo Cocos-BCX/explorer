@@ -48,6 +48,7 @@ export default {
       margin: 50px auto auto 100px;
       top: -25px;
       left: -82px;
+      
     }
   }
 }
