@@ -4,6 +4,10 @@
 
 Visit on https://explorer.cocosbcx.io/  
 
+## Preparation
+
+node.js 8.9.3+
+
 ## Build Setup
 
 ``` bash
